@@ -23,7 +23,7 @@ class NetworkTopo(Topo):
         d4 = self.addHost('d4', ip='192.168.0.9/28')
         d5 = self.addHost('d5', ip='192.168.0.10/28')
         d6 = self.addHost('d6', ip='192.168.0.11/28')
-
+        print(d1,d2,d3,d4,d5,d6)
         # Connecting hosts to switches
         for d, s in [(d1, s1), (d2, s1), (d3, s1)]:
             self.addLink(d, s)
