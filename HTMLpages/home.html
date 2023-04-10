@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2> Welcome to DISERTATIE!</h2>
+<p>Curent user is: {{user}}</p>
+{% if admin %}
+<p>You have full rights </p>
+{% else %}
+<p>You have limited rights </p>
+{% endif %}
+
+{% for topology in topologies %}
+    <h2> Topology ID: {{topology.id}} </h2>
+    <h3> Topology NAME: {{topology.name}} </h3>
+{% endfor %}
+{% endblock %}
