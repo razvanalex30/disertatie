@@ -5,6 +5,7 @@ from wtforms.validators import DataRequired
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from datetime import datetime
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 app = Flask(__name__)
@@ -85,7 +86,7 @@ def update(id):
             return render_template("update.html", form=form, name_to_update=name_to_update)
 
     else:
-        return render_template("update.html", form=form, name_to_update=name_to_update)
+        return render_template("update.html", form=form, name_to_update=name_to_update, id = id)
 
 
 
