@@ -48,6 +48,11 @@ class Users(db.Model):
         return f'Full Name {self.full_name}'
 
 
+class PasswordForm(FlaskForm):
+    email = StringField("What's your email", validators=[DataRequired()])
+    password_hash = PasswordField("What's your password", validators=[DataRequired()])
+    submit = SubmitField("Submit")
+
 
 # Create Form Class
 class RegisterForm(FlaskForm):
@@ -149,6 +154,38 @@ def page_not_found(e):
 @app.errorhandler(500)
 def page_not_found(e):
     return render_template("500.html"), 500
+
+
+@app.route('/test_pw', methods=['GET', 'POST'])
+def test_pw():
+    email = None
+    password = None
+    pw_to_check = None
+    passed = None
+
+    form = PasswordForm()
+    # Validate Form
+    if form.validate_on_submit():
+        email = form.email.data
+        password = form.password_hash.data
+        # Clear the form
+        form.email.data = ''
+        form.password_hash.data = ''
+
+        # Lookup user by email address
+        pw_to_check = Users.query.filter_by(email=email).first()
+
+        # Check Hashed password
+        passed = check_password_hash(pw_to_check.password_hash, password)
+
+
+
+        # flash("Account registered successfully!")
+
+    return render_template("test_pw.html", email=email, password=password,
+                           pw_to_check=pw_to_check,
+                           passed=passed,
+                           form=form)
 
 
 @app.route('/register', methods=['GET', 'POST'])
