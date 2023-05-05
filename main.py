@@ -1,4 +1,4 @@
-from flask import Flask, render_template, flash
+from flask import Flask, render_template, flash, request
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
@@ -15,6 +15,8 @@ app.config['SECRET_KEY'] = "pass"
 
 # Initialize the database
 db = SQLAlchemy(app)
+
+
 
 # Create Model
 class Users(db.Model):
@@ -37,6 +39,27 @@ class RegisterForm(FlaskForm):
     email = StringField("Email", validators=[DataRequired()])
     password = StringField("Password", validators=[DataRequired()])
     submit = SubmitField("Register")
+
+# Update Database Record
+@app.route('/update/<int:id>', methods=['GET','POST'])
+def update(id):
+    form = RegisterForm()
+    name_to_update = Users.query.get_or_404(id)
+    if request.method == "POST":
+        name_to_update.full_name = request.form["full_name"]
+        name_to_update.email = request.form["email"]
+        name_to_update.password = request.form["password"]
+        try:
+            db.session.commit()
+            flash("User Updated Successfully!")
+            return render_template("update.html", form=form, name_to_update=name_to_update)
+        except:
+            flash("ERROR!")
+            return render_template("update.html", form=form, name_to_update=name_to_update)
+
+    else:
+        return render_template("update.html", form=form, name_to_update=name_to_update)
+
 
 
 
@@ -79,7 +102,7 @@ def user(name):
 def page_not_found(e):
     return render_template("404.html"), 404
 
-# INternal Server Error
+# Internal Server Error
 @app.errorhandler(500)
 def page_not_found(e):
     return render_template("500.html"), 500
