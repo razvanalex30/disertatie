@@ -1,7 +1,7 @@
 from flask import Flask, render_template, flash, request
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
-from wtforms.validators import DataRequired
+from wtforms import StringField, SubmitField, PasswordField, EmailField, BooleanField, ValidationError
+from wtforms.validators import DataRequired, EqualTo, Length, Email
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from datetime import datetime
@@ -53,7 +53,8 @@ class Users(db.Model):
 class RegisterForm(FlaskForm):
     full_name = StringField("Full Name", validators=[DataRequired()])
     email = StringField("Email", validators=[DataRequired()])
-    password = StringField("Password", validators=[DataRequired()])
+    password_hash = PasswordField("Password", validators=[DataRequired(), EqualTo("password_hash2", message="Passwords must match!")])
+    password_hash2 = PasswordField("Confirm Password", validators=[DataRequired()])
     master_name = StringField("Master Programme Name")
     submit = SubmitField("Register")
 
@@ -111,13 +112,14 @@ def add_user():
     if form.validate_on_submit():
         user = Users.query.filter_by(email=form.email.data).first()
         if user is None:
-            user = Users(full_name=form.full_name.data, email=form.email.data, password=form.password.data, master_name=form.master_name.data)
+            hashed_passwrd = generate_password_hash(form.password_hash.data, "sha256")
+            user = Users(full_name=form.full_name.data, email=form.email.data, password_hash=hashed_passwrd, master_name=form.master_name.data)
             db.session.add(user)
             db.session.commit()
         full_name=form.full_name.data
         form.full_name.data = ''
         form.email.data = ''
-        form.password.data = ''
+        form.password_hash.data = ''
         form.master_name.data = ''
         flash("User added successfully")
     our_users = Users.query.order_by(Users.date_added)

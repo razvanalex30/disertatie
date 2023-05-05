@@ -18,7 +18,7 @@
 <table class="table table-hover table-bordered table-striped">
 {% for our_user in our_users %}
     <tr>
-    <td>{{our_user.id}} - <a href="{{url_for('update', id=our_user.id)}}"> {{our_user.full_name}} </a> - {{our_user.email}} - {{our_user.password}}
+    <td>{{our_user.id}} - <a href="{{url_for('update', id=our_user.id)}}"> {{our_user.full_name}} </a> - {{our_user.email}} - {{our_user.password_hash}}
         - {{our_user.master_name}} -
     <a href="{{url_for('delete', id=our_user.id)}}"> Delete </a>
     </td>
@@ -45,10 +45,16 @@
         {{ form.email(class="form-control") }}
         <br/>
 
-        {{ form.password.label(class="form-label") }}
+        {{ form.password_hash.label(class="form-label") }}
 
-        {{ form.password(class="form-control") }}
+        {{ form.password_hash(class="form-control") }}
         <br/>
+
+        {{ form.password_hash2.label(class="form-label") }}
+
+        {{ form.password_hash2(class="form-control") }}
+        <br/>
+
         {{ form.master_name.label(class="form-label") }}
 
         {{ form.master_name(class="form-control") }}
@@ -63,7 +69,7 @@
 {% for our_user in our_users %}
     <tr>
     <td>{{our_user.id}} - <a href="{{url_for('update', id=our_user.id)}}"> {{our_user.full_name}} </a> - {{our_user.email}}
-        - {{our_user.password}} - {{our_user.master_name}} -
+        - PW: {{our_user.password_hash}} - {{our_user.master_name}} -
 
     <a href="{{url_for('delete', id=our_user.id)}}"> Delete </a>
     </td>
