@@ -19,7 +19,7 @@
 <table class="table table-hover table-bordered table-striped">
 {% for our_user in our_users %}
     <tr>
-    <td>{{our_user.id}} - {{our_user.full_name}} - {{our_user.email}} - {{our_user.password}}</td>
+    <td>{{our_user.id}} - {{our_user.full_name}} - {{our_user.email}} - {{our_user.password}} - {{our_user.master_name}} </td>
     </tr>
 {% endfor %}
 </table>
@@ -48,6 +48,12 @@
         {{ form.password(class="form-control", value=name_to_update.password) }}
 
         <br/>
+
+        {{ form.master_name.label(class="form-label") }}
+
+        {{ form.master_name(class="form-control", value=name_to_update.master_name) }}
+        <br/>
+
         {{ form.submit(class="btn btn-primary") }}
 
     </form>

@@ -3,6 +3,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 from datetime import datetime
 
 
@@ -15,6 +16,7 @@ app.config['SECRET_KEY'] = "pass"
 
 # Initialize the database
 db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
 
 
@@ -24,6 +26,7 @@ class Users(db.Model):
     full_name = db.Column(db.String(200), nullable=False)
     email = db.Column(db.String(200), nullable=False, unique=True)
     password = db.Column(db.String(50), nullable=False)
+    master_name = db.Column(db.String(200))
     date_added = db.Column(db.DateTime, default=datetime.utcnow)
 
     # Create a string
@@ -38,7 +41,30 @@ class RegisterForm(FlaskForm):
     full_name = StringField("Full Name", validators=[DataRequired()])
     email = StringField("Email", validators=[DataRequired()])
     password = StringField("Password", validators=[DataRequired()])
+    master_name = StringField("Master Programme Name")
     submit = SubmitField("Register")
+
+
+@app.route('/delete/<int:id>')
+def delete(id):
+    user_to_delete = Users.query.get_or_404(id)
+    full_name = None
+    form = RegisterForm()
+    try:
+        db.session.delete(user_to_delete)
+        db.session.commit()
+        flash("User Deleted Successfully!")
+        our_users = Users.query.order_by(Users.date_added)
+        return render_template("add_user.html", form=form,
+                               full_name=full_name,
+                               our_users=our_users)
+    except:
+        flash("ERROR! There was a problem deleting the user")
+        return render_template("add_user.html", form=form,
+                               full_name=full_name,
+                               our_users=our_users)
+
+
 
 # Update Database Record
 @app.route('/update/<int:id>', methods=['GET','POST'])
@@ -49,6 +75,7 @@ def update(id):
         name_to_update.full_name = request.form["full_name"]
         name_to_update.email = request.form["email"]
         name_to_update.password = request.form["password"]
+        name_to_update.master_name = request.form["master_name"]
         try:
             db.session.commit()
             flash("User Updated Successfully!")
@@ -71,13 +98,14 @@ def add_user():
     if form.validate_on_submit():
         user = Users.query.filter_by(email=form.email.data).first()
         if user is None:
-            user = Users(full_name=form.full_name.data, email=form.email.data, password=form.password.data)
+            user = Users(full_name=form.full_name.data, email=form.email.data, password=form.password.data, master_name=form.master_name.data)
             db.session.add(user)
             db.session.commit()
         full_name=form.full_name.data
         form.full_name.data = ''
         form.email.data = ''
         form.password.data = ''
+        form.master_name.data = ''
         flash("User added successfully")
     our_users = Users.query.order_by(Users.date_added)
     return render_template("add_user.html", form=form,
