@@ -1,4 +1,4 @@
-from flask import Flask, render_template, flash, request
+from flask import Flask, render_template, flash, request, redirect, url_for
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, EmailField, BooleanField, ValidationError
 from wtforms.validators import DataRequired, EqualTo, Length, Email
@@ -51,6 +51,27 @@ def topologies():
 def topology(id):
     topology = Topologies.query.get_or_404(id)
     return render_template("topology.html", topology=topology)
+
+@app.route("/topologies/edit/<int:id>", methods=["GET", "POST"])
+def edit_topology(id):
+    topology = Topologies.query.get_or_404(id)
+    form = TopologyForm()
+    if form.validate_on_submit():
+        topology.topology_name = form.topology_name.data
+        topology.topology_description = form.topology_description.data
+        topology.topology_creator = form.topology_creator.data
+        # Update database
+        db.session.add(topology)
+        db.session.commit()
+        flash("Topology updated successfully!")
+        return redirect(url_for('topology', id= topology.id))
+
+    form.topology_name.data = topology.topology_name
+    form.topology_description.data = topology.topology_description
+    form.topology_creator.data = topology.topology_creator
+
+    return render_template("edit_topology.html", form=form)
+
 
 
 @app.route("/add_topology", methods=["GET","POST"])
