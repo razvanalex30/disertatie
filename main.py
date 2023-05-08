@@ -46,6 +46,13 @@ def topologies():
 
     return render_template("topologies.html", topologies=topologies)
 
+
+@app.route("/topologies/<int:id>")
+def topology(id):
+    topology = Topologies.query.get_or_404(id)
+    return render_template("topology.html", topology=topology)
+
+
 @app.route("/add_topology", methods=["GET","POST"])
 def add_topology():
     form = TopologyForm()

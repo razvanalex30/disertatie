@@ -13,16 +13,17 @@
 
 <br/>
 
-{% for topology in topologies %}
+
 <div class="shadow p-3 mb-5 bg-body-tertiary rounded">
-    <h2><a href="{{url_for('topology', id=topology.id)}}">{{topology.topology_name}}</a></h2><br/>
+    <h2>{{topology.topology_name}}</h2><br/>
     {{topology.topology_description}}<br/>
     {{topology.topology_creator}}<br/><br/>
-    <a href="{{url_for('topology', id=topology.id)}}" class="btn btn-outline-secondary btn-sm">View Topology</a>
 
 </div>
+
+    <a href="{{url_for('topologies')}}" class="btn btn-outline-secondary btn-sm">Back</a>
 <br/>
 
-{% endfor %}
+
 
 {% endblock %}
