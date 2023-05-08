@@ -6,6 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
+from wtforms.widgets import TextArea
 
 
 app = Flask(__name__)
@@ -19,9 +20,47 @@ app.config['SECRET_KEY'] = "pass"
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
+# Create Topology Model
+class Topologies(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    topology_name = db.Column(db.String(255))
+    topology_description = db.Column(db.Text)
+    topology_creator = db.Column(db.String(255))
+    date_created = db.Column(db.DateTime, default=datetime.utcnow)
+
+# Create a Topology Form
+
+class TopologyForm(FlaskForm):
+    topology_name = StringField("Topology Name", validators=[DataRequired()])
+    topology_description = StringField("Topology Description", validators=[DataRequired()], widget=TextArea())
+    topology_creator = StringField("Topology Creator", validators=[DataRequired()])
+    submit = SubmitField("Submit")
+
+@app.route("/add_topology", methods=["GET","POST"])
+def add_topology():
+    form = TopologyForm()
+
+    if form.validate_on_submit():
+        post = Topologies(topology_name=form.topology_name.data, topology_description=form.topology_description.data, topology_creator=form.topology_creator.data)
+        # Clear the form
+        form.topology_name.data = ''
+        form.topology_description.data = ''
+        form.topology_creator.data = ''
+
+        # Add topology to database
+        db.session.add(post)
+        db.session.commit()
+
+        # Return message
+        flash("Topology submitted successfully!")
+
+    return render_template("add_topology.html", form=form)
 
 
-# Create Model
+
+
+
+# Create Users Model
 class Users(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     full_name = db.Column(db.String(200), nullable=False)
