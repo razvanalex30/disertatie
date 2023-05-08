@@ -72,6 +72,25 @@ def edit_topology(id):
 
     return render_template("edit_topology.html", form=form)
 
+@app.route("/topologies/delete/<int:id>")
+def delete_topology(id):
+    topology_to_delete = Topologies.query.get_or_404(id)
+
+    try:
+        db.session.delete(topology_to_delete)
+        db.session.commit()
+        # Return a message
+        flash("Topology was deleted!")
+        topologies = Topologies.query.order_by(Topologies.date_created)
+        return render_template("topologies.html", topologies=topologies)
+
+    except:
+        # Return error message
+        flash("ERROR when deleting Topology, please try again")
+        topologies = Topologies.query.order_by(Topologies.date_created)
+
+        return render_template("topologies.html", topologies=topologies)
+
 
 
 @app.route("/add_topology", methods=["GET","POST"])
