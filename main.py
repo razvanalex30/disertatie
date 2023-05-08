@@ -36,6 +36,16 @@ class TopologyForm(FlaskForm):
     topology_creator = StringField("Topology Creator", validators=[DataRequired()])
     submit = SubmitField("Submit")
 
+
+# Show Topologies
+
+@app.route("/topologies")
+def topologies():
+    # Grab all the topologies from the database
+    topologies = Topologies.query.order_by(Topologies.date_created)
+
+    return render_template("topologies.html", topologies=topologies)
+
 @app.route("/add_topology", methods=["GET","POST"])
 def add_topology():
     form = TopologyForm()
