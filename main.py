@@ -7,6 +7,7 @@ from flask_migrate import Migrate
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from wtforms.widgets import TextArea
+from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 
 
 app = Flask(__name__)
@@ -19,6 +20,59 @@ app.config['SECRET_KEY'] = "pass"
 # Initialize the database
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'
+
+@login_manager.user_loader
+def load_user(user_id):
+    return Users.query.get(int(user_id))
+
+
+# Create Login Form
+class LoginForm(FlaskForm):
+    email = StringField("Email", validators=[DataRequired()])
+    password = PasswordField("Password", validators=[DataRequired()])
+    submit = SubmitField("Submit")
+
+
+
+# Create Login Page
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = Users.query.filter_by(email=form.email.data).first()
+        if user:
+            # Check the hash
+            if check_password_hash(user.password_hash, form.password.data):
+                login_user(user)
+                flash("Login succesfull!")
+                return redirect(url_for('dashboard'))
+            else:
+                flash("Wrong Password - Try again!")
+        else:
+            flash("User doesn't exist!")
+    return render_template("login.html", form=form)
+
+
+# Create Logout Function
+@app.route("/logout", methods=["GET", "POST"])
+@login_required
+def logout():
+    logout_user()
+    flash("You have been logged out!")
+    return redirect(url_for('login'))
+
+
+# Create Dashboard Page
+@app.route('/dashboard', methods=['GET', 'POST'])
+@login_required
+def dashboard():
+    return render_template("dashboard.html")
+
+
 
 # Create Topology Model
 class Topologies(db.Model):
@@ -118,7 +172,7 @@ def add_topology():
 
 
 # Create Users Model
-class Users(db.Model):
+class Users(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     full_name = db.Column(db.String(200), nullable=False)
     email = db.Column(db.String(200), nullable=False, unique=True)
