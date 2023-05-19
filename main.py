@@ -94,6 +94,7 @@ class TopologyForm(FlaskForm):
 # Show Topologies
 
 @app.route("/topologies")
+@login_required
 def topologies():
     # Grab all the topologies from the database
     topologies = Topologies.query.order_by(Topologies.date_created)
@@ -102,11 +103,13 @@ def topologies():
 
 
 @app.route("/topologies/<int:id>")
+@login_required
 def topology(id):
     topology = Topologies.query.get_or_404(id)
     return render_template("topology.html", topology=topology)
 
 @app.route("/topologies/edit/<int:id>", methods=["GET", "POST"])
+@login_required
 def edit_topology(id):
     topology = Topologies.query.get_or_404(id)
     form = TopologyForm()
@@ -127,6 +130,7 @@ def edit_topology(id):
     return render_template("edit_topology.html", form=form)
 
 @app.route("/topologies/delete/<int:id>")
+@login_required
 def delete_topology(id):
     topology_to_delete = Topologies.query.get_or_404(id)
 
@@ -148,6 +152,7 @@ def delete_topology(id):
 
 
 @app.route("/add_topology", methods=["GET","POST"])
+@login_required
 def add_topology():
     form = TopologyForm()
 
