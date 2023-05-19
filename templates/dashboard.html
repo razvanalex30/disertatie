@@ -13,11 +13,19 @@
 {% endfor %}
 
 
-    <h1>Dashboard</h1>
-    <br/><br/>
-    <p>You are logged in!</p>
-
-    <a href="{{url_for('logout')}}">Logout</a>
+    <h2>Dashboard</h2>
+    <br/>
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Welcome {{current_user.full_name}}</h5>
+            <br/><br/>
+    <strong> Full Name: </strong> {{current_user.full_name}} <br/>
+    <strong> Email: </strong> {{current_user.email}} <br/>
+    <strong> Master Program: </strong> {{current_user.master_name}} <br/>
+    <strong> Date Registered: </strong> {{current_user.date_added}} <br/><br/>
+        <a href="{{url_for('logout')}}" class="btn btn-secondary btn-sm">Logout</a>
+      </div>
+    </div>
 
 
  <br/> <br/> <br/>

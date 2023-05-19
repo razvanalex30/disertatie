@@ -12,15 +12,21 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="{{url_for('user', name='Razvan')}}">My Profile</a>
         </li>
+        {% if current_user.is_authenticated %}
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{{url_for('register')}}">Register</a>
+          <a class="nav-link active" aria-current="page" href="{{url_for('dashboard')}}">Dashboard</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{{url_for('add_user')}}">Add User</a>
+          <a class="nav-link active" aria-current="page" href="{{url_for('logout')}}">Logout</a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{{url_for('add_user')}}">Register</a>
         </li>
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="{{url_for('login')}}">Login</a>
         </li>
+        {% endif %}
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="{{url_for('add_topology')}}">Add Topology</a>
         </li>
