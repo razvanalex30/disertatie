@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+    <br/>
+
+        <h2>Search Results:</h2>
+        <p>{{searched}}</p>
+        <br/>
+
+{% for topology in topologies %}
+<a href="{{url_for('topology', id=topology.id)}}">
+   {{ topology.topology_name }}</a><br/>
+{% endfor %}
+
+
+{% endblock %}

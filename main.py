@@ -4,7 +4,7 @@ from flask_migrate import Migrate
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
-from webforms import RegisterForm, LoginForm, PasswordForm, TopologyForm
+from webforms import RegisterForm, LoginForm, PasswordForm, TopologyForm, SearchForm
 
 app = Flask(__name__)
 # Add Database
@@ -65,9 +65,22 @@ def dashboard():
     return render_template("dashboard.html")
 
 
+# Pass info to navbar
+@app.context_processor
+def base():
+    form = SearchForm()
+    return dict(form=form)
 
-
-
+# Create Search Function
+@app.route('/search', methods=["POST"])
+def search():
+    form = SearchForm()
+    topologies = Topologies.query
+    if form.validate_on_submit():
+        topology.searched = form.searched.data
+        topologies = topologies.filter(Topologies.topology_description.like('%' + topology.searched + '%'))
+        topologies = topologies.order_by(Topologies.topology_name).all()
+        return render_template("search.html", form=form, searched=topology.searched, topologies=topologies)
 
 
 
