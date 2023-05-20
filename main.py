@@ -113,26 +113,32 @@ def edit_topology(id):
 @login_required
 def delete_topology(id):
     topology_to_delete = Topologies.query.get_or_404(id)
+    id = current_user.id
+    if id == topology_to_delete.topology_creator.id:
 
-    try:
-        db.session.delete(topology_to_delete)
-        db.session.commit()
+        try:
+            db.session.delete(topology_to_delete)
+            db.session.commit()
+            # Return a message
+            flash("Topology was deleted!")
+            topologies = Topologies.query.order_by(Topologies.date_created)
+            return render_template("topologies.html", topologies=topologies)
+
+        except:
+            # Return error message
+            flash("ERROR when deleting Topology, please try again")
+            topologies = Topologies.query.order_by(Topologies.date_created)
+
+            return render_template("topologies.html", topologies=topologies)
+    else:
         # Return a message
-        flash("Topology was deleted!")
+        flash("You are not authorized to delete this topology!")
         topologies = Topologies.query.order_by(Topologies.date_created)
         return render_template("topologies.html", topologies=topologies)
-
-    except:
-        # Return error message
-        flash("ERROR when deleting Topology, please try again")
-        topologies = Topologies.query.order_by(Topologies.date_created)
-
-        return render_template("topologies.html", topologies=topologies)
-
 
 
 @app.route("/add_topology", methods=["GET","POST"])
-#@login_required
+@login_required
 def add_topology():
     form = TopologyForm()
 
