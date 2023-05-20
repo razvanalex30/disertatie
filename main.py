@@ -103,11 +103,18 @@ def edit_topology(id):
         flash("Topology updated successfully!")
         return redirect(url_for('topology', id=topology.id))
 
-    form.topology_name.data = topology.topology_name
-    form.topology_description.data = topology.topology_description
-    # form.topology_creator.data = topology.topology_creator
+    if current_user.id == topology.topology_creator_id:
+        form.topology_name.data = topology.topology_name
+        form.topology_description.data = topology.topology_description
+        # form.topology_creator.data = topology.topology_creator
 
-    return render_template("edit_topology.html", form=form)
+        return render_template("edit_topology.html", form=form)
+
+    else:
+        flash("You are not authorized to edit this post!")
+        topologies = Topologies.query.order_by(Topologies.date_created)
+
+        return render_template("topologies.html", topologies=topologies)
 
 @app.route("/topologies/delete/<int:id>")
 @login_required

@@ -20,8 +20,12 @@
     <br/>
     Created by: {{topology.topology_creator.full_name}}<br/><br/>
     <a href="{{url_for('topology', id=topology.id)}}" class="btn btn-outline-secondary btn-sm">View Topology</a>
+    {% if topology.topology_creator_id == current_user.id %}
+
     <a href="{{url_for('edit_topology', id=topology.id)}}" class="btn btn-outline-secondary btn-sm">Edit Topology</a>
     <a href="{{url_for('delete_topology', id=topology.id)}}" class="btn btn-outline-danger btn-sm">Delete Topology</a>
+
+    {% endif %}
 
 </div>
 <br/>
