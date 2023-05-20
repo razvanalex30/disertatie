@@ -16,7 +16,7 @@
 {% for topology in topologies %}
 <div class="shadow p-3 mb-5 bg-body-tertiary rounded">
     <h2><a href="{{url_for('topology', id=topology.id)}}">{{topology.topology_name}}</a></h2><br/>
-    {{topology.topology_description}}<br/>
+    {{topology.topology_description|safe}}<br/>
     <br/>
     Created by: {{topology.topology_creator.full_name}}<br/><br/>
     <a href="{{url_for('topology', id=topology.id)}}" class="btn btn-outline-secondary btn-sm">View Topology</a>

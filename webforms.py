@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, EmailField, BooleanField, ValidationError
 from wtforms.validators import DataRequired, EqualTo, Length, Email
 from wtforms.widgets import TextArea
-
+from flask_ckeditor import CKEditorField
 
 # Create Search Form
 class SearchForm(FlaskForm):
@@ -35,6 +35,6 @@ class RegisterForm(FlaskForm):
 # Create a Topology Form
 class TopologyForm(FlaskForm):
     topology_name = StringField("Topology Name", validators=[DataRequired()])
-    topology_description = StringField("Topology Description", validators=[DataRequired()], widget=TextArea())
+    topology_description = CKEditorField("Topology Description", validators=[DataRequired()])
     topology_creator = StringField("Topology Creator")
     submit = SubmitField("Submit")

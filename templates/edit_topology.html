@@ -13,7 +13,7 @@
 
 <br/>
 
-
+<h2>Edit Topology</h2>
 <div class="shadow p-3 mb-5 bg-body-tertiary rounded">
 
      <form method="POST">
@@ -33,6 +33,8 @@
         {{ form.submit(class="btn btn-primary") }}
 
     </form>
+    {{ ckeditor.load() }}
+    {{ ckeditor.config(name='topology_description') }}
 
 </div>
 

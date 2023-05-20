@@ -5,8 +5,13 @@ from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from webforms import RegisterForm, LoginForm, PasswordForm, TopologyForm, SearchForm
+from flask_ckeditor import CKEditor
+
+
 
 app = Flask(__name__)
+# Add ckeditor
+ckeditor = CKEditor(app)
 # Add Database
 #app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///users.db"
 app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:Zarvan39#@localhost/users"

@@ -2,6 +2,7 @@
 
 {% block content %}
 
+
 {% for message in get_flashed_messages() %}
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
             {{ message }}
@@ -35,6 +36,8 @@
         {{ form.submit(class="btn btn-primary") }}
 
     </form>
+        {{ ckeditor.load() }}
+        {{ ckeditor.config(name='topology_description') }}
 </div>
  <br/> <br/> <br/>
 
