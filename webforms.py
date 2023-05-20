@@ -29,5 +29,5 @@ class RegisterForm(FlaskForm):
 class TopologyForm(FlaskForm):
     topology_name = StringField("Topology Name", validators=[DataRequired()])
     topology_description = StringField("Topology Description", validators=[DataRequired()], widget=TextArea())
-    topology_creator = StringField("Topology Creator", validators=[DataRequired()])
+    topology_creator = StringField("Topology Creator")
     submit = SubmitField("Submit")

@@ -96,16 +96,16 @@ def edit_topology(id):
     if form.validate_on_submit():
         topology.topology_name = form.topology_name.data
         topology.topology_description = form.topology_description.data
-        topology.topology_creator = form.topology_creator.data
+        # topology.topology_creator = form.topology_creator.data
         # Update database
         db.session.add(topology)
         db.session.commit()
         flash("Topology updated successfully!")
-        return redirect(url_for('topology', id= topology.id))
+        return redirect(url_for('topology', id=topology.id))
 
     form.topology_name.data = topology.topology_name
     form.topology_description.data = topology.topology_description
-    form.topology_creator.data = topology.topology_creator
+    # form.topology_creator.data = topology.topology_creator
 
     return render_template("edit_topology.html", form=form)
 
@@ -132,16 +132,17 @@ def delete_topology(id):
 
 
 @app.route("/add_topology", methods=["GET","POST"])
-@login_required
+#@login_required
 def add_topology():
     form = TopologyForm()
 
     if form.validate_on_submit():
-        post = Topologies(topology_name=form.topology_name.data, topology_description=form.topology_description.data, topology_creator=form.topology_creator.data)
+        topology_creator = current_user.id
+        post = Topologies(topology_name=form.topology_name.data, topology_description=form.topology_description.data, topology_creator_id=topology_creator)
         # Clear the form
         form.topology_name.data = ''
         form.topology_description.data = ''
-        form.topology_creator.data = ''
+        # form.topology_creator.data = ''
 
         # Add topology to database
         db.session.add(post)
@@ -302,8 +303,10 @@ class Topologies(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     topology_name = db.Column(db.String(255))
     topology_description = db.Column(db.Text)
-    topology_creator = db.Column(db.String(255))
+    #topology_creator = db.Column(db.String(255))
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
+    # Foreign key to link users (refer to primary key)
+    topology_creator_id = db.Column(db.Integer, db.ForeignKey("users.id"))
 
 # Create Users Model
 class Users(db.Model, UserMixin):
@@ -313,8 +316,9 @@ class Users(db.Model, UserMixin):
     password_hash = db.Column(db.String(128), nullable=False)
     master_name = db.Column(db.String(200))
     date_added = db.Column(db.DateTime, default=datetime.utcnow)
+    # A user can have many topologies
+    topologies = db.relationship("Topologies", backref="topology_creator")
 
-    # Create a string
 
     @property
     def password(self):
