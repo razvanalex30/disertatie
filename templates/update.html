@@ -43,18 +43,13 @@
         {{ form.email(class="form-control", value=name_to_update.email) }}
         <br/>
 
-        {{ form.password.label(class="form-label") }}
-
-        {{ form.password(class="form-control", value=name_to_update.password) }}
-
-        <br/>
 
         {{ form.master_name.label(class="form-label") }}
 
         {{ form.master_name(class="form-control", value=name_to_update.master_name) }}
         <br/>
 
-        {{ form.submit(class="btn btn-primary") }}
+        {{ form.submit(class="btn btn-primary", value="Submit") }}
 
         <a href="{{url_for('delete', id=id)}}" class="btn btn-danger"> Delete </a>
 

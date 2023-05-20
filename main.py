@@ -248,18 +248,17 @@ def update(id):
     if request.method == "POST":
         name_to_update.full_name = request.form["full_name"]
         name_to_update.email = request.form["email"]
-        name_to_update.password = request.form["password"]
         name_to_update.master_name = request.form["master_name"]
         try:
             db.session.commit()
             flash("User Updated Successfully!")
-            return render_template("update.html", form=form, name_to_update=name_to_update)
+            return render_template("update.html", form=form, name_to_update=name_to_update, id=id)
         except:
             flash("ERROR!")
-            return render_template("update.html", form=form, name_to_update=name_to_update)
+            return render_template("update.html", form=form, name_to_update=name_to_update, id=id)
 
     else:
-        return render_template("update.html", form=form, name_to_update=name_to_update, id = id)
+        return render_template("update.html", form=form, name_to_update=name_to_update, id=id)
 
 
 
