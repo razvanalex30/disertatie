@@ -12,9 +12,10 @@ class SearchForm(FlaskForm):
 
 # Create Login Form
 class LoginForm(FlaskForm):
-    email = StringField("Email", validators=[DataRequired()])
+    email = StringField("Email", validators=[DataRequired(), Email()])
     password = PasswordField("Password", validators=[DataRequired()])
-    submit = SubmitField("Submit")
+    remember = BooleanField("Remember Me")
+    submit = SubmitField("Login")
 
 
 class PasswordForm(FlaskForm):
@@ -24,11 +25,11 @@ class PasswordForm(FlaskForm):
 
 # Create Form Class
 class RegisterForm(FlaskForm):
-    full_name = StringField("Full Name", validators=[DataRequired()])
-    email = StringField("Email", validators=[DataRequired()])
+    full_name = StringField("Full Name", validators=[DataRequired(), Length(min=2, max=70)])
+    email = StringField("Email", validators=[DataRequired(), Email()])
     password_hash = PasswordField("Password", validators=[DataRequired(), EqualTo("password_hash2", message="Passwords must match!")])
     password_hash2 = PasswordField("Confirm Password", validators=[DataRequired()])
-    master_name = StringField("Master Programme Name")
+    master_name = StringField("Master Programme Name", validators=[DataRequired()])
     submit = SubmitField("Register")
 
 
