@@ -30,7 +30,16 @@ login_manager.login_view = 'login'
 def load_user(user_id):
     return Users.query.get(int(user_id))
 
-
+# Create Admin Page
+@app.route('/admin')
+@login_required
+def admin():
+    email = current_user.email
+    if email == "test@test.com":
+        return render_template("admin.html")
+    else:
+        flash("Restricted Access!")
+        return redirect(url_for('dashboard'))
 
 
 

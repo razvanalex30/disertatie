@@ -16,6 +16,11 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="{{url_for('dashboard')}}">Dashboard</a>
         </li>
+        {% if current_user.email == "test@test.com" %}
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{{url_for('admin')}}">Admin</a>
+        </li>
+        {% endif %}
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="{{url_for('logout')}}">Logout</a>
         </li>
