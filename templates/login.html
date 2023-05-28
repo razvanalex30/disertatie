@@ -32,10 +32,25 @@
 
         {{ form.password(class="form-control") }}
         <br/>
-
+        <div class="form-check">
+            {{ form.remember(class="form-check-input") }}
+            {{ form.remember.label(class="form-check-label") }}
+        </div>
+        <br/>
         {{ form.submit(class="btn btn-primary") }}
 
     </form>
+    </br>
+    <small class="text-muted ml-2">
+        <a href="#">Forgot Password?
+        </a>
+    </small>
+</div>
+<br/>
+<div class="border-top pt-3">
+    <small class="text-muted">
+        Need An Account? <a class="ml-2" href="{{url_for('add_user')}}">Register Here</a>
+    </small>
 </div>
  <br/> <br/> <br/>
 

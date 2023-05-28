@@ -42,17 +42,45 @@
 
         {{ form.email.label(class="form-label") }}
 
-        {{ form.email(class="form-control") }}
+        {% if form.email.errors %}
+            {{ form.email(class="form-control is-invalid") }}
+        <div class="invalid-feedback">
+            {% for error in form.email.errors %}
+                <span>{{ error }}</span>
+            {% endfor %}
+        </div>
+        {% else %}
+            {{ form.email(class="form-control") }}
+        {% endif %}
+
         <br/>
 
         {{ form.password_hash.label(class="form-label") }}
 
-        {{ form.password_hash(class="form-control") }}
+        {% if form.password_hash.errors %}
+            {{ form.password_hash(class="form-control is-invalid") }}
+        <div class="invalid-feedback">
+            {% for error in form.password_hash.errors %}
+                <span>{{ error }}</span>
+            {% endfor %}
+        </div>
+        {% else %}
+            {{ form.password_hash(class="form-control") }}
+        {% endif %}
         <br/>
 
         {{ form.password_hash2.label(class="form-label") }}
 
-        {{ form.password_hash2(class="form-control") }}
+        {% if form.password_hash2.errors %}
+            {{ form.password_hash2(class="form-control is-invalid") }}
+        <div class="invalid-feedback">
+            {% for error in form.password_hash2.errors %}
+                <span>{{ error }}</span>
+            {% endfor %}
+        </div>
+        {% else %}
+            {{ form.password_hash2(class="form-control") }}
+        {% endif %}
         <br/>
 
         {{ form.master_name.label(class="form-label") }}
