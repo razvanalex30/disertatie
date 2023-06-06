@@ -42,4 +42,4 @@ class Users(db.Model, UserMixin):
 
 
     def __repr__(self):
-        return f'Full Name: {self.full_name}, Email: {self.email}'
+        return f'Id: {self.id} - Full Name: {self.full_name} - Email: {self.email}'

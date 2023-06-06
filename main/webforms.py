@@ -1,7 +1,8 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, EmailField, BooleanField, ValidationError
-from wtforms.validators import DataRequired, EqualTo, Length, Email
+from wtforms.validators import DataRequired, EqualTo, Length, Email, ValidationError
 from flask_ckeditor import CKEditorField
+from main.models import Users
 
 # Create Search Form
 class SearchForm(FlaskForm):
@@ -30,6 +31,11 @@ class RegisterForm(FlaskForm):
     password_hash2 = PasswordField("Confirm Password", validators=[DataRequired()])
     master_name = StringField("Master Programme Name", validators=[DataRequired()])
     submit = SubmitField("Register")
+
+    def validate_email(self, email):
+        user = Users.query.filter_by(email=email.data).first()
+        if user:
+            raise ValidationError("Error - Email already used! Please use another email address!")
 
 
 # Create a Topology Form

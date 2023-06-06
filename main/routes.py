@@ -231,12 +231,12 @@ def add_user():
     full_name = None
     form = RegisterForm()
     if form.validate_on_submit():
-        user = Users.query.filter_by(email=form.email.data).first()
-        if user is None:
-            hashed_passwrd = generate_password_hash(form.password_hash.data, "sha256")
-            user = Users(full_name=form.full_name.data, email=form.email.data, password_hash=hashed_passwrd, master_name=form.master_name.data)
-            db.session.add(user)
-            db.session.commit()
+        # user = Users.query.filter_by(email=form.email.data).first()
+        # if user is None:
+        hashed_passwrd = generate_password_hash(form.password_hash.data, "sha256")
+        user = Users(full_name=form.full_name.data, email=form.email.data, password_hash=hashed_passwrd, master_name=form.master_name.data)
+        db.session.add(user)
+        db.session.commit()
         full_name=form.full_name.data
         form.full_name.data = ''
         form.email.data = ''
@@ -304,14 +304,14 @@ def test_pw():
                            form=form)
 
 
-@app.route('/register', methods=['GET', 'POST'])
-def register():
-    full_name = None
-    form = RegisterForm()
-    # Validate Form
-    if form.validate_on_submit():
-        full_name = form.full_name.data
-        form.full_name.data = ''
-        flash("Account registered successfully!")
-
-    return render_template("register.html", full_name=full_name, form=form)
+# @app.route('/register', methods=['GET', 'POST'])
+# def register():
+#     full_name = None
+#     form = RegisterForm()
+#     # Validate Form
+#     if form.validate_on_submit():
+#         full_name = form.full_name.data
+#         form.full_name.data = ''
+#         flash("Account registered successfully!")
+#
+#     return render_template("register.html", full_name=full_name, form=form)
