@@ -2,14 +2,13 @@ from flask import render_template, flash, request, redirect, url_for
 from main import app
 from main import db
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import login_user, LoginManager, login_required, logout_user, current_user
+from flask_login import login_user, login_required, logout_user, current_user
 from main.models import Users, Topologies
 from main.webforms import RegisterForm, LoginForm, PasswordForm, TopologyForm, SearchForm
+from main import login_manager
 
 
-login_manager = LoginManager()
-login_manager.init_app(app)
-login_manager.login_view = 'login'
+
 
 @login_manager.user_loader
 def load_user(user_id):
