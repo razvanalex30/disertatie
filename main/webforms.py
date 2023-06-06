@@ -1,7 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, EmailField, BooleanField, ValidationError
 from wtforms.validators import DataRequired, EqualTo, Length, Email
-from wtforms.widgets import TextArea
 from flask_ckeditor import CKEditorField
 
 # Create Search Form

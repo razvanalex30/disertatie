@@ -1,26 +1,11 @@
-from flask import Flask, render_template, flash, request, redirect, url_for
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
-from datetime import datetime
+from flask import render_template, flash, request, redirect, url_for
+from main import app
+from main import db
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
-from webforms import RegisterForm, LoginForm, PasswordForm, TopologyForm, SearchForm
-from flask_ckeditor import CKEditor
+from flask_login import login_user, LoginManager, login_required, logout_user, current_user
+from main.models import Users, Topologies
+from main.webforms import RegisterForm, LoginForm, PasswordForm, TopologyForm, SearchForm
 
-
-
-app = Flask(__name__)
-# Add ckeditor
-ckeditor = CKEditor(app)
-# Add Database
-#app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///users.db"
-app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:Zarvan39#@localhost/users"
-# Secret Key
-app.config['SECRET_KEY'] = "pass"
-
-# Initialize the database
-db = SQLAlchemy(app)
-migrate = Migrate(app, db)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -195,13 +180,6 @@ def add_topology():
 
 
 
-
-
-
-
-
-
-
 @app.route('/delete/<int:id>')
 def delete(id):
     user_to_delete = Users.query.get_or_404(id)
@@ -337,43 +315,3 @@ def register():
         flash("Account registered successfully!")
 
     return render_template("register.html", full_name=full_name, form=form)
-
-# Create Topology Model
-class Topologies(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    topology_name = db.Column(db.String(255))
-    topology_description = db.Column(db.Text)
-    #topology_creator = db.Column(db.String(255))
-    date_created = db.Column(db.DateTime, default=datetime.utcnow)
-    # Foreign key to link users (refer to primary key)
-    topology_creator_id = db.Column(db.Integer, db.ForeignKey("users.id"))
-
-# Create Users Model
-class Users(db.Model, UserMixin):
-    id = db.Column(db.Integer, primary_key=True)
-    full_name = db.Column(db.String(200), nullable=False)
-    email = db.Column(db.String(200), nullable=False, unique=True)
-    password_hash = db.Column(db.String(128), nullable=False)
-    master_name = db.Column(db.String(200))
-    date_added = db.Column(db.DateTime, default=datetime.utcnow)
-    # A user can have many topologies
-    topologies = db.relationship("Topologies", backref="topology_creator")
-
-
-    @property
-    def password(self):
-        raise AttributeError("password is not a readable attribute!")
-
-    @password.setter
-    def password(self, password):
-        self.password_hash = generate_password_hash(password)
-
-    def verify_password(self, password):
-        return check_password_hash(self.password_hash, password)
-
-
-    def __repr__(self):
-        return f'Full Name {self.full_name}'
-
-
-
