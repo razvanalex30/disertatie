@@ -31,15 +31,18 @@ def admin():
 # Create Login Page
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('dashboard'))
     form = LoginForm()
     if form.validate_on_submit():
         user = Users.query.filter_by(email=form.email.data).first()
         if user:
             # Check the hash
             if check_password_hash(user.password_hash, form.password.data):
-                login_user(user)
-                flash("Login succesfull!")
-                return redirect(url_for('dashboard'))
+                login_user(user, remember=form.remember.data)
+                next_page = request.args.get('next')
+                flash("Login successfully!")
+                return redirect(next_page) if next_page else redirect(url_for('dashboard'))
             else:
                 flash("Wrong Password - Try again!")
         else:
@@ -227,6 +230,8 @@ def update(id):
 
 @app.route('/user/register', methods=['GET','POST'])
 def add_user():
+    if current_user.is_authenticated:
+        return redirect(url_for('dashboard'))
     full_name = None
     form = RegisterForm()
     if form.validate_on_submit():
