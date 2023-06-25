@@ -2,6 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, EmailField, BooleanField, ValidationError, IntegerField
 from wtforms.validators import DataRequired, EqualTo, Length, Email, ValidationError, NumberRange
 from flask_ckeditor import CKEditorField
+import re
 from main.models import Users
 
 # Create Search Form
@@ -43,9 +44,123 @@ class TopologyForm(FlaskForm):
     topology_name = StringField("Topology Name", validators=[DataRequired()])
     topology_description = CKEditorField("Description", validators=[DataRequired()])
     topology_controllers_nr = IntegerField("Controllers Number", validators=[DataRequired(), NumberRange(min=0)])
+    topology_controllers_names = StringField("Controllers Names", validators=[DataRequired()])
     topology_switches_nr = IntegerField("Switches Number", validators=[DataRequired(), NumberRange(min=1)])
+    topology_switches_names = StringField("Switches Names", validators=[DataRequired()])
     topology_hosts_nr = IntegerField("Hosts Number", validators=[DataRequired(), NumberRange(min=1)])
-    topology_creation_text = CKEditorField("Topology Description", validators=[DataRequired()])
+    topology_hosts_names = StringField("Hosts Names", validators=[DataRequired()])
+    topology_creation_text = CKEditorField("Topology Setup", validators=[DataRequired()])
     topology_creator = StringField("Topology Creator")
     submit = SubmitField("Submit")
+
+    def validate_topology_controllers_names(self, topology_controllers_names):
+        # Check if input is a string
+        controllers_names = topology_controllers_names.data
+        controllers_nr = self.topology_controllers_nr.data
+
+
+        if not isinstance(controllers_names, str):
+            raise ValidationError("Input must be a string.")
+        if not isinstance(controllers_nr, int):
+            raise ValidationError("Input must be an integer.")
+
+        # Validate input format using regex
+        pattern = r"^(?=.*[a-zA-Z])(?:[a-zA-Z0-9]+(?:,[a-zA-Z0-9]+)*)$"
+        if not re.match(pattern, controllers_names):
+            raise ValidationError("The provided values are not correct, please try again!")
+
+
+        # Split the input string into a list
+        controller_values = controllers_names.split(',')
+        duplicates_controllers = list(set(controller_values))
+        controller_values.sort()
+        duplicates_controllers.sort()
+        # print(f"DUPLICATES CONTROLLERS IS :{duplicates_controllers}")
+        if duplicates_controllers != controller_values:
+            raise ValidationError("There are duplicates in names, please try again!")
+        if len(controller_values) != controllers_nr:
+            raise ValidationError("You have provided too many or too few controllers names, please try again!")
+
+
+        # print(f">>>>>>>>>>>CONTROLLER VALUES ARE: {controller_values}")
+        return controller_values
+
+
+    def validate_topology_switches_names(self, topology_switches_names):
+        # Check if input is a string
+        switches_names = topology_switches_names.data
+        switches_nr = self.topology_switches_nr.data
+
+
+
+        if not isinstance(switches_names, str):
+            raise ValidationError("Input must be a string.")
+        if not isinstance(switches_nr, int):
+            raise ValidationError("Input must be an integer.")
+
+        # Validate input format using regex
+        pattern = r"^(?=.*[a-zA-Z])(?:[a-zA-Z0-9]+(?:,[a-zA-Z0-9]+)*)$"
+        if not re.match(pattern, switches_names):
+            raise ValidationError("The provided values are not correct, please try again!")
+
+        # Split the input string into a list
+        switches_values = switches_names.split(',')
+        duplicates_switches = list(set(switches_values))
+        switches_values.sort()
+        duplicates_switches.sort()
+        # print(f"DUPLICATES SWITCHES IS :{duplicates_switches}")
+        if duplicates_switches != switches_values:
+            raise ValidationError("There are duplicates in names, please try again!")
+        if len(switches_values) != switches_nr:
+            raise ValidationError("You have provided too many or too few switches names, please try again!")
+
+        # print(f">>>>>>>>>>>SWITCHES VALUES ARE: {switches_values}")
+        return switches_values
+
+
+    def validate_topology_hosts_names(self, topology_hosts_names):
+        # Check if input is a string
+        hosts_names = topology_hosts_names.data
+        hosts_nr = self.topology_hosts_nr.data
+
+
+        if not isinstance(hosts_names, str):
+            raise ValidationError("Input must be a string.")
+        if not isinstance(hosts_nr, int):
+            raise ValidationError("Input must be an integer.")
+
+        # Validate input format using regex
+        pattern = r"^(?=.*[a-zA-Z])(?:[a-zA-Z0-9]+(?:,[a-zA-Z0-9]+)*)$"
+        if not re.match(pattern, hosts_names):
+            raise ValidationError("The provided values are not correct, please try again!")
+
+        # Split the input string into a list
+        hosts_values = hosts_names.split(',')
+        duplicates_hosts = list(set(hosts_values))
+        hosts_values.sort()
+        duplicates_hosts.sort()
+        # print(f"DUPLICATES HOSTS IS :{duplicates_hosts}")
+        if duplicates_hosts != hosts_values:
+            raise ValidationError("There are duplicates in names, please try again!")
+
+        if len(hosts_values) != hosts_nr:
+            raise ValidationError("You have provided too many or too few hosts names, please try again!")
+        # print(f">>>>>>>>>>>HOSTS VALUES ARE: {hosts_values}")
+        return hosts_values
+
+    def validate_controllers_switches_hosts_names(self):
+        controllers_names = self.validate_topology_controllers_names(self.topology_controllers_names)
+        switches_names = self.validate_topology_switches_names(self.topology_switches_names)
+        hosts_names = self.validate_topology_hosts_names(self.topology_hosts_names)
+
+        nodes_names_list = controllers_names + switches_names + hosts_names
+        duplicates_names_list = list(set(nodes_names_list))
+        nodes_names_list.sort()
+        duplicates_names_list.sort()
+        # print(f"############## NODES LIST IS: {nodes_names_list}")
+        # print(f"############## DUPLICATE VALUES ARE: {duplicates_names_list}")
+        if nodes_names_list == duplicates_names_list:
+            return True
+        else:
+            return False
 

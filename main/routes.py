@@ -168,26 +168,37 @@ def add_topology():
         post = Topologies(topology_name=form.topology_name.data, topology_description=form.topology_description.data,
                           topology_creator_id=topology_creator,
                           topology_controllers_nr=form.topology_controllers_nr.data,
+                          topology_controllers_names=form.topology_controllers_names.data,
                           topology_switches_nr=form.topology_switches_nr.data,
+                          topology_switches_names=form.topology_switches_names.data,
                           topology_hosts_nr=form.topology_hosts_nr.data,
+                          topology_hosts_names=form.topology_hosts_names.data,
                           topology_creation_text=form.topology_creation_text.data
                           )
 
-        # Add topology to database
-        db.session.add(post)
-        db.session.commit()
 
-        # Clear the form
-        form.topology_name.data = ''
-        form.topology_description.data = ''
-        form.topology_controllers_nr.raw_data = ['']
-        form.topology_switches_nr.raw_data = ['']
-        form.topology_hosts_nr.raw_data = ['']
-        form.topology_creation_text.data = ''
-        # form.topology_creator.data = ''
 
-        # Return message
-        flash("Topology submitted successfully!")
+        if form.validate_controllers_switches_hosts_names():
+            # Add topology to database
+            db.session.add(post)
+            db.session.commit()
+
+            # Clear the form
+            form.topology_name.data = ''
+            form.topology_description.data = ''
+            form.topology_controllers_nr.raw_data = ['']
+            form.topology_controllers_names.data = ''
+            form.topology_switches_nr.raw_data = ['']
+            form.topology_switches_names.data = ''
+            form.topology_hosts_nr.raw_data = ['']
+            form.topology_hosts_names.data = ''
+            form.topology_creation_text.data = ''
+            # form.topology_creator.data = ''
+
+            # Return message
+            flash("Topology submitted successfully!")
+        else:
+            flash("There are duplicates, please check the names entered for your nodes!")
 
     return render_template("add_topology.html", form=form)
 

@@ -40,15 +40,63 @@
 
         <br/>
 
+        {{ form.topology_controllers_names.label(class="form-label") }}
+
+        {% if form.topology_controllers_names.errors %}
+            {{ form.topology_controllers_names(class="form-control is-invalid") }}
+        <div class="invalid-feedback">
+            {% for error in form.topology_controllers_names.errors %}
+                <span>{{ error }}</span>
+            {% endfor %}
+        </div>
+        {% else %}
+            {{ form.topology_controllers_names(class="form-control") }}
+        {% endif %}
+
+        <br/>
+
+
         {{ form.topology_switches_nr.label(class="form-label") }}
 
         {{ form.topology_switches_nr(class="form-control") }}
 
         <br/>
 
+        {{ form.topology_switches_names.label(class="form-label") }}
+
+
+        {% if form.topology_switches_names.errors %}
+            {{ form.topology_switches_names(class="form-control is-invalid") }}
+        <div class="invalid-feedback">
+            {% for error in form.topology_switches_names.errors %}
+                <span>{{ error }}</span>
+            {% endfor %}
+        </div>
+        {% else %}
+            {{ form.topology_switches_names(class="form-control") }}
+        {% endif %}
+
+
+        <br/>
+
         {{ form.topology_hosts_nr.label(class="form-label") }}
 
         {{ form.topology_hosts_nr(class="form-control") }}
+
+        <br/>
+
+        {{ form.topology_hosts_names.label(class="form-label") }}
+
+        {% if form.topology_hosts_names.errors %}
+            {{ form.topology_hosts_names(class="form-control is-invalid") }}
+        <div class="invalid-feedback">
+            {% for error in form.topology_hosts_names.errors %}
+                <span>{{ error }}</span>
+            {% endfor %}
+        </div>
+        {% else %}
+            {{ form.topology_hosts_names(class="form-control") }}
+        {% endif %}
 
         <br/>
 
