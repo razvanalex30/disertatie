@@ -165,15 +165,26 @@ def add_topology():
 
     if form.validate_on_submit():
         topology_creator = current_user.id
-        post = Topologies(topology_name=form.topology_name.data, topology_description=form.topology_description.data, topology_creator_id=topology_creator)
-        # Clear the form
-        form.topology_name.data = ''
-        form.topology_description.data = ''
-        # form.topology_creator.data = ''
+        post = Topologies(topology_name=form.topology_name.data, topology_description=form.topology_description.data,
+                          topology_creator_id=topology_creator,
+                          topology_controllers_nr=form.topology_controllers_nr.data,
+                          topology_switches_nr=form.topology_switches_nr.data,
+                          topology_hosts_nr=form.topology_hosts_nr.data,
+                          topology_creation_text=form.topology_creation_text.data
+                          )
 
         # Add topology to database
         db.session.add(post)
         db.session.commit()
+
+        # Clear the form
+        form.topology_name.data = ''
+        form.topology_description.data = ''
+        form.topology_controllers_nr.raw_data = ['']
+        form.topology_switches_nr.raw_data = ['']
+        form.topology_hosts_nr.raw_data = ['']
+        form.topology_creation_text.data = ''
+        # form.topology_creator.data = ''
 
         # Return message
         flash("Topology submitted successfully!")

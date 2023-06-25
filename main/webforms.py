@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField, EmailField, BooleanField, ValidationError
-from wtforms.validators import DataRequired, EqualTo, Length, Email, ValidationError
+from wtforms import StringField, SubmitField, PasswordField, EmailField, BooleanField, ValidationError, IntegerField
+from wtforms.validators import DataRequired, EqualTo, Length, Email, ValidationError, NumberRange
 from flask_ckeditor import CKEditorField
 from main.models import Users
 
@@ -41,6 +41,11 @@ class RegisterForm(FlaskForm):
 # Create a Topology Form
 class TopologyForm(FlaskForm):
     topology_name = StringField("Topology Name", validators=[DataRequired()])
-    topology_description = CKEditorField("Topology Description", validators=[DataRequired()])
+    topology_description = CKEditorField("Description", validators=[DataRequired()])
+    topology_controllers_nr = IntegerField("Controllers Number", validators=[DataRequired(), NumberRange(min=0)])
+    topology_switches_nr = IntegerField("Switches Number", validators=[DataRequired(), NumberRange(min=1)])
+    topology_hosts_nr = IntegerField("Hosts Number", validators=[DataRequired(), NumberRange(min=1)])
+    topology_creation_text = CKEditorField("Topology Description", validators=[DataRequired()])
     topology_creator = StringField("Topology Creator")
     submit = SubmitField("Submit")
+

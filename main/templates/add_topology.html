@@ -33,6 +33,31 @@
 
         <br/>
 
+        {{ form.topology_controllers_nr.label(class="form-label") }}
+
+        {{ form.topology_controllers_nr(class="form-control") }}
+
+
+        <br/>
+
+        {{ form.topology_switches_nr.label(class="form-label") }}
+
+        {{ form.topology_switches_nr(class="form-control") }}
+
+        <br/>
+
+        {{ form.topology_hosts_nr.label(class="form-label") }}
+
+        {{ form.topology_hosts_nr(class="form-control") }}
+
+        <br/>
+
+        {{ form.topology_creation_text.label(class="form-label") }}
+
+        {{ form.topology_creation_text(class="form-control", rows="5") }}
+
+        <br/>
+
         {{ form.submit(class="btn btn-primary") }}
 
     </form>
