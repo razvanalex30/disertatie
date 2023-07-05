@@ -107,19 +107,42 @@ def topology(id):
 def edit_topology(id):
     topology = Topologies.query.get_or_404(id)
     form = TopologyForm()
+
     if form.validate_on_submit():
         topology.topology_name = form.topology_name.data
         topology.topology_description = form.topology_description.data
+        topology.topology_controllers_nr = form.topology_controllers_nr.data
+        topology.topology_controllers_names = form.topology_controllers_names.data
+        topology.topology_switches_nr = form.topology_switches_nr.data
+        topology.topology_switches_names = form.topology_switches_names.data
+        topology.topology_hosts_nr = form.topology_hosts_nr.data
+        topology.topology_hosts_names = form.topology_hosts_names.data
+        topology.topology_connections_text = form.topology_connections_text.data
+        topology.topology_setup_text = form.topology_setup_text.data
+
+
         # topology.topology_creator = form.topology_creator.data
         # Update database
-        db.session.add(topology)
-        db.session.commit()
-        flash("Topology updated successfully!")
+        if form.validate_controllers_switches_hosts_names():
+            db.session.add(topology)
+            db.session.commit()
+            flash("Topology updated successfully!")
+        else:
+            flash("There are duplicates, please check the names entered for your nodes!")
+            return render_template("edit_topology.html", form=form)
         return redirect(url_for('topology', id=topology.id))
 
     if current_user.id == topology.topology_creator_id:
         form.topology_name.data = topology.topology_name
         form.topology_description.data = topology.topology_description
+        form.topology_controllers_nr.data = topology.topology_controllers_nr
+        form.topology_controllers_names.data = topology.topology_controllers_names
+        form.topology_switches_nr.data = topology.topology_switches_nr
+        form.topology_switches_names.data = topology.topology_switches_names
+        form.topology_hosts_nr.data = topology.topology_hosts_nr
+        form.topology_hosts_names.data = topology.topology_hosts_names
+        form.topology_connections_text.data = topology.topology_connections_text
+        form.topology_setup_text.data = topology.topology_setup_text
         # form.topology_creator.data = topology.topology_creator
 
         return render_template("edit_topology.html", form=form)
