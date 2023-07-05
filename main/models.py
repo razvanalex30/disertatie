@@ -15,14 +15,15 @@ class Topologies(db.Model):
     topology_switches_names = db.Column(db.String(255))
     topology_hosts_nr = db.Column(db.Integer)
     topology_hosts_names = db.Column(db.String(255))
-    topology_creation_text = db.Column(db.Text)
+    topology_connections_text = db.Column(db.String(255))
+    topology_setup_text = db.Column(db.String(255))
     #topology_creator = db.Column(db.String(255))
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
     # Foreign key to link users (refer to primary key)
     topology_creator_id = db.Column(db.Integer, db.ForeignKey("users.id"))
 
     def __repr__(self):
-        return f"Topologies('{self.topology_name}', '{self.topology_creator_id}', '{self.topology_controllers_nr}', '{self.topology_switches_nr}')"
+        return f"Topologies('{self.topology_name}', '{self.topology_creator_id}', '{self.topology_connections_text}', '{self.topology_setup_text}')"
 
 # Create Users Model
 class Users(db.Model, UserMixin):

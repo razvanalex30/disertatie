@@ -173,7 +173,8 @@ def add_topology():
                           topology_switches_names=form.topology_switches_names.data,
                           topology_hosts_nr=form.topology_hosts_nr.data,
                           topology_hosts_names=form.topology_hosts_names.data,
-                          topology_creation_text=form.topology_creation_text.data
+                          topology_connections_text=form.topology_connections_text.data,
+                          topology_setup_text=form.topology_setup_text.data
                           )
 
 
@@ -192,7 +193,8 @@ def add_topology():
             form.topology_switches_names.data = ''
             form.topology_hosts_nr.raw_data = ['']
             form.topology_hosts_names.data = ''
-            form.topology_creation_text.data = ''
+            form.topology_connections_text.data = ''
+            form.topology_setup_text.data = ''
             # form.topology_creator.data = ''
 
             # Return message
