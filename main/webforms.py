@@ -45,6 +45,8 @@ class TopologyForm(FlaskForm):
     topology_description = CKEditorField("Description", validators=[DataRequired()])
     topology_controllers_nr = IntegerField("Controllers Number", validators=[DataRequired(), NumberRange(min=0)])
     topology_controllers_names = StringField("Controllers Names", validators=[DataRequired()])
+    topology_routers_nr = IntegerField("Routers Number", validators=[DataRequired(), NumberRange(min=0)])
+    topology_routers_names = StringField("Routers Names", validators=[DataRequired()])
     topology_switches_nr = IntegerField("Switches Number", validators=[DataRequired(), NumberRange(min=1)])
     topology_switches_names = StringField("Switches Names", validators=[DataRequired()])
     topology_hosts_nr = IntegerField("Hosts Number", validators=[DataRequired(), NumberRange(min=1)])
@@ -85,6 +87,43 @@ class TopologyForm(FlaskForm):
 
         # print(f">>>>>>>>>>>CONTROLLER VALUES ARE: {controller_values}")
         return controller_values
+
+
+
+    def validate_topology_routers_names(self, topology_routers_names):
+        # Check if input is a string
+        routers_names = topology_routers_names.data
+        routers_nr = self.topology_routers_nr.data
+
+
+        if not isinstance(routers_names, str):
+            raise ValidationError("Input must be a string.")
+        if not isinstance(routers_nr, int):
+            raise ValidationError("Input must be an integer.")
+
+        # Validate input format using regex
+        pattern = r"^(?=.*[a-zA-Z])(?:[a-zA-Z0-9]+(?:,[a-zA-Z0-9]+)*)$"
+        if not re.match(pattern, routers_names):
+            raise ValidationError("The provided values are not correct, please try again!")
+
+
+        # Split the input string into a list
+        router_values = routers_names.split(',')
+        duplicates_routers = list(set(router_values))
+        router_values.sort()
+        duplicates_routers.sort()
+        # print(f"DUPLICATES ROUTERS IS :{duplicates_routers}")
+        if duplicates_routers != router_values:
+            raise ValidationError("There are duplicates in names, please try again!")
+        if len(router_values) != routers_nr:
+            raise ValidationError("You have provided too many or too few controllers names, please try again!")
+
+
+        # print(f">>>>>>>>>>>ROUTER VALUES ARE: {router_values}")
+        return router_values
+
+
+
 
 
     def validate_topology_switches_names(self, topology_switches_names):
@@ -149,12 +188,13 @@ class TopologyForm(FlaskForm):
         # print(f">>>>>>>>>>>HOSTS VALUES ARE: {hosts_values}")
         return hosts_values
 
-    def validate_controllers_switches_hosts_names(self):
+    def validate_controllers_routers_switches_hosts_names(self):
         controllers_names = self.validate_topology_controllers_names(self.topology_controllers_names)
+        routers_names = self.validate_topology_routers_names(self.topology_routers_names)
         switches_names = self.validate_topology_switches_names(self.topology_switches_names)
         hosts_names = self.validate_topology_hosts_names(self.topology_hosts_names)
 
-        nodes_names_list = controllers_names + switches_names + hosts_names
+        nodes_names_list = controllers_names + routers_names + switches_names + hosts_names
         duplicates_names_list = list(set(nodes_names_list))
         nodes_names_list.sort()
         duplicates_names_list.sort()
@@ -165,3 +205,10 @@ class TopologyForm(FlaskForm):
         else:
             return False
 
+    # def validate_topology_connections_text(self):
+    #     pass
+    #
+    # def validate_topology_setup_text(self):
+    #     pass
+    #
+    #

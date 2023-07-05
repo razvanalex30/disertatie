@@ -113,6 +113,8 @@ def edit_topology(id):
         topology.topology_description = form.topology_description.data
         topology.topology_controllers_nr = form.topology_controllers_nr.data
         topology.topology_controllers_names = form.topology_controllers_names.data
+        topology.topology_routers_nr = form.topology_routers_nr.data
+        topology.topology_routers_names = form.topology_routers_names.data
         topology.topology_switches_nr = form.topology_switches_nr.data
         topology.topology_switches_names = form.topology_switches_names.data
         topology.topology_hosts_nr = form.topology_hosts_nr.data
@@ -123,7 +125,7 @@ def edit_topology(id):
 
         # topology.topology_creator = form.topology_creator.data
         # Update database
-        if form.validate_controllers_switches_hosts_names():
+        if form.validate_controllers_routers_switches_hosts_names():
             db.session.add(topology)
             db.session.commit()
             flash("Topology updated successfully!")
@@ -137,6 +139,8 @@ def edit_topology(id):
         form.topology_description.data = topology.topology_description
         form.topology_controllers_nr.data = topology.topology_controllers_nr
         form.topology_controllers_names.data = topology.topology_controllers_names
+        form.topology_routers_nr.data = topology.topology_routers_nr
+        form.topology_routers_names.data = topology.topology_routers_names
         form.topology_switches_nr.data = topology.topology_switches_nr
         form.topology_switches_names.data = topology.topology_switches_names
         form.topology_hosts_nr.data = topology.topology_hosts_nr
@@ -192,6 +196,8 @@ def add_topology():
                           topology_creator_id=topology_creator,
                           topology_controllers_nr=form.topology_controllers_nr.data,
                           topology_controllers_names=form.topology_controllers_names.data,
+                          topology_routers_nr=form.topology_routers_nr.data,
+                          topology_routers_names=form.topology_routers_names.data,
                           topology_switches_nr=form.topology_switches_nr.data,
                           topology_switches_names=form.topology_switches_names.data,
                           topology_hosts_nr=form.topology_hosts_nr.data,
@@ -202,7 +208,7 @@ def add_topology():
 
 
 
-        if form.validate_controllers_switches_hosts_names():
+        if form.validate_controllers_routers_switches_hosts_names():
             # Add topology to database
             db.session.add(post)
             db.session.commit()
@@ -212,6 +218,8 @@ def add_topology():
             form.topology_description.data = ''
             form.topology_controllers_nr.raw_data = ['']
             form.topology_controllers_names.data = ''
+            form.topology_routers_nr.raw_data = ['']
+            form.topology_routers_names.data = ''
             form.topology_switches_nr.raw_data = ['']
             form.topology_switches_names.data = ''
             form.topology_hosts_nr.raw_data = ['']

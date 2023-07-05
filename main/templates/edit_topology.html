@@ -53,6 +53,30 @@
         <br/>
 
 
+
+         {{ form.topology_routers_nr.label(class="form-label") }}
+
+        {{ form.topology_routers_nr(class="form-control") }}
+
+
+        <br/>
+
+        {{ form.topology_routers_names.label(class="form-label") }}
+
+        {% if form.topology_routers_names.errors %}
+            {{ form.topology_routers_names(class="form-control is-invalid") }}
+        <div class="invalid-feedback">
+            {% for error in form.topology_routers_names.errors %}
+                <span>{{ error }}</span>
+            {% endfor %}
+        </div>
+        {% else %}
+            {{ form.topology_routers_names(class="form-control") }}
+        {% endif %}
+
+        <br/>
+
+
         {{ form.topology_switches_nr.label(class="form-label") }}
 
         {{ form.topology_switches_nr(class="form-control") }}

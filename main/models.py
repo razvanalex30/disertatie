@@ -11,6 +11,8 @@ class Topologies(db.Model):
     topology_description = db.Column(db.Text)
     topology_controllers_nr = db.Column(db.Integer)
     topology_controllers_names = db.Column(db.String(255))
+    topology_routers_nr = db.Column(db.Integer)
+    topology_routers_names = db.Column(db.String(255))
     topology_switches_nr = db.Column(db.Integer)
     topology_switches_names = db.Column(db.String(255))
     topology_hosts_nr = db.Column(db.Integer)
