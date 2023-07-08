@@ -25,7 +25,7 @@ class Topologies(db.Model):
     topology_creator_id = db.Column(db.Integer, db.ForeignKey("users.id"))
 
     def __repr__(self):
-        return f"Topologies('{self.topology_name}', '{self.topology_creator_id}', '{self.topology_connections_text}', '{self.topology_setup_text}')"
+        return f"Topologies('{self.topology_name}', 'CONTROLLERS NAMES: {self.topology_controllers_names}', 'ROUTERS NAMES: {self.topology_routers_names}')"
 
 # Create Users Model
 class Users(db.Model, UserMixin):
