@@ -90,8 +90,9 @@ def search():
 @app.route("/topologies")
 @login_required
 def topologies():
-    # Grab all the topologies from the database
-    topologies = Topologies.query.order_by(Topologies.date_created)
+    topology_creator = current_user.id
+    # Grab all the topologies from the database for the current user
+    topologies = Topologies.query.filter_by(topology_creator_id=topology_creator).order_by(Topologies.date_created.desc())
 
     return render_template("topologies.html", topologies=topologies)
 
