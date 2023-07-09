@@ -190,9 +190,17 @@ def delete_topology(id):
 def add_topology():
     form = TopologyForm()
 
-    if form.validate_on_submit():
+    if form.validate():
         topology_creator = current_user.id
-        post = Topologies(topology_name=form.topology_name.data, topology_description=form.topology_description.data,
+
+        if form.topology_controllers_nr.data == 0:
+            form.topology_controllers_names.data = "No Controllers"
+        if form.topology_routers_nr.data == 0:
+            form.topology_routers_names.data = "No Routers"
+
+
+        post = Topologies(topology_name=form.topology_name.data,
+                          topology_description=form.topology_description.data,
                           topology_creator_id=topology_creator,
                           topology_controllers_nr=form.topology_controllers_nr.data,
                           topology_controllers_names=form.topology_controllers_names.data,
@@ -208,32 +216,33 @@ def add_topology():
 
 
 
-        if form.validate_controllers_routers_switches_hosts_names():
-            # Add topology to database
-            db.session.add(post)
-            db.session.commit()
+        # Add topology to database
+        db.session.add(post)
+        db.session.commit()
 
-            # Clear the form
-            form.topology_name.data = ''
-            form.topology_description.data = ''
-            form.topology_controllers_nr.raw_data = ['']
-            form.topology_controllers_names.data = ''
-            form.topology_routers_nr.raw_data = ['']
-            form.topology_routers_names.data = ''
-            form.topology_switches_nr.raw_data = ['']
-            form.topology_switches_names.data = ''
-            form.topology_hosts_nr.raw_data = ['']
-            form.topology_hosts_names.data = ''
-            form.topology_connections_text.data = ''
-            form.topology_setup_text.data = ''
-            # form.topology_creator.data = ''
+        # Clear the form
+        form.topology_name.data = ''
+        form.topology_description.data = ''
+        form.topology_controllers_nr.raw_data = ['']
+        form.topology_controllers_names.data = ''
+        form.topology_routers_nr.raw_data = ['']
+        form.topology_routers_names.data = ''
+        form.topology_switches_nr.raw_data = ['']
+        form.topology_switches_names.data = ''
+        form.topology_hosts_nr.raw_data = ['']
+        form.topology_hosts_names.data = ''
+        form.topology_connections_text.data = ''
+        form.topology_setup_text.data = ''
+        # form.topology_creator.data = ''
 
-            # Return message
-            flash("Topology submitted successfully!")
-        else:
-            flash("There are duplicates, please check the names entered for your nodes!")
+        topologies = Topologies.query.order_by(Topologies.date_created)
+        # Return message
+        flash("Topology submitted successfully!")
+        return render_template("topologies.html", topologies=topologies)
 
-    return render_template("add_topology.html", form=form)
+    else:
+        return render_template("add_topology.html", form=form)
+
 
 
 
