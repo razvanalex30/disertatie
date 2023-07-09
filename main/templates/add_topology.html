@@ -24,7 +24,16 @@
 
         {{ form.topology_name.label(class="form-label") }}
 
-        {{ form.topology_name(class="form-control") }}
+        {% if form.topology_name.errors %}
+            {{ form.topology_name(class="form-control is-invalid") }}
+        <div class="invalid-feedback">
+            {% for error in form.topology_name.errors %}
+                <span>{{ error }}</span>
+            {% endfor %}
+        </div>
+        {% else %}
+            {{ form.topology_name(class="form-control") }}
+        {% endif %}
         <br/>
 
         {{ form.topology_description.label(class="form-label") }}

@@ -5,7 +5,8 @@ from wtforms import StringField, SubmitField, PasswordField, EmailField, Boolean
 from wtforms.validators import DataRequired, EqualTo, Length, Email, ValidationError, NumberRange, Optional, InputRequired
 from flask_ckeditor import CKEditorField
 import re
-from main.models import Users
+from main.models import Users, Topologies
+
 
 # Create Search Form
 class SearchForm(FlaskForm):
@@ -229,6 +230,13 @@ class TopologyForm(FlaskForm):
     #         return True
     #     else:
     #         return False
+
+
+    def validate_topology_name(self, field):
+        topology = Topologies.query.filter_by(topology_name=field.data).first()
+        if topology:
+            raise ValidationError("Error - Topology name already used! Please use another name!")
+
 
     def validate_topology_controllers_names(self, field):
         if self.topology_controllers_nr.data is None:
