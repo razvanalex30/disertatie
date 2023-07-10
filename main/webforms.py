@@ -5,7 +5,12 @@ from wtforms import StringField, SubmitField, PasswordField, EmailField, Boolean
 from wtforms.validators import DataRequired, EqualTo, Length, Email, ValidationError, NumberRange, Optional, InputRequired
 from flask_ckeditor import CKEditorField
 import re
+from bs4 import BeautifulSoup
+from collections import Counter
 from main.models import Users, Topologies
+
+
+
 
 
 # Create Search Form
@@ -337,20 +342,74 @@ class TopologyForm(FlaskForm):
             if len(names) != len(set(names)):
                 raise ValidationError("Hosts Names should not contain duplicates.")
 
+
+
+    def validate_connection_text(self, **kwargs):
+        devices_names_list = kwargs.get("all_names")
+        controllers_names_list = kwargs.get("controllers_list")
+        routers_names_list = kwargs.get("routers_list")
+        switches_names_list = kwargs.get("switches_list")
+        hosts_names_list = kwargs.get("hosts_list")
+
+
+
+
+
     def validate(self, extra_validators=None):
         if not super().validate():
             return False
 
+        # List which will contain all devices names
         all_names = []
-        for field_name in ['topology_controllers_names', 'topology_routers_names', 'topology_switches_names', 'topology_hosts_names']:
+
+        # Get switches and hosts names -> they are mandatory
+        switches_names_list = []
+        hosts_names_list = []
+        for field_name in ['topology_switches_names', 'topology_hosts_names']:
             field = getattr(self, field_name)
             names = field.data.split(",")
             names = [name.strip() for name in names if name.strip()]
             all_names.extend(names)
+            if "switches" in field_name:
+                switches_names_list.extend(names)
+            else:
+                hosts_names_list.extend(names)
+
+        controllers_names_list = []
+        # Get Controllers names -> they are optional, if the controllers nr. is 0, we ignore this field
+        if self.topology_controllers_nr.data > 0:
+            names = self.topology_controllers_names.data.split(",")
+            names = [name.strip() for name in names if name.strip()]
+            all_names.extend(names)
+            controllers_names_list.extend(names)
+
+        routers_names_list = []
+        # Get Routers names -> they are optional, if the routers nr. is 0, we ignore this field
+        if self.topology_routers_nr.data > 0:
+            names = self.topology_routers_names.data.split(",")
+            names = [name.strip() for name in names if name.strip()]
+            all_names.extend(names)
+            routers_names_list.extend(names)
+
+        # print(f">>>>>DEVICES NAMES: {all_names}")
 
         if len(all_names) != len(set(all_names)):
-            flash("Names in Controllers Names, Routers Names, Switches Names, and Hosts Names should not contain duplicates.")
+            duplicates = Counter(all_names)
+            duplicates_list = list([elem for elem in duplicates if duplicates[elem] > 1])
+            flash(f"There are duplicates in devices names: {duplicates_list}")
             return False
+
+
+        soup = BeautifulSoup(self.topology_connections_text.data, 'html.parser')
+        plain_text = soup.get_text(separator=' ')
+        plain_text = soup.get_text(separator='\n')
+        lines = plain_text.split('\n')
+        non_empty_lines = [line.strip() for line in lines if line.strip()]
+        cleaned_lines = [''.join(line.split()) for line in non_empty_lines]
+        cleaned_text = '\n'.join(cleaned_lines)
+        print(f">>>>> CONNECTIONS TEXT: {cleaned_text}")
+
+
         return True
 
     # def validate_topology_connections_text(self):
