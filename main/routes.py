@@ -6,6 +6,7 @@ from flask_login import login_user, login_required, logout_user, current_user
 from main.models import Users, Topologies
 from main.webforms import RegisterForm, LoginForm, PasswordForm, TopologyForm, SearchForm
 from main import login_manager
+from bs4 import BeautifulSoup
 
 
 
@@ -109,7 +110,7 @@ def edit_topology(id):
     topology = Topologies.query.get_or_404(id)
     form = TopologyForm()
 
-    if form.validate_on_submit():
+    if form.validate():
         topology.topology_name = form.topology_name.data
         topology.topology_description = form.topology_description.data
         topology.topology_controllers_nr = form.topology_controllers_nr.data
@@ -199,6 +200,14 @@ def add_topology():
         if form.topology_routers_nr.data == 0:
             form.topology_routers_names.data = "No Routers"
 
+        soup = BeautifulSoup(form.topology_connections_text.data, 'html.parser')
+        plain_text = soup.get_text(separator='\n')
+        lines = plain_text.split('\n')
+        non_empty_lines = [line.strip() for line in lines if line.strip()]
+        cleaned_lines = [''.join(line.split()) for line in non_empty_lines]
+        cleaned_text = '\n'.join(cleaned_lines)
+        form.topology_connections_text.data = cleaned_text
+
 
         post = Topologies(topology_name=form.topology_name.data,
                           topology_description=form.topology_description.data,
@@ -236,10 +245,10 @@ def add_topology():
         form.topology_setup_text.data = ''
         # form.topology_creator.data = ''
 
-        topologies = Topologies.query.order_by(Topologies.date_created)
         # Return message
         flash("Topology submitted successfully!")
-        return render_template("topologies.html", topologies=topologies)
+        return redirect(url_for('topologies'))
+        # return render_template("topologies.html", topologies=topologies)
 
     else:
         return render_template("add_topology.html", form=form)

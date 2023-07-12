@@ -401,7 +401,6 @@ class TopologyForm(FlaskForm):
 
 
         soup = BeautifulSoup(self.topology_connections_text.data, 'html.parser')
-        plain_text = soup.get_text(separator=' ')
         plain_text = soup.get_text(separator='\n')
         lines = plain_text.split('\n')
         non_empty_lines = [line.strip() for line in lines if line.strip()]
