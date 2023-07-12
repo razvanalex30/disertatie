@@ -108,55 +108,37 @@ def topology(id):
 @login_required
 def edit_topology(id):
     topology = Topologies.query.get_or_404(id)
-    form = TopologyForm()
-
-    if form.validate():
-        topology.topology_name = form.topology_name.data
-        topology.topology_description = form.topology_description.data
-        topology.topology_controllers_nr = form.topology_controllers_nr.data
-        topology.topology_controllers_names = form.topology_controllers_names.data
-        topology.topology_routers_nr = form.topology_routers_nr.data
-        topology.topology_routers_names = form.topology_routers_names.data
-        topology.topology_switches_nr = form.topology_switches_nr.data
-        topology.topology_switches_names = form.topology_switches_names.data
-        topology.topology_hosts_nr = form.topology_hosts_nr.data
-        topology.topology_hosts_names = form.topology_hosts_names.data
-        topology.topology_connections_text = form.topology_connections_text.data
-        topology.topology_setup_text = form.topology_setup_text.data
-
-
-        # topology.topology_creator = form.topology_creator.data
-        # Update database
-        if form.validate_controllers_routers_switches_hosts_names():
-            db.session.add(topology)
-            db.session.commit()
-            flash("Topology updated successfully!")
-        else:
-            flash("There are duplicates, please check the names entered for your nodes!")
-            return render_template("edit_topology.html", form=form)
-        return redirect(url_for('topology', id=topology.id))
+    form = TopologyForm(obj=topology)
+    print(f">>>>>>> NAME CHANGED{form.topology_name_changed}")
 
     if current_user.id == topology.topology_creator_id:
-        form.topology_name.data = topology.topology_name
-        form.topology_description.data = topology.topology_description
-        form.topology_controllers_nr.data = topology.topology_controllers_nr
-        form.topology_controllers_names.data = topology.topology_controllers_names
-        form.topology_routers_nr.data = topology.topology_routers_nr
-        form.topology_routers_names.data = topology.topology_routers_names
-        form.topology_switches_nr.data = topology.topology_switches_nr
-        form.topology_switches_names.data = topology.topology_switches_names
-        form.topology_hosts_nr.data = topology.topology_hosts_nr
-        form.topology_hosts_names.data = topology.topology_hosts_names
-        form.topology_connections_text.data = topology.topology_connections_text
-        form.topology_setup_text.data = topology.topology_setup_text
-        # form.topology_creator.data = topology.topology_creator
+            if form.validate():
+                topology.topology_name = form.topology_name.data
+                topology.topology_description = form.topology_description.data
+                topology.topology_controllers_nr = form.topology_controllers_nr.data
+                topology.topology_controllers_names = form.topology_controllers_names.data
+                topology.topology_routers_nr = form.topology_routers_nr.data
+                topology.topology_routers_names = form.topology_routers_names.data
+                topology.topology_switches_nr = form.topology_switches_nr.data
+                topology.topology_switches_names = form.topology_switches_names.data
+                topology.topology_hosts_nr = form.topology_hosts_nr.data
+                topology.topology_hosts_names = form.topology_hosts_names.data
+                topology.topology_connections_text = form.topology_connections_text.data
+                topology.topology_setup_text = form.topology_setup_text.data
+                db.session.add(topology)
+                db.session.commit()
+                flash("Topology updated successfully!")
+                return redirect(url_for('topologies'))
+            else:
+                flash("Form validation failed. Please check the errors below.")
+                for field, errors in form.errors.items():
+                    flash(f"{field}: {', '.join(errors)}")
 
-        return render_template("edit_topology.html", form=form)
-
+            return render_template("edit_topology.html", form=form)
     else:
         flash("You are not authorized to edit this post!")
-        topologies = Topologies.query.order_by(Topologies.date_created)
-
+        topologies = Topologies.query.filter_by(topology_creator_id=current_user.id).order_by(
+            Topologies.date_created.desc())
         return render_template("topologies.html", topologies=topologies)
 
 @app.route("/topologies/delete/<int:id>")
@@ -191,6 +173,7 @@ def delete_topology(id):
 @login_required
 def add_topology():
     form = TopologyForm()
+    form.topology_name_changed = True
 
     if form.validate():
         topology_creator = current_user.id

@@ -64,11 +64,19 @@ class TopologyForm(FlaskForm):
     topology_creator = StringField("Topology Creator")
     submit = SubmitField("Submit")
 
-    def __init__(self, *args, **kwargs):
-        super(TopologyForm, self).__init__(*args, **kwargs)
-        self.topology_controllers_names.default = "No Controllers"
+    def __init__(self, obj=None, *args, **kwargs):
+        super(TopologyForm, self).__init__(obj=obj, *args, **kwargs)
+        self.topology_name_changed = False
+        self.edit_topology = obj is not None
+        self.meta.obj = obj  # Store the object in the form meta
+        if request.path == "/add_topology":
+            self.topology_controllers_names.default = "No Controllers"
+            self.topology_routers_names.default = "No Routers"
+        else:
+            self.topology_controllers_names.default = obj.topology_controllers_names or "No Controllers"
+            self.topology_routers_names.default = obj.topology_routers_names or "No Routers"
+
         self.topology_controllers_names.process(request.form)
-        self.topology_routers_names.default = "No Routers"
         self.topology_routers_names.process(request.form)
 
     # def validate_topology_controllers_names(self, topology_controllers_names):
@@ -238,10 +246,35 @@ class TopologyForm(FlaskForm):
 
 
     def validate_topology_name(self, field):
-        topology = Topologies.query.filter_by(topology_name=field.data).first()
-        if topology:
-            raise ValidationError("Error - Topology name already used! Please use another name!")
+        # if not self.topology_name_changed:
+        #     return
+        if self._is_add_topology_route():
+            topology = Topologies.query.filter_by(topology_name=field.data).first()
+            if topology:
+                raise ValidationError("Error - Topology name already used! Please use another name!")
 
+
+        elif self._is_edit_topology_route():
+
+            if field.data != self.topology_name.default and Topologies.query.filter(
+
+                    Topologies.topology_name == field.data,
+
+                    Topologies.id != self.meta.obj.id if self.meta.obj else None
+
+            ).first():
+                raise ValidationError("Error - Topology name already used! Please use another name.")
+
+    def _is_add_topology_route(self):
+        return request.path == "/add_topology"
+
+    def _is_edit_topology_route(self):
+        return request.path.startswith("/topologies/edit/")
+
+    def populate_obj(self, obj):
+        super(TopologyForm, self).populate_obj(obj)
+        if self.topology_name.data != obj.topology_name:
+            self.topology_name.changed = True
 
     def validate_topology_controllers_names(self, field):
         if self.topology_controllers_nr.data is None:
@@ -344,12 +377,12 @@ class TopologyForm(FlaskForm):
 
 
 
-    def validate_connection_text(self, **kwargs):
-        devices_names_list = kwargs.get("all_names")
-        controllers_names_list = kwargs.get("controllers_list")
-        routers_names_list = kwargs.get("routers_list")
-        switches_names_list = kwargs.get("switches_list")
-        hosts_names_list = kwargs.get("hosts_list")
+    # def validate_connection_text(self, **kwargs):
+    #     devices_names_list = kwargs.get("all_names")
+    #     controllers_names_list = kwargs.get("controllers_list")
+    #     routers_names_list = kwargs.get("routers_list")
+    #     switches_names_list = kwargs.get("switches_list")
+    #     hosts_names_list = kwargs.get("hosts_list")
 
 
 
