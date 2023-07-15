@@ -79,170 +79,7 @@ class TopologyForm(FlaskForm):
         self.topology_controllers_names.process(request.form)
         self.topology_routers_names.process(request.form)
 
-    # def validate_topology_controllers_names(self, topology_controllers_names):
-    #     # Check if input is a string
-    #     controllers_names = topology_controllers_names.data
-    #     controllers_nr = self.topology_controllers_nr.data
-    #
-    #
-    #     if not isinstance(controllers_names, str):
-    #         raise ValidationError("Input must be a string.")
-    #     if not isinstance(controllers_nr, int):
-    #         raise ValidationError("Input must be an integer.")
-    #
-    #     if controllers_nr == 0 and controllers_names:
-    #         raise ValidationError("You have entered 0 controllers, please leave this field empty!")
-    #
-    #     # Validate input format using regex
-    #     if controllers_nr > 0:
-    #         pattern = r"^(?=.*[a-zA-Z])(?:[a-zA-Z0-9]+(?:,[a-zA-Z0-9]+)*)$"
-    #         if not re.match(pattern, controllers_names):
-    #             raise ValidationError("The provided values are not correct, please try again!")
-    #
-    #
-    #     # Split the input string into a list
-    #     controller_values = controllers_names.split(',')
-    #     duplicates_controllers = list(set(controller_values))
-    #     controller_values.sort()
-    #     duplicates_controllers.sort()
-    #     # print(f"DUPLICATES CONTROLLERS IS :{duplicates_controllers}")
-    #     if duplicates_controllers != controller_values:
-    #         raise ValidationError("There are duplicates in names, please try again!")
-    #     if len(controller_values) != controllers_nr and controllers_nr > 0:
-    #         raise ValidationError("You have provided too many or too few controllers names, please try again!")
-    #
-    #
-    #     # print(f">>>>>>>>>>>CONTROLLER VALUES ARE: {controller_values}")
-    #     return controller_values
-    # #
-    # #
-    #
-    # def validate_topology_routers_names(self, topology_routers_names):
-    #     # Check if input is a string
-    #     routers_names = topology_routers_names.data
-    #     routers_nr = self.topology_routers_nr.data
-    #
-    #     if not isinstance(routers_names, str):
-    #         raise ValidationError("Input must be a string.")
-    #     if not isinstance(routers_nr, int):
-    #         raise ValidationError("Input must be an integer.")
-    #
-    #     routers_names = routers_names.replace(" ", "")
-    #
-    #     if routers_nr == 0 and routers_names:
-    #         print(f"SUNT IN IF SI VAL ESTE: PLM{routers_names}MUE")
-    #         raise ValidationError("You have entered 0 routers, please leave this field empty!")
-    #
-    #     if routers_nr > 0:
-    #         print("####SUNT IN IFFFFF")
-    #         raise ValidationError("Value is empty but nr is >0!")
-    #
-    #     # Validate input format using regex
-    #     if routers_nr > 0:
-    #         pattern = r"^(?=.*[a-zA-Z])(?:[a-zA-Z0-9]+(?:,[a-zA-Z0-9]+)*)$"
-    #         if not re.match(pattern, routers_names):
-    #             raise ValidationError("The provided values are not correct, please try again!")
-    #
-    #
-    #     # Split the input string into a list
-    #     router_values = routers_names.split(',')
-    #     duplicates_routers = list(set(router_values))
-    #     router_values.sort()
-    #     duplicates_routers.sort()
-    #     # print(f"DUPLICATES ROUTERS IS :{duplicates_routers}")
-    #     if duplicates_routers != router_values:
-    #         raise ValidationError("There are duplicates in names, please try again!")
-    #     if len(router_values) != routers_nr and routers_nr > 0:
-    #         raise ValidationError("You have provided too many or too few controllers names, please try again!")
-    #
-    #
-    #     # print(f">>>>>>>>>>>ROUTER VALUES ARE: {router_values}")
-    #     return router_values
-    #
-    #
-    #
-    #
-    # def validate_topology_switches_names(self, topology_switches_names):
-    #     # Check if input is a string
-    #     switches_names = topology_switches_names.data
-    #     switches_nr = self.topology_switches_nr.data
-    #
-    #
-    #
-    #     if not isinstance(switches_names, str):
-    #         raise ValidationError("Input must be a string.")
-    #     if not isinstance(switches_nr, int):
-    #         raise ValidationError("Input must be an integer.")
-    #
-    #     # Validate input format using regex
-    #     pattern = r"^(?=.*[a-zA-Z])(?:[a-zA-Z0-9]+(?:,[a-zA-Z0-9]+)*)$"
-    #     if not re.match(pattern, switches_names):
-    #         raise ValidationError("The provided values are not correct, please try again!")
-    #
-    #     # Split the input string into a list
-    #     switches_values = switches_names.split(',')
-    #     duplicates_switches = list(set(switches_values))
-    #     switches_values.sort()
-    #     duplicates_switches.sort()
-    #     # print(f"DUPLICATES SWITCHES IS :{duplicates_switches}")
-    #     if duplicates_switches != switches_values:
-    #         raise ValidationError("There are duplicates in names, please try again!")
-    #     if len(switches_values) != switches_nr:
-    #         raise ValidationError("You have provided too many or too few switches names, please try again!")
-    #
-    #     # print(f">>>>>>>>>>>SWITCHES VALUES ARE: {switches_values}")
-    #     return switches_values
-    #
-    #
-    # def validate_topology_hosts_names(self, topology_hosts_names):
-    #     # Check if input is a string
-    #     hosts_names = topology_hosts_names.data
-    #     hosts_nr = self.topology_hosts_nr.data
-    #
-    #
-    #     if not isinstance(hosts_names, str):
-    #         raise ValidationError("Input must be a string.")
-    #     if not isinstance(hosts_nr, int):
-    #         raise ValidationError("Input must be an integer.")
-    #
-    #     # Validate input format using regex
-    #     pattern = r"^(?=.*[a-zA-Z])(?:[a-zA-Z0-9]+(?:,[a-zA-Z0-9]+)*)$"
-    #     if not re.match(pattern, hosts_names):
-    #         raise ValidationError("The provided values are not correct, please try again!")
-    #
-    #     # Split the input string into a list
-    #     hosts_values = hosts_names.split(',')
-    #     duplicates_hosts = list(set(hosts_values))
-    #     hosts_values.sort()
-    #     duplicates_hosts.sort()
-    #     # print(f"DUPLICATES HOSTS IS :{duplicates_hosts}")
-    #     if duplicates_hosts != hosts_values:
-    #         raise ValidationError("There are duplicates in names, please try again!")
-    #
-    #     if len(hosts_values) != hosts_nr:
-    #         raise ValidationError("You have provided too many or too few hosts names, please try again!")
-    #     # print(f">>>>>>>>>>>HOSTS VALUES ARE: {hosts_values}")
-    #     return hosts_values
-    #
-    # def validate_controllers_routers_switches_hosts_names(self):
-    #     controllers_names = self.validate_topology_controllers_names(self.topology_controllers_names)
-    #     # routers_names = self.validate_topology_routers_names(self.topology_routers_names, check=False)
-    #     switches_names = self.validate_topology_switches_names(self.topology_switches_names)
-    #     hosts_names = self.validate_topology_hosts_names(self.topology_hosts_names)
-    #
-    #     controllers_names = ['No Controllers'] if controllers_names == [''] else controllers_names
-    #     # routers_names = ['No Routers'] if routers_names == [''] else routers_names
-    #
-    #     nodes_names_list = controllers_names + switches_names + hosts_names
-    #     duplicates_names_list = list(set(nodes_names_list))
-    #     nodes_names_list.sort()
-    #     duplicates_names_list.sort()
-    #     # print(f"############## NODES LIST IS: {nodes_names_list}")
-    #     # print(f"############## DUPLICATE VALUES ARE: {duplicates_names_list}")
-    #     if nodes_names_list == duplicates_names_list:
-    #         return True
-    #     else:
-    #         return False
+
 
 
     def validate_topology_name(self, field):
@@ -300,8 +137,7 @@ class TopologyForm(FlaskForm):
                 raise ValidationError(f"Number of Controllers Names should be {self.topology_controllers_nr.data}.")
             if len(names) != len(set(names)):
                 raise ValidationError("Controllers Names should not contain duplicates.")
-        else:
-            pass
+
             # if self.topology_controllers_nr.data == 0:
                 # raise War("Controllers Names field is required when Controllers Number is greater than 0.")
 
@@ -331,8 +167,7 @@ class TopologyForm(FlaskForm):
                 raise ValidationError(f"Number of Routers Names should be {self.topology_routers_nr.data}.")
             if len(names) != len(set(names)):
                 raise ValidationError("Routers Names should not contain duplicates.")
-        else:
-            pass
+
             # if self.topology_routers_nr.data > 0:
             #     raise ValidationError("Routers Names field is required when Controllers Number is greater than 0.")
 
@@ -377,12 +212,94 @@ class TopologyForm(FlaskForm):
 
 
 
-    # def validate_connection_text(self, **kwargs):
-    #     devices_names_list = kwargs.get("all_names")
-    #     controllers_names_list = kwargs.get("controllers_list")
-    #     routers_names_list = kwargs.get("routers_list")
-    #     switches_names_list = kwargs.get("switches_list")
-    #     hosts_names_list = kwargs.get("hosts_list")
+    def validate_connection_text(self, **kwargs):
+        valid_lines = []
+        invalid_lines = []
+
+
+        connections_text = kwargs.get("cleaned_text")
+        devices_names_list = kwargs.get("all_names")
+        controllers_names_list = kwargs.get("controllers_list")
+        routers_names_list = kwargs.get("routers_list")
+        switches_names_list = kwargs.get("switches_list")
+        hosts_names_list = kwargs.get("hosts_list")
+
+        # Track unused devices
+        unused_devices = {
+            'controllers': set(controllers_names_list),
+            'routers': set(routers_names_list),
+            'switches': set(switches_names_list),
+            'hosts': set(hosts_names_list)
+        }
+
+
+
+        for line in connections_text.split('\n'):
+            line = line.strip()
+
+            # Check if the line follows the valid format
+            if '<->' in line or '<>' in line:
+                device1, device2 = line.split('<->') if '<->' in line else line.split('<>')
+                device1 = device1.strip()
+                device2 = device2.strip()
+                # Check if device1 and device2 are present in the respective lists
+                if (device1 in controllers_names_list or device1 in routers_names_list or device1 in switches_names_list or device1 in hosts_names_list) \
+                        and (device2 in controllers_names_list or device2 in routers_names_list or device2 in switches_names_list or device2 in hosts_names_list):
+
+                    # Check if device1 and device2 are not "no controllers" or "no routers"
+                    if device1 == 'no controllers' or device1 == 'no routers' or device2 == 'no controllers' or device2 == 'no routers':
+                        invalid_lines.append(line)
+                        continue
+
+                    # Perform the specific validations based on the rules you provided
+                    if device1 in controllers_names_list and (device2 in switches_names_list or device2 in routers_names_list):
+                        valid_lines.append(line)
+                    elif device1 in routers_names_list and (device2 in switches_names_list or device2 in controllers_names_list):
+                        valid_lines.append(line)
+                    # elif device1 in routers_names_list and (
+                    #         device2 in controllers_names_list or device2 in routers_names_list or device2 in hosts_names_list or device2 in switches_names_list):
+                    #     valid_lines.append(line)
+                    elif device1 in hosts_names_list and (device2 in switches_names_list or device2 in hosts_names_list):
+                        valid_lines.append(line)
+                    else:
+                        invalid_lines.append(line)
+
+                    # Remove used devices from unused_devices
+                    if device1 in unused_devices['controllers']:
+                        unused_devices['controllers'].remove(device1)
+                    if device1 in unused_devices['routers']:
+                        unused_devices['routers'].remove(device1)
+                    if device1 in unused_devices['switches']:
+                        unused_devices['switches'].remove(device1)
+                    if device1 in unused_devices['hosts']:
+                        unused_devices['hosts'].remove(device1)
+                    if device2 in unused_devices['controllers']:
+                        unused_devices['controllers'].remove(device2)
+                    if device2 in unused_devices['routers']:
+                        unused_devices['routers'].remove(device2)
+                    if device2 in unused_devices['switches']:
+                        unused_devices['switches'].remove(device2)
+                    if device2 in unused_devices['hosts']:
+                        unused_devices['hosts'].remove(device2)
+
+                else:
+                    invalid_lines.append(line)
+            else:
+                invalid_lines.append(line)
+
+        # Remove duplicates from the valid lines
+        valid_lines = list(set(valid_lines))
+
+        # Check for unused devices
+        unused_devices_list = [device for device_type, devices in unused_devices.items() for device in devices]
+        for elem in unused_devices_list.copy():
+            if elem == "No Controllers" or elem == "No Routers":
+                unused_devices_list.remove(elem)
+        # if unused_devices_list:
+        #     invalid_lines.extend(unused_devices_list)
+
+        return valid_lines, invalid_lines, unused_devices_list
+
 
 
 

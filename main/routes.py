@@ -189,8 +189,36 @@ def add_topology():
         non_empty_lines = [line.strip() for line in lines if line.strip()]
         cleaned_lines = [''.join(line.split()) for line in non_empty_lines]
         cleaned_text = '\n'.join(cleaned_lines)
-        form.topology_connections_text.data = cleaned_text
+        # form.topology_connections_text.data = cleaned_text
 
+        controllers_list = form.topology_controllers_names.data.split(",")
+        routers_list = form.topology_routers_names.data.split(",")
+        switches_list = form.topology_switches_names.data.split(",")
+        hosts_list = form.topology_hosts_names.data.split(",")
+        all_names = controllers_list + routers_list + switches_list + hosts_list
+
+
+        valid_lines, invalid_lines, unused_devices = form.validate_connection_text(cleaned_text=cleaned_text,
+                                                                                   controllers_list=controllers_list,
+                                                                                   routers_list=routers_list,
+                                                                                   switches_list=switches_list,
+                                                                                   hosts_list=hosts_list)
+
+        # print(f">>>>>>> VALID LINES: {valid_lines}")
+        if unused_devices and invalid_lines:
+            flash("Unused devices found: {}".format(", ".join(unused_devices)), 'error')
+            flash("Invalid lines found: {}".format(", ".join(invalid_lines)), 'error')
+            return render_template('add_topology.html', form=form)
+        elif not unused_devices and invalid_lines:
+            flash("Invalid lines found: {}".format(", ".join(invalid_lines)), 'error')
+            return render_template('add_topology.html', form=form)
+        elif unused_devices and not invalid_lines:
+            flash("Unused devices found: {}".format(", ".join(unused_devices)), 'error')
+            return render_template('add_topology.html', form=form)
+
+
+
+        form.topology_connections_text.data = cleaned_text
 
         post = Topologies(topology_name=form.topology_name.data,
                           topology_description=form.topology_description.data,
@@ -206,6 +234,8 @@ def add_topology():
                           topology_connections_text=form.topology_connections_text.data,
                           topology_setup_text=form.topology_setup_text.data
                           )
+
+
 
 
 
