@@ -256,10 +256,17 @@ class TopologyForm(FlaskForm):
                         valid_lines.append(line)
                     elif device1 in routers_names_list and (device2 in switches_names_list or device2 in controllers_names_list):
                         valid_lines.append(line)
-                    # elif device1 in routers_names_list and (
-                    #         device2 in controllers_names_list or device2 in routers_names_list or device2 in hosts_names_list or device2 in switches_names_list):
-                    #     valid_lines.append(line)
-                    elif device1 in hosts_names_list and (device2 in switches_names_list or device2 in hosts_names_list):
+                    elif device1 in switches_names_list and (device2 in controllers_names_list or device2 in routers_names_list or device2 in hosts_names_list or device2 in switches_names_list):
+                        valid_lines.append(line)
+                    elif device1 in hosts_names_list and device2 in switches_names_list:
+                        valid_lines.append(line)
+                    elif device2 in controllers_names_list and (device1 in switches_names_list or device1 in routers_names_list):
+                        valid_lines.append(line)
+                    elif device2 in hosts_names_list and (device1 in switches_names_list or device1 in controllers_names_list):
+                        valid_lines.append(line)
+                    elif device2 in switches_names_list and (device1 in controllers_names_list or device1 in routers_names_list or device1 in hosts_names_list or device1 in switches_names_list):
+                        valid_lines.append(line)
+                    elif device2 in hosts_names_list and device1 in switches_names_list:
                         valid_lines.append(line)
                     else:
                         invalid_lines.append(line)
@@ -295,8 +302,6 @@ class TopologyForm(FlaskForm):
         for elem in unused_devices_list.copy():
             if elem == "No Controllers" or elem == "No Routers":
                 unused_devices_list.remove(elem)
-        # if unused_devices_list:
-        #     invalid_lines.extend(unused_devices_list)
 
         return valid_lines, invalid_lines, unused_devices_list
 

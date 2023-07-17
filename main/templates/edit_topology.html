@@ -123,7 +123,24 @@
 
         {{ form.topology_connections_text.label(class="form-label") }}
 
-        {{ form.topology_connections_text(class="form-control", rows="5") }}
+        <textarea name="topology_connections_text" id="topology_connections_text" class="form-control ckeditor" rows="5">
+  {% for line in form.topology_connections_text.data.strip().split('\n') if line.strip() %}
+    {{ line.strip() }}{% if not loop.last %}<p>{% endif %}
+  {% endfor %}
+</textarea>
+
+<script>
+  // Initialize CKEditor
+  ClassicEditor
+    .create(document.querySelector('#topology_connections_text'), {
+      enterMode: CKEDITOR.ENTER_BR, // Set the enterMode to use <br> for line breaks
+      allowedContent: true, // Allow all content
+      toolbar: ['undo', 'redo', 'bold', 'italic'] // Customize the toolbar as needed
+    })
+    .catch(error => {
+      console.error(error);
+    });
+</script>
 
         <br/>
 
