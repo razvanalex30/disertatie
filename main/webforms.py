@@ -12,7 +12,6 @@ from main.models import Users, Topologies
 
 
 
-
 # Create Search Form
 class SearchForm(FlaskForm):
     searched = StringField("Searched", validators=[DataRequired()])
@@ -238,8 +237,8 @@ class TopologyForm(FlaskForm):
             line = line.strip()
 
             # Check if the line follows the valid format
-            if '<->' in line or '<>' in line:
-                device1, device2 = line.split('<->') if '<->' in line else line.split('<>')
+            if '<->' in line and line.count('<->') == 1:
+                device1, device2 = line.split('<->')
                 device1 = device1.strip()
                 device2 = device2.strip()
                 # Check if device1 and device2 are present in the respective lists

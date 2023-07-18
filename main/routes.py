@@ -9,6 +9,26 @@ from main import login_manager
 from bs4 import BeautifulSoup
 
 
+def remove_duplicate_lines(valid_lines):
+    print(f"VALID LINES: {valid_lines}")
+    unique_lines = []
+    duplicate_lines = []
+
+    for line in valid_lines:
+        # Split the line into device1 and device2
+        device1, device2 = line.split('<->')
+
+        reversed_line = f"{device2}<->{device1}"
+
+        # Check if the normalized line or its reverse line exists in the set
+        if line not in unique_lines and reversed_line not in unique_lines:
+            unique_lines.append(line)
+        else:
+            duplicate_lines.append(line)
+
+    # unique_lines = list(unique_lines)
+    print(f"UNIQUE LINES:   {unique_lines}")
+    print(f"DUPLICATE LINES:  {duplicate_lines}")
 
 
 @login_manager.user_loader
@@ -215,6 +235,9 @@ def add_topology():
         elif unused_devices and not invalid_lines:
             flash("Unused devices found: {}".format(", ".join(unused_devices)), 'error')
             return render_template('add_topology.html', form=form)
+
+
+        remove_duplicate_lines(valid_lines)
 
 
 
