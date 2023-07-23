@@ -123,29 +123,35 @@
 
         {{ form.topology_connections_text.label(class="form-label") }}
 
-        <textarea name="topology_connections_text" id="topology_connections_text" class="form-control ckeditor" rows="5">
-  {% for line in form.topology_connections_text.data.strip().split('\n') if line.strip() %}{{ line.strip() }}{% if not loop.last %}{% endif %}
-  {% endfor %}
-</textarea>
+        {% if form.topology_connections_text.errors %}
+            {{ form.topology_connections_text(class="form-control is-invalid", rows="7") }}
+        <div class="invalid-feedback">
+            {% for error in form.topology_connections_text.errors %}
+                <span>{{ error }}</span>
+            {% endfor %}
+        </div>
+        {% else %}
+            {{ form.topology_connections_text(class="form-control", rows="7") }}
+        {% endif %}
 
-<script>
-  // Initialize CKEditor
-  ClassicEditor
-    .create(document.querySelector('#topology_connections_text'), {
-      enterMode: CKEDITOR.ENTER_BR, // Set the enterMode to use <br> for line breaks
-      allowedContent: true, // Allow all content
-      toolbar: ['undo', 'redo', 'bold', 'italic'] // Customize the toolbar as needed
-    })
-    .catch(error => {
-      console.error(error);
-    });
-</script>
+
 
         <br/>
 
         {{ form.topology_setup_text.label(class="form-label") }}
 
-        {{ form.topology_setup_text(class="form-control", rows="5") }}
+        {% if form.topology_setup_text.errors %}
+            {{ form.topology_setup_text(class="form-control is-invalid", rows="7") }}
+        <div class="invalid-feedback">
+            {% for error in form.topology_setup_text.errors %}
+                <span>{{ error }}</span>
+            {% endfor %}
+        </div>
+        {% else %}
+            {{ form.topology_setup_text(class="form-control", rows="7") }}
+        {% endif %}
+
+
 
         <br/>
 

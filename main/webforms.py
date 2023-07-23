@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from flask import flash, request
 
-from wtforms import StringField, SubmitField, PasswordField, EmailField, BooleanField, ValidationError, IntegerField
+from wtforms import StringField, SubmitField, PasswordField, EmailField, BooleanField, ValidationError, IntegerField, TextAreaField
 from wtforms.validators import DataRequired, EqualTo, Length, Email, ValidationError, NumberRange, Optional, InputRequired
 from flask_ckeditor import CKEditorField
 import re
@@ -59,8 +59,8 @@ class TopologyForm(FlaskForm):
     topology_switches_names = StringField("Switches Names", validators=[DataRequired()])
     topology_hosts_nr = IntegerField("Hosts Number", validators=[DataRequired(), NumberRange(min=1)])
     topology_hosts_names = StringField("Hosts Names", validators=[DataRequired()])
-    topology_connections_text = CKEditorField("Topology Connections", validators=[DataRequired()])
-    topology_setup_text = CKEditorField("Topology Setup", validators=[DataRequired()])
+    topology_connections_text = TextAreaField("Topology Connections", validators=[DataRequired()])
+    topology_setup_text = TextAreaField("Topology Setup", validators=[DataRequired()])
     topology_creator = StringField("Topology Creator")
     submit = SubmitField("Submit")
 

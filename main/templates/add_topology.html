@@ -136,14 +136,14 @@
         {{ form.topology_connections_text.label(class="form-label") }}
 
         {% if form.topology_connections_text.errors %}
-            {{ form.topology_connections_text(class="form-control is-invalid") }}
+            {{ form.topology_connections_text(class="form-control is-invalid", rows="7") }}
         <div class="invalid-feedback">
             {% for error in form.topology_connections_text.errors %}
                 <span>{{ error }}</span>
             {% endfor %}
         </div>
         {% else %}
-            {{ form.topology_connections_text(class="form-control") }}
+            {{ form.topology_connections_text(class="form-control", rows="7") }}
         {% endif %}
 
 
@@ -152,14 +152,14 @@
         {{ form.topology_setup_text.label(class="form-label") }}
 
         {% if form.topology_setup_text.errors %}
-            {{ form.topology_setup_text(class="form-control is-invalid") }}
+            {{ form.topology_setup_text(class="form-control is-invalid", rows="7") }}
         <div class="invalid-feedback">
             {% for error in form.topology_setup_text.errors %}
                 <span>{{ error }}</span>
             {% endfor %}
         </div>
         {% else %}
-            {{ form.topology_setup_text(class="form-control") }}
+            {{ form.topology_setup_text(class="form-control", rows="7") }}
         {% endif %}
 
         <br/>
@@ -169,8 +169,8 @@
     </form>
         {{ ckeditor.load() }}
         {{ ckeditor.config(name='topology_description', custom_config="fillEmptyBlocks: 'false'") }}
-        {{ ckeditor.config(name='topology_connections_text', custom_config="fillEmptyBlocks: 'true'") }}
-        {{ ckeditor.config(name='topology_setup_text', custom_config="fillEmptyBlocks: 'false'") }}
+<!--        {{ ckeditor.config(name='topology_connections_text', custom_config="fillEmptyBlocks: 'true'") }}-->
+<!--        {{ ckeditor.config(name='topology_setup_text', custom_config="fillEmptyBlocks: 'false'") }}-->
 </div>
  <br/> <br/> <br/>
 
