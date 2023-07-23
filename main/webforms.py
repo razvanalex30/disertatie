@@ -5,6 +5,7 @@ from wtforms import StringField, SubmitField, PasswordField, EmailField, Boolean
 from wtforms.validators import DataRequired, EqualTo, Length, Email, ValidationError, NumberRange, Optional, InputRequired
 from flask_ckeditor import CKEditorField
 import re
+import ipaddress
 from bs4 import BeautifulSoup
 from collections import Counter
 from main.models import Users, Topologies
@@ -217,7 +218,7 @@ class TopologyForm(FlaskForm):
 
 
         connections_text = kwargs.get("cleaned_text")
-        devices_names_list = kwargs.get("all_names")
+
         controllers_names_list = kwargs.get("controllers_list")
         routers_names_list = kwargs.get("routers_list")
         switches_names_list = kwargs.get("switches_list")
@@ -294,7 +295,8 @@ class TopologyForm(FlaskForm):
                 invalid_lines.append(line)
 
         # Remove duplicates from the valid lines
-        valid_lines = list(set(valid_lines))
+        # print(type(valid_lines))
+        # valid_lines = list(set(valid_lines))
 
         # Check for unused devices
         unused_devices_list = [device for device_type, devices in unused_devices.items() for device in devices]
@@ -303,6 +305,104 @@ class TopologyForm(FlaskForm):
                 unused_devices_list.remove(elem)
 
         return valid_lines, invalid_lines, unused_devices_list
+
+
+    def validate_setup_text(self, **kwargs):
+
+        valid_host_line = re.compile(
+            r'^(h\d+)\s*-\s*(\d+\.\d+\.\d+\.\d+/\d+)\s*default_route:\s*(\d+\.\d+\.\d+\.\d+|None)\s+MAC:\s*(random|(?:[0-9A-Fa-f]{2}[:-]){5}[0-9A-Fa-f]{2})$')
+        valid_router_line = re.compile(r'^(r\d+)\s*-\s*(\w+\s+)?([\d.]+)/([\d.]+)$')
+        valid_controller_line = re.compile(r'^(c\d+)\s*-\s*(?:([\d.]+):)?(\d+)$')
+
+        setup_text = kwargs.get("cleaned_text")
+        controllers_names_list = kwargs.get("controllers_list")
+        routers_names_list = kwargs.get("routers_list")
+        # switches_names_list = kwargs.get("switches_list")
+        hosts_names_list = kwargs.get("hosts_list")
+
+        seen_host_names = set()
+        valid_lines = []
+        invalid_lines = []
+        duplicate_lines = []
+        unused_hosts = []
+
+        for line in setup_text.split('\n'):
+            # print(f">>>LINIA ESTE: {line}")
+            # Handle hosts
+            host_match = valid_host_line.match(line)
+            router_match = valid_router_line.match(line)
+            controller_match = valid_controller_line.match(line)
+            # print(f">>>HOST MATCH ESTE: {host_match}")
+            # print(f">>>ROUTER MATCH ESTE: {router_match}")
+            # print(f">>>CONTROLLER MATCH ESTE: {controller_match}")
+            if host_match and not router_match and not controller_match:
+                host_name, ip_address_netmask, default_route, mac_address = host_match.groups()
+                print(host_name, ip_address_netmask, default_route, mac_address)
+                if host_name not in hosts_names_list:
+                    invalid_lines.append(line)
+                    continue
+                else:
+                    if host_name in seen_host_names:
+                        duplicate_lines.append(line)
+                        continue
+                    else:
+                        seen_host_names.add(host_name)
+                        try:
+                            ipaddress.IPv4Interface(f"{ip_address_netmask}")
+                            valid_lines.append(line)
+                        except (ipaddress.AddressValueError, ipaddress.NetmaskValueError):
+                            invalid_lines.append(line)
+                            continue
+            elif router_match and not host_match and not controller_match:
+                router_name, interface_name, ip_address, netmask = router_match.groups()
+                if router_name not in routers_names_list:
+                    invalid_lines.append(line)
+                    continue
+                else:
+                    # Validate IP address
+                    try:
+                        ipaddress.IPv4Interface(f"{ip_address}/{netmask}")
+                        valid_lines.append(line)
+                    except (ipaddress.AddressValueError, ipaddress.NetmaskValueError):
+                        invalid_lines.append(line)
+                        continue
+            elif controller_match and not host_match and not router_match:
+                controller_name, ip_port, port_number = controller_match.groups()
+                if controller_name not in controllers_names_list:
+                    invalid_lines.append(line)
+                    continue
+                else:
+                    if ip_port:
+                        try:
+                            ipaddress.IPv4Address(ip_port.split(":")[0])
+                            port_number = int(port_number)
+                            if not 1 <= port_number <= 65535:
+                                invalid_lines.append(line)
+                                continue
+                            valid_lines.append(line)
+                        except ipaddress.AddressValueError:
+                            invalid_lines.append(line)
+                            continue
+            else:
+                invalid_lines.append(line)
+
+
+        seen_host_names = list(seen_host_names)
+        if set(seen_host_names) ^ set(hosts_names_list):
+            hosts_not_used = list(set(seen_host_names) ^ set(hosts_names_list))
+            unused_hosts.extend(hosts_not_used)
+
+        # print(f"VALID LINES SETUP: {valid_lines}")
+        # print(f"DUPLICATE LINES SETUP: {duplicate_lines}")
+        # print(f"INVALID LINES SETUP: {invalid_lines}")
+        # print(f"UNSED HOSTS SETUP: {unused_hosts}")
+        return valid_lines, invalid_lines, unused_hosts, duplicate_lines
+
+
+
+
+
+
 
 
 

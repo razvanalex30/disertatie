@@ -124,8 +124,7 @@
         {{ form.topology_connections_text.label(class="form-label") }}
 
         <textarea name="topology_connections_text" id="topology_connections_text" class="form-control ckeditor" rows="5">
-  {% for line in form.topology_connections_text.data.strip().split('\n') if line.strip() %}
-    {{ line.strip() }}{% if not loop.last %}<p>{% endif %}
+  {% for line in form.topology_connections_text.data.strip().split('\n') if line.strip() %}{{ line.strip() }}{% if not loop.last %}{% endif %}
   {% endfor %}
 </textarea>
 

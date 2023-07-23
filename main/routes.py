@@ -10,7 +10,7 @@ from bs4 import BeautifulSoup
 
 
 def remove_duplicate_lines(valid_lines):
-    print(f"VALID LINES: {valid_lines}")
+    # print(f"VALID LINES: {valid_lines}")
     unique_lines = []
     duplicate_lines = []
 
@@ -26,9 +26,13 @@ def remove_duplicate_lines(valid_lines):
         else:
             duplicate_lines.append(line)
 
-    # unique_lines = list(unique_lines)
-    print(f"UNIQUE LINES:   {unique_lines}")
-    print(f"DUPLICATE LINES:  {duplicate_lines}")
+    # print(f"UNIQUE LINES:   {unique_lines}")
+    # print(f"DUPLICATE LINES:  {duplicate_lines}")
+
+    return duplicate_lines
+
+
+
 
 
 @login_manager.user_loader
@@ -215,7 +219,6 @@ def add_topology():
         routers_list = form.topology_routers_names.data.split(",")
         switches_list = form.topology_switches_names.data.split(",")
         hosts_list = form.topology_hosts_names.data.split(",")
-        all_names = controllers_list + routers_list + switches_list + hosts_list
 
 
         valid_lines, invalid_lines, unused_devices = form.validate_connection_text(cleaned_text=cleaned_text,
@@ -237,11 +240,58 @@ def add_topology():
             return render_template('add_topology.html', form=form)
 
 
-        remove_duplicate_lines(valid_lines)
+        duplicate_lines = remove_duplicate_lines(valid_lines)
+        if duplicate_lines:
+            flash("Duplicate lines found: {}".format(", ".join(duplicate_lines)), 'error')
+            return render_template('add_topology.html', form=form)
 
 
 
-        form.topology_connections_text.data = cleaned_text
+
+        form.topology_connections_text.data = cleaned_text      # de revazut aici
+
+        soup = BeautifulSoup(form.topology_setup_text.data, 'html.parser')
+        plain_text = soup.get_text(separator='\n')
+        lines = plain_text.split('\n')
+        non_empty_lines = [line.strip() for line in lines if line.strip()]
+        cleaned_lines = [' '.join(line.split()) for line in non_empty_lines]
+        cleaned_text = '\n'.join(cleaned_lines)
+        print(f">>>>cleaned text: {cleaned_text}")
+
+        ##### metoda de apelat aici ####
+        valid_lines_setup, invalid_lines_setup, unused_hosts_setup, duplicate_lines_setup = form.validate_setup_text(cleaned_text=cleaned_text,
+                                                                                             controllers_list=controllers_list,
+                                                                                             routers_list=routers_list,
+                                                                                             hosts_list=hosts_list)
+
+        if invalid_lines_setup and duplicate_lines_setup and unused_hosts_setup:
+            flash("Unused hosts found: {}".format(", ".join(unused_hosts_setup)), 'error')
+            flash("Invalid lines found: {}".format(", ".join(invalid_lines_setup)), 'error')
+            flash("Duplicate lines found: {}".format(", ".join(duplicate_lines_setup)), 'error')
+            return render_template('add_topology.html', form=form)
+        elif invalid_lines_setup and duplicate_lines_setup:
+            flash("Invalid lines found: {}".format(", ".join(invalid_lines_setup)), 'error')
+            flash("Duplicate lines found: {}".format(", ".join(duplicate_lines)), 'error')
+            return render_template('add_topology.html', form=form)
+        elif invalid_lines_setup and unused_hosts_setup:
+            flash("Invalid lines found: {}".format(", ".join(invalid_lines_setup)), 'error')
+            flash("Unused hosts found: {}".format(", ".join(unused_hosts_setup)), 'error')
+            return render_template('add_topology.html', form=form)
+        elif duplicate_lines_setup and unused_hosts_setup:
+            flash("Duplicate lines found: {}".format(", ".join(duplicate_lines_setup)), 'error')
+            flash("Unused hosts found: {}".format(", ".join(unused_hosts_setup)), 'error')
+            return render_template('add_topology.html', form=form)
+        elif duplicate_lines_setup:
+            flash("Duplicate lines found: {}".format(", ".join(duplicate_lines_setup)), 'error')
+            return render_template('add_topology.html', form=form)
+        elif unused_hosts_setup:
+            flash("Unused hosts found: {}".format(", ".join(unused_hosts_setup)), 'error')
+            return render_template('add_topology.html', form=form)
+        elif invalid_lines_setup:
+            flash("Invalid lines found: {}".format(", ".join(invalid_lines_setup)), 'error')
+            return render_template('add_topology.html', form=form)
+
+        form.topology_setup_text.data = cleaned_text
 
         post = Topologies(topology_name=form.topology_name.data,
                           topology_description=form.topology_description.data,
