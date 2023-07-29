@@ -27,6 +27,21 @@ class Topologies(db.Model):
     def __repr__(self):
         return f"Topologies('{self.topology_name}', 'TOPOPLOGY CONNECTIONS TEXT: {self.topology_connections_text}', 'CONTROLLERS NAMES: {self.topology_controllers_names}', 'ROUTERS NAMES: {self.topology_routers_names}')"
 
+
+class TopologiesUploaded(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    topology_name = db.Column(db.String(255))
+    topology_description = db.Column(db.Text)
+    topology_file_path = db.Column(db.String(255))
+    date_created = db.Column(db.DateTime, default=datetime.utcnow)
+    # Foreign key to link users (refer to primary key)
+    topology_creator_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+
+    def __repr__(self):
+        return f"TopologiesUploaded('{self.topology_name}', 'TOPOLOGY DESCRIPTION: {self.topology_description}', 'TOPOLOGY FILEPATH: {self.topology_file_path}')"
+
+
+
 # Create Users Model
 class Users(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)

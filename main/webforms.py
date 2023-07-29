@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from flask import flash, request
+from flask import flash, request, session
 
 from wtforms import StringField, SubmitField, PasswordField, EmailField, BooleanField, ValidationError, IntegerField, TextAreaField, FileField
 from wtforms.validators import DataRequired, EqualTo, Length, Email, ValidationError, NumberRange, Optional, InputRequired
@@ -30,64 +30,38 @@ def run_python_script(file_path):
         command = ["sudo", "/home/razvan/Disertatie/disertatie/virt/bin/python", file_path]
         process = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
         print(f"PRIMUL PROCESS ID: {process.pid}")
-        time.sleep(10)
-        print("AM DORMIT 10 SECUNDE")
+        time.sleep(15)
+        print("AM DORMIT 15 SECUNDE")
         process.stdin.write('\nexit\n'.encode())
         process.stdin.flush()
         process.terminate()
         return True
-        # try:
-        #     print("SUNT IN AL DOILEA TRY")
-        #     # Wait for the process to finish or raise TimeoutExpired
-        #     stdout, stderr = process.communicate(timeout=10)
-        # except subprocess.TimeoutExpired:
-        #     print("SUNTEM IN EXCEPT")
-        #     # If the script runs for 10 seconds without errors, terminate it with SIGINT
-        #     process.kill()
-        #     print("PROCESUL A FOST KILL")
-        #     process.wait()
-        #     print("AM ASTEPTAT")
-        #
-        #     # Check if the process terminated after SIGINT
-        #     poll_result = process.poll()
-        #     if poll_result is None:
-        #         print("SUNT IN IF POLL")
-        #         # Process hasn't terminated yet after SIGINT, forcefully terminate it with SIGKILL
-        #         process.kill()
-        #         process.wait()
-        #
-        # # Check if the process was terminated successfully
-        # if process.returncode == -9:
-        #     result_queue.put((True, None))
-        # else:
-        #     result_queue.put((False, None))
+
 
     except Exception as e:
         return False
 
 
-    # except Exception as e:
-    #     # If any other exception occurred, capture the error message and put it in the result queue
-    #     result_queue.put((True, None))
 
-def is_valid_python_file(file_path):
-    try:
-        result_queue = Queue()
-        process = Process(target=run_python_script, args=(file_path, result_queue))
-        process.start()
-        process.join()
-        result = result_queue.get()
-        if isinstance(result, subprocess.CompletedProcess):
-            print(f"RESULT RETURN CODE: {result.returncode}")
-            if result.returncode == 0:
-                return True, None
-            else:
-                error_message = result.stderr.strip() or result.stdout.strip()
-                return False, error_message
-        else:
-            return False, str(result)
-    except Exception as e:
-        return False, str(e)
+
+# def is_valid_python_file(file_path):  ######NOT USED####
+#     try:
+#         result_queue = Queue()
+#         process = Process(target=run_python_script, args=(file_path, result_queue))
+#         process.start()
+#         process.join()
+#         result = result_queue.get()
+#         if isinstance(result, subprocess.CompletedProcess):
+#             print(f"RESULT RETURN CODE: {result.returncode}")
+#             if result.returncode == 0:
+#                 return True, None
+#             else:
+#                 error_message = result.stderr.strip() or result.stdout.strip()
+#                 return False, error_message
+#         else:
+#             return False, str(result)
+#     except Exception as e:
+#         return False, str(e)
 
 
 
@@ -139,28 +113,16 @@ class FileForm(FlaskForm):
         file_path = os.path.join("/home/razvan/Disertatie/disertatie/uploads", field.data.filename)
         field.data.save(file_path)
 
-        # result_queue = Queue()
-        # process = Process(target=run_python_script, args=(file_path, result_queue))
-        # process.daemon = True  # Set the process as daemon
-        # process.start()
-        # process.join()
-        run_python=run_python_script(file_path)
-        # is_valid, message = result_queue.get()
-        # print(f"{is_valid} / {message}")
-        # print(f" #### PLM {process.is_alive()}")
-        # print(f" #### PID {process.pid}")
+
+        run_python = run_python_script(file_path)
+        print(f">>>> VALOARE {run_python}")
         if not run_python:
             os.remove(file_path)
-            raise ValidationError("plm")
-        # else:
-        #     process.kill()
-        #     process.is_alive()
-        # if error_message:
-        #     print(f">>>>>>>>>>>>>. ERROR MESSAGE: {error_message}")
-        #     os.remove(file_path)
+            raise ValidationError("Python file has errors, please check!")
 
-        # if not is_valid:
-        #     raise ValidationError(error_message)
+
+        session['file_path'] = file_path
+
 
 
 

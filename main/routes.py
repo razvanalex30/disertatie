@@ -1,4 +1,4 @@
-from flask import render_template, flash, request, redirect, url_for
+from flask import render_template, flash, request, redirect, url_for, session
 from main import app
 from main import db
 import os
@@ -303,6 +303,8 @@ def create_topology():
     if form.validate_on_submit():
         name = form.name.data
         description = form.description.data
+        file_path = session.get('file_path')
+        print(f"FILE PATH ESTE: {file_path}")
 
         flash('Topology created successfully!', 'success')
         return redirect(url_for('create_topology'))
