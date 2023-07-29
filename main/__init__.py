@@ -15,6 +15,8 @@ ckeditor = CKEditor(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:Zarvan39#@localhost/users"
 # Secret Key
 app.config['SECRET_KEY'] = "pass"
+app.config['UPLOAD_FOLDER'] = 'uploads'
+app.config['ALLOWED_EXTENSIONS'] = {'py'}
 
 # Initialize the database
 db = SQLAlchemy(app)

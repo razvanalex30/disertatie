@@ -1,12 +1,18 @@
 from flask import render_template, flash, request, redirect, url_for
 from main import app
 from main import db
+import os
+
+import subprocess
 from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.utils import secure_filename
 from flask_login import login_user, login_required, logout_user, current_user
 from main.models import Users, Topologies
-from main.webforms import RegisterForm, LoginForm, PasswordForm, TopologyForm, SearchForm
+from main.webforms import RegisterForm, LoginForm, PasswordForm, TopologyForm, SearchForm, FileForm
 from main import login_manager
 from bs4 import BeautifulSoup
+
+
 
 
 def remove_duplicate_lines(valid_lines):
@@ -30,6 +36,8 @@ def remove_duplicate_lines(valid_lines):
     # print(f"DUPLICATE LINES:  {duplicate_lines}")
 
     return duplicate_lines
+
+
 
 
 
@@ -287,6 +295,22 @@ def delete_topology(id):
         flash("You are not authorized to delete this topology!")
         topologies = Topologies.query.order_by(Topologies.date_created)
         return render_template("topologies.html", topologies=topologies)
+
+
+@app.route("/add_topology_file", methods=['GET', 'POST'])
+def create_topology():
+    form = FileForm()
+    if form.validate_on_submit():
+        name = form.name.data
+        description = form.description.data
+
+        flash('Topology created successfully!', 'success')
+        return redirect(url_for('create_topology'))
+    # else:
+    #     flash('Topology NOT CREATED ERRORS IN THE PYTHON FILE!', 'fails')
+        # return redirect(url_for('create_topology'))
+
+    return render_template('create_topology.html', form=form)
 
 
 @app.route("/add_topology", methods=["GET","POST"])
