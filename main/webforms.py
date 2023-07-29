@@ -179,7 +179,7 @@ class TopologyForm(FlaskForm):
         # if not self.topology_name_changed:
         #     return
         if self._is_add_topology_route():
-            topology = Topologies.query.filter_by(topology_name=field.data).first()
+            topology = Topologies.query.filter_by(topology_name=field.data, topology_creator_id=current_user.id).first()
             if topology:
                 raise ValidationError("Error - Topology name already used! Please use another name!")
 
@@ -189,6 +189,8 @@ class TopologyForm(FlaskForm):
             if field.data != self.topology_name.default and Topologies.query.filter(
 
                     Topologies.topology_name == field.data,
+
+                    Topologies.topology_creator_id == current_user.id,
 
                     Topologies.id != self.meta.obj.id if self.meta.obj else None
 
