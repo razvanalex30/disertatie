@@ -1,9 +1,11 @@
 from flask_wtf import FlaskForm
 from flask import flash, request, session
 
-from wtforms import StringField, SubmitField, PasswordField, EmailField, BooleanField, ValidationError, IntegerField, TextAreaField, FileField
+from wtforms import StringField, SubmitField, PasswordField, EmailField, BooleanField, ValidationError, IntegerField, TextAreaField
 from wtforms.validators import DataRequired, EqualTo, Length, Email, ValidationError, NumberRange, Optional, InputRequired
 from flask_ckeditor import CKEditorField
+from flask_wtf.file import FileField, FileAllowed
+from flask_login import current_user
 import re
 import os
 import signal
@@ -101,12 +103,20 @@ class RegisterForm(FlaskForm):
 
 
 class FileForm(FlaskForm):
-    name = StringField('Topology Name', validators=[DataRequired()])
-    description = TextAreaField('Topology Description', validators=[DataRequired()])
-    python_file = FileField('Python File (Only .py)', validators=[DataRequired()])
+    topology_name = StringField('Topology Name', validators=[DataRequired()])
+    topology_description = TextAreaField('Topology Description', validators=[DataRequired()])
+    topology_python_file = FileField('Python File (Only .py)', validators=[FileAllowed(['py'])])
     submit = SubmitField('Submit')
 
-    def validate_python_file(self, field):
+
+    def validate_topology_name(self, field):
+        topology = Topologies.query.filter_by(topology_name=field.data, topology_creator_id=current_user.id).first()
+        if topology:
+            raise ValidationError("Error - Topology name already used! Please use another name!")
+
+
+
+    def validate_topology_python_file(self, field):
         if not allowed_file(field.data.filename):
             raise ValidationError('Please upload a valid .py file.')
         print("SUNTEM IN VALIDATE PYTHON FILE")

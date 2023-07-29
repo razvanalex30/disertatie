@@ -298,11 +298,12 @@ def delete_topology(id):
 
 
 @app.route("/add_topology_file", methods=['GET', 'POST'])
+@login_required
 def create_topology():
     form = FileForm()
     if form.validate_on_submit():
-        name = form.name.data
-        description = form.description.data
+        topology_name = form.topology_name.data
+        topology_description = form.topology_description.data
         file_path = session.get('file_path')
         print(f"FILE PATH ESTE: {file_path}")
 
