@@ -125,7 +125,12 @@ def search():
 def topologies():
     topology_creator = current_user.id
     # Grab all the topologies from the database for the current user
-    topologies = Topologies.query.filter_by(topology_creator_id=topology_creator).order_by(Topologies.date_created.desc())
+    query_created = Topologies.query.filter_by(topology_creator_id=topology_creator).order_by(Topologies.date_created.desc())
+    query_uploaded = TopologiesUploaded.query.filter_by(topology_creator_id=topology_creator).order_by(TopologiesUploaded.date_created.desc())
+    topologies_created = query_created.all()
+    topologies_uploaded = query_uploaded.all()
+    topologies = topologies_created + topologies_uploaded
+    topologies = sorted(topologies, key=lambda x: x.date_created, reverse=True)
 
     return render_template("topologies.html", topologies=topologies)
 

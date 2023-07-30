@@ -18,7 +18,7 @@
     <h2><a href="{{url_for('topology', id=topology.id)}}">{{topology.topology_name}}</a></h2><br/>
     {{topology.topology_description|safe}}<br/>
     <br/>
-    Created by: {{topology.topology_creator.full_name}}<br/><br/>
+<!--    Created by: {{topology.topology_creator_id.full_name}}<br/><br/>-->
     <a href="{{url_for('topology', id=topology.id)}}" class="btn btn-outline-secondary btn-sm">View Topology</a>
     {% if topology.topology_creator_id == current_user.id %}
 
