@@ -15,7 +15,7 @@ import subprocess
 import ipaddress
 from bs4 import BeautifulSoup
 from collections import Counter
-from main.models import Users, Topologies
+from main.models import Users, Topologies, TopologiesUploaded
 
 
 
@@ -110,8 +110,9 @@ class FileForm(FlaskForm):
 
 
     def validate_topology_name(self, field):
-        topology = Topologies.query.filter_by(topology_name=field.data, topology_creator_id=current_user.id).first()
-        if topology:
+        topology_created = Topologies.query.filter_by(topology_name=field.data, topology_creator_id=current_user.id).first()
+        topology_uploaded = TopologiesUploaded.query.filter_by(topology_name=field.data, topology_creator_id=current_user.id).first()
+        if topology_created or topology_uploaded:
             raise ValidationError("Error - Topology name already used! Please use another name!")
 
 
@@ -179,8 +180,9 @@ class TopologyForm(FlaskForm):
         # if not self.topology_name_changed:
         #     return
         if self._is_add_topology_route():
-            topology = Topologies.query.filter_by(topology_name=field.data, topology_creator_id=current_user.id).first()
-            if topology:
+            topology_created = Topologies.query.filter_by(topology_name=field.data, topology_creator_id=current_user.id).first()
+            topology_uploaded = TopologiesUploaded.query.filter_by(topology_name=field.data, topology_creator_id=current_user.id).first()
+            if topology_created or topology_uploaded:
                 raise ValidationError("Error - Topology name already used! Please use another name!")
 
 

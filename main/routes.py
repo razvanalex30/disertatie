@@ -7,7 +7,7 @@ import subprocess
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from flask_login import login_user, login_required, logout_user, current_user
-from main.models import Users, Topologies
+from main.models import Users, Topologies, TopologiesUploaded
 from main.webforms import RegisterForm, LoginForm, PasswordForm, TopologyForm, SearchForm, FileForm
 from main import login_manager
 from bs4 import BeautifulSoup
@@ -302,16 +302,30 @@ def delete_topology(id):
 def create_topology():
     form = FileForm()
     if form.validate_on_submit():
-        topology_name = form.topology_name.data
-        topology_description = form.topology_description.data
+        topology_creator = current_user.id
+
+
         file_path = session.get('file_path')
         print(f"FILE PATH ESTE: {file_path}")
 
+        post = TopologiesUploaded(topology_name=form.topology_name.data,
+                          topology_description=form.topology_description.data,
+                          topology_file_path=file_path,
+                          topology_creator_id=topology_creator,
+                          )
+
+        # Add topology to database
+        db.session.add(post)
+        db.session.commit()
+
+        # Clear the form
+        form.topology_name.data = ''
+        form.topology_description.data = ''
+
+
         flash('Topology created successfully!', 'success')
         return redirect(url_for('create_topology'))
-    # else:
-    #     flash('Topology NOT CREATED ERRORS IN THE PYTHON FILE!', 'fails')
-        # return redirect(url_for('create_topology'))
+
 
     return render_template('create_topology.html', form=form)
 
