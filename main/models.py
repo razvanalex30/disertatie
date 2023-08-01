@@ -37,8 +37,6 @@ class TopologiesUploaded(db.Model):
     # Foreign key to link users (refer to primary key)
     topology_creator_id = db.Column(db.Integer, db.ForeignKey("users.id"))
 
-    # def get_file_path(self):
-    #     return self.topology_file_path
 
     def __repr__(self):
         return f"TopologiesUploaded('{self.topology_name}', 'TOPOLOGY DESCRIPTION: {self.topology_description}', 'TOPOLOGY FILEPATH: {self.topology_file_path}')"

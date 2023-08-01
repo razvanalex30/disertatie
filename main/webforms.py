@@ -109,13 +109,43 @@ class FileForm(FlaskForm):
     submit = SubmitField('Submit')
 
 
-    def validate_topology_name(self, field):
-        topology_created = Topologies.query.filter_by(topology_name=field.data, topology_creator_id=current_user.id).first()
-        topology_uploaded = TopologiesUploaded.query.filter_by(topology_name=field.data, topology_creator_id=current_user.id).first()
-        if self.topology_name.data != field.data:
-            if topology_created or topology_uploaded:
-                raise ValidationError("Error - Topology name already used! Please use another name!")
+    def __init__(self, obj=None, *args, **kwargs):
+        super(FileForm, self).__init__(obj=obj, *args, **kwargs)
+        self.topology_name_changed = False
+        self.edit_topology = obj is not None
+        self.meta.obj = obj
 
+
+    def validate_topology_name(self, field):
+
+
+        if self._is_add_topology_route():
+            topology_created = Topologies.query.filter_by(topology_name=field.data, topology_creator_id=current_user.id).first()
+            topology_uploaded = TopologiesUploaded.query.filter_by(topology_name=field.data, topology_creator_id=current_user.id).first()
+            if self.topology_name.data != field.data:
+                if topology_created or topology_uploaded:
+                    raise ValidationError("Error - Topology name already used! Please use another name!")
+
+        elif self._is_edit_topology_route():
+
+            if field.data != self.topology_name.default and Topologies.query.filter(
+
+                    Topologies.topology_name == field.data,
+
+                    Topologies.topology_creator_id == current_user.id,
+
+                    Topologies.id != self.meta.obj.id if self.meta.obj else None
+
+            ).first() or TopologiesUploaded.query.filter(
+
+                TopologiesUploaded.topology_name == field.data,
+
+                TopologiesUploaded.topology_creator_id == current_user.id,
+
+                TopologiesUploaded.id != self.meta.obj.id if self.meta.obj else None
+
+            ).first():
+                raise ValidationError("Error - Topology name already used! Please use another name.")
 
 
     def validate_topology_python_file(self, field):
@@ -211,6 +241,14 @@ class TopologyForm(FlaskForm):
                     Topologies.topology_creator_id == current_user.id,
 
                     Topologies.id != self.meta.obj.id if self.meta.obj else None
+
+            ).first() or TopologiesUploaded.query.filter(
+
+                    TopologiesUploaded.topology_name == field.data,
+
+                    TopologiesUploaded.topology_creator_id == current_user.id,
+
+                    TopologiesUploaded.id != self.meta.obj.id if self.meta.obj else None
 
             ).first():
                 raise ValidationError("Error - Topology name already used! Please use another name.")

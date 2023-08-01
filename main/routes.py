@@ -308,7 +308,6 @@ def delete_topology(id):
 def edit_topology_uploaded(id):
     # Fetch the existing topology from the database
     topology = TopologiesUploaded.query.get_or_404(id)
-    print(f">>>>>> {topology.topology_file_path}")
     # Create an instance of FileForm and pass the topology to prepopulate the form
     form = FileForm(obj=topology)
 
