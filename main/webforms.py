@@ -112,12 +112,22 @@ class FileForm(FlaskForm):
     def validate_topology_name(self, field):
         topology_created = Topologies.query.filter_by(topology_name=field.data, topology_creator_id=current_user.id).first()
         topology_uploaded = TopologiesUploaded.query.filter_by(topology_name=field.data, topology_creator_id=current_user.id).first()
-        if topology_created or topology_uploaded:
-            raise ValidationError("Error - Topology name already used! Please use another name!")
+        if self.topology_name.data != field.data:
+            if topology_created or topology_uploaded:
+                raise ValidationError("Error - Topology name already used! Please use another name!")
 
 
 
     def validate_topology_python_file(self, field):
+
+        if field.data is None and self._is_add_topology_route():
+            raise ValidationError('Please upload a valid .py file.')
+
+
+        if field.data is None and self._is_edit_topology_route():
+            return
+
+
         if not allowed_file(field.data.filename):
             raise ValidationError('Please upload a valid .py file.')
         print("SUNTEM IN VALIDATE PYTHON FILE")
@@ -135,6 +145,12 @@ class FileForm(FlaskForm):
         session['file_path'] = file_path
 
 
+
+    def _is_add_topology_route(self):
+        return request.path == "/add_topology_file"
+
+    def _is_edit_topology_route(self):
+        return request.path.startswith("/edit_topology_uploaded")
 
 
 
@@ -562,10 +578,4 @@ class TopologyForm(FlaskForm):
 
         return True
 
-    # def validate_topology_connections_text(self):
-    #     pass
-    #
-    # def validate_topology_setup_text(self):
-    #     pass
-    #
-    #
+

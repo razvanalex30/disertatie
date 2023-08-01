@@ -302,6 +302,46 @@ def delete_topology(id):
         return render_template("topologies.html", topologies=topologies)
 
 
+
+@app.route("/edit_topology_uploaded/<int:id>", methods=['GET', 'POST'])
+@login_required
+def edit_topology_uploaded(id):
+    # Fetch the existing topology from the database
+    topology = TopologiesUploaded.query.get_or_404(id)
+    print(f">>>>>> {topology.topology_file_path}")
+    # Create an instance of FileForm and pass the topology to prepopulate the form
+    form = FileForm(obj=topology)
+
+    file_name = topology.topology_file_path.split("/")[-1]
+
+    if form.validate_on_submit():
+        topology.topology_name = form.topology_name.data
+        topology.topology_description = form.topology_description.data
+        # topology.topology_file_path = form.topology_python_file.data
+        # print(topology.topology_file_path)
+        # # Update the topology data with the form data
+        # form.populate_obj(topology)
+
+        # Check if the user has uploaded a new file
+        if form.topology_python_file.data is not None:
+            # Save the new file and update the topology_file_path in the database
+            file_path = os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(form.topology_python_file.data.filename))
+            form.topology_python_file.data.save(file_path)
+            topology.topology_file_path = file_path
+
+        # Commit the changes to the database
+        db.session.add(topology)
+        db.session.commit()
+
+        flash("Topology updated successfully!")
+        return redirect(url_for('topologies'))
+
+    return render_template('edit_topology_uploaded.html', form=form, file_name=file_name)
+
+
+
+
+
 @app.route("/add_topology_file", methods=['GET', 'POST'])
 @login_required
 def create_topology():
@@ -329,7 +369,7 @@ def create_topology():
 
 
         flash('Topology created successfully!', 'success')
-        return redirect(url_for('create_topology'))
+        return redirect(url_for('topologies'))
 
 
     return render_template('create_topology.html', form=form)
