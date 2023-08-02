@@ -312,8 +312,10 @@ def delete_topology_uploaded(id):
     if id == topology_to_delete.topology_creator_id:
 
         try:
+            print(f">>>>>>>>>> {topology_to_delete.topology_file_path}")
             db.session.delete(topology_to_delete)
             db.session.commit()
+            os.remove(topology_to_delete.topology_file_path)
             # Return a message
             flash("Topology was deleted!")
             topologies = TopologiesUploaded.query.order_by(TopologiesUploaded.date_created)
