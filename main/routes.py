@@ -304,7 +304,32 @@ def delete_topology(id):
         return render_template("topologies.html", topologies=topologies)
 
 
+@app.route("/topologies/delete_uploaded/<int:id>", methods=['GET', 'POST'])
+@login_required
+def delete_topology_uploaded(id):
+    topology_to_delete = TopologiesUploaded.query.get_or_404(id)
+    id = current_user.id
+    if id == topology_to_delete.topology_creator_id:
 
+        try:
+            db.session.delete(topology_to_delete)
+            db.session.commit()
+            # Return a message
+            flash("Topology was deleted!")
+            topologies = TopologiesUploaded.query.order_by(TopologiesUploaded.date_created)
+            return redirect(url_for('topologies'))
+
+        except:
+            # Return error message
+            flash("ERROR when deleting Topology, please try again")
+            topologies = TopologiesUploaded.query.order_by(TopologiesUploaded.date_created)
+
+            return render_template("topologies.html", topologies=topologies)
+    else:
+        # Return a message
+        flash("You are not authorized to delete this topology!")
+        topologies = TopologiesUploaded.query.order_by(TopologiesUploaded.date_created)
+        return render_template("topologies.html", topologies=topologies)
 
 
 
