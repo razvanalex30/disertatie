@@ -132,7 +132,9 @@ def topologies():
     topologies = topologies_created + topologies_uploaded
     topologies = sorted(topologies, key=lambda x: x.date_created, reverse=True)
 
-    return render_template("topologies.html", topologies=topologies)
+    return render_template("topologies.html", topologies=topologies,
+                           topologies_created=topologies_created,
+                           topologies_uploaded=topologies_uploaded)
 
 
 @app.route("/topologies/<int:id>")
@@ -274,7 +276,7 @@ def edit_topology(id):
             Topologies.date_created.desc())
         return render_template("topologies.html", topologies=topologies)
 
-@app.route("/topologies/delete/<int:id>")
+@app.route("/topologies/delete/<int:id>", methods=['GET', 'POST'])
 @login_required
 def delete_topology(id):
     topology_to_delete = Topologies.query.get_or_404(id)
@@ -287,7 +289,7 @@ def delete_topology(id):
             # Return a message
             flash("Topology was deleted!")
             topologies = Topologies.query.order_by(Topologies.date_created)
-            return render_template("topologies.html", topologies=topologies)
+            return redirect(url_for('topologies'))
 
         except:
             # Return error message
@@ -300,6 +302,9 @@ def delete_topology(id):
         flash("You are not authorized to delete this topology!")
         topologies = Topologies.query.order_by(Topologies.date_created)
         return render_template("topologies.html", topologies=topologies)
+
+
+
 
 
 
