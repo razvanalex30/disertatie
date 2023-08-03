@@ -313,25 +313,21 @@ def delete_topology_uploaded(id):
 
         try:
             print(f">>>>>>>>>> {topology_to_delete.topology_file_path}")
+            os.remove(topology_to_delete.topology_file_path)
             db.session.delete(topology_to_delete)
             db.session.commit()
-            os.remove(topology_to_delete.topology_file_path)
             # Return a message
             flash("Topology was deleted!")
-            topologies = TopologiesUploaded.query.order_by(TopologiesUploaded.date_created)
             return redirect(url_for('topologies'))
 
         except:
             # Return error message
             flash("ERROR when deleting Topology, please try again")
-            topologies = TopologiesUploaded.query.order_by(TopologiesUploaded.date_created)
-
-            return render_template("topologies.html", topologies=topologies)
+            return redirect(url_for('topologies'))
     else:
         # Return a message
         flash("You are not authorized to delete this topology!")
-        topologies = TopologiesUploaded.query.order_by(TopologiesUploaded.date_created)
-        return render_template("topologies.html", topologies=topologies)
+        return redirect(url_for('topologies'))
 
 
 
