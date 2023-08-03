@@ -344,18 +344,15 @@ def edit_topology_uploaded(id):
     form = FileForm(obj=topology)
 
     file_name = topology.topology_file_path.split("/")[-1]
-
+    print(f">>>>>> FILE_PATH: {topology.topology_file_path}")
     if form.validate_on_submit():
         topology.topology_name = form.topology_name.data
         topology.topology_description = form.topology_description.data
-        # topology.topology_file_path = form.topology_python_file.data
-        # print(topology.topology_file_path)
-        # # Update the topology data with the form data
-        # form.populate_obj(topology)
 
         # Check if the user has uploaded a new file
         if form.topology_python_file.data is not None:
             # Save the new file and update the topology_file_path in the database
+            os.remove(topology.topology_file_path)
             file_path = os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(form.topology_python_file.data.filename))
             form.topology_python_file.data.save(file_path)
             topology.topology_file_path = file_path
