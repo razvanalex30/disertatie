@@ -2,6 +2,7 @@ from flask import render_template, flash, request, redirect, url_for, session
 from main import app
 from main import db
 import os
+import shutil
 
 import subprocess
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -374,12 +375,23 @@ def create_topology():
         topology_creator = current_user.id
 
 
+
+
         file_path = session.get('file_path')
         print(f"FILE PATH ESTE: {file_path}")
+        file_name = file_path.split("/")[-1]
+
+        directory_path = os.path.join("/home/razvan/Disertatie/disertatie/TopologiesScripts",
+                                      f"user_{topology_creator}", f"uploaded/{form.topology_name.data}")
+        if not os.path.exists(directory_path):
+            os.makedirs(directory_path)
+        shutil.move(file_path, directory_path)
+        directory_path = os.path.join(directory_path, file_name)
+        print(f"DIRECTORY_PATH ESTE: {directory_path}")
 
         post = TopologiesUploaded(topology_name=form.topology_name.data,
                           topology_description=form.topology_description.data,
-                          topology_file_path=file_path,
+                          topology_file_path=directory_path,
                           topology_creator_id=topology_creator,
                           )
 
@@ -387,10 +399,15 @@ def create_topology():
         db.session.add(post)
         db.session.commit()
 
+        # directory_path = os.path.join("/home/razvan/Disertatie/disertatie/TopologiesScripts",
+        #                               f"user_{topology_creator}", f"uploaded/{form.topology_name.data}")
+        # if not os.path.exists(directory_path):
+        #     os.makedirs(directory_path)
+        # shutil.move(file_path, directory_path)
+
         # Clear the form
         form.topology_name.data = ''
         form.topology_description.data = ''
-
 
         flash('Topology created successfully!', 'success')
         return redirect(url_for('topologies'))
