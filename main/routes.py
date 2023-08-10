@@ -3,6 +3,8 @@ from main import app
 from main import db
 import os
 import shutil
+import re
+
 
 import subprocess
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -37,6 +39,84 @@ def remove_duplicate_lines(valid_lines):
     # print(f"DUPLICATE LINES:  {duplicate_lines}")
 
     return duplicate_lines
+
+
+
+
+
+
+def parse_hosts_info(topo_setup_text):
+    topo_text = topo_setup_text.strip().split("\n")
+
+    hosts_created_lines = []
+
+
+    valid_host_line = re.compile(
+        r'^(h\d+)\s*-\s*(\d+\.\d+\.\d+\.\d+/\d+)\s*default_route:\s*(\d+\.\d+\.\d+\.\d+|None)\s+MAC:\s*(random|(?:[0-9A-Fa-f]{2}[:-]){5}[0-9A-Fa-f]{2})$')
+    for line in topo_text:
+        host_match = valid_host_line.match(line)
+        if host_match:
+            host_name, ip_address_netmask, default_route, mac_address = host_match.groups()
+            if default_route == "None" and mac_address == "random":
+                host_line = f"{host_name} = self.addHost('{host_name}', ip = '{ip_address_netmask}')"
+                hosts_created_lines.append(host_line)
+            elif default_route != "None" and mac_address == "random":
+                host_line = f"{host_name} = self.addHost('{host_name}', ip = '{ip_address_netmask}', defaultRoute='via {default_route}')"
+                hosts_created_lines.append(host_line)
+            elif default_route != "None" and mac_address != "random":
+                host_line = f"{host_name} = self.addHost('{host_name}', ip = '{ip_address_netmask}', mac = '{mac_address}', defaultRoute='via {default_route}')"
+                hosts_created_lines.append(host_line)
+            elif default_route == "None" and mac_address != "random":
+                host_line = f"{host_name} = self.addHost('{host_name}', ip = '{ip_address_netmask}', mac = '{mac_address}')"
+                hosts_created_lines.append(host_line)
+        else:
+            continue
+
+    return hosts_created_lines
+
+
+
+
+def create_topology_script(**kwargs):
+    connections_text = kwargs.get("topo_conn_text")
+    setup_text = kwargs.get("topo_setup_text")
+
+    controllers_names = kwargs.get("controllers_names")
+    routers_names = kwargs.get("routers_names")
+    switches_name = kwargs.get("switches_names")
+    hosts_names = kwargs.get("hosts_names")
+
+    switches_lines = []
+    for switch_name in switches_name:
+        switch_line = f"{switch_name} = self.addSwitch('{switch_name}', failMode='standalone')"
+        switches_lines.append(switch_line)
+
+
+
+    hosts_lines = parse_hosts_info(setup_text)
+    hosts_lines = switches_lines + hosts_lines
+
+    with open('/home/razvan/Disertatie/disertatie/topologies_templates/switch_host_tmp.py', 'r') as f:
+        existing_code = f.read()
+
+
+
+
+    # Append the new lines to the existing code
+
+    new_code = re.sub(r'# Insert your code here', '\n        '.join(hosts_lines), existing_code)
+
+    # Write the modified code back to the script
+    with open('/home/razvan/Disertatie/disertatie/topologies_templates/switch_host_tmp.py', 'w') as f:
+        f.write(new_code)
+
+
+
+
+
+
+
+
 
 
 
@@ -473,13 +553,16 @@ def add_topology():
 
         form.topology_connections_text.data = cleaned_text      # de revazut aici
 
+
+        topo_conn_text = cleaned_text
+        print(f"TOPO CONNECTION: {topo_conn_text}")
+
         soup = BeautifulSoup(form.topology_setup_text.data, 'html.parser')
         plain_text = soup.get_text(separator='\n')
         lines = plain_text.split('\n')
         non_empty_lines = [line.strip() for line in lines if line.strip()]
         cleaned_lines = [' '.join(line.split()) for line in non_empty_lines]
         cleaned_text = '\n'.join(cleaned_lines)
-        print(f">>>>cleaned text: {cleaned_text}")
 
         ##### metoda de apelat aici ####
         valid_lines_setup, invalid_lines_setup, unused_hosts_setup, duplicate_lines_setup = form.validate_setup_text(cleaned_text=cleaned_text,
@@ -516,6 +599,9 @@ def add_topology():
 
         form.topology_setup_text.data = cleaned_text
 
+        topo_setup_text = cleaned_text
+        print(f"TOPO SETUP: {topo_setup_text}")
+
         post = Topologies(topology_name=form.topology_name.data,
                           topology_description=form.topology_description.data,
                           topology_creator_id=topology_creator,
@@ -533,11 +619,19 @@ def add_topology():
 
 
 
-
-
         # Add topology to database
         db.session.add(post)
         db.session.commit()
+
+        # Create topology file with .py extension
+
+        create_topology_script(topo_conn_text=topo_conn_text,
+                               topo_setup_text=topo_setup_text,
+                               hosts_names=hosts_list,
+                               controllers_names=controllers_list,
+                               switches_names=switches_list,
+                               routers_names=routers_list)
+
 
         # Clear the form
         form.topology_name.data = ''
