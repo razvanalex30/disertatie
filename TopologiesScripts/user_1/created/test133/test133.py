@@ -31,7 +31,6 @@ class NetworkTopo(Topo):
         h2 = self.addHost('h2', ip = '192.168.1.1/24', defaultRoute='via 192.168.0.3')
         h3 = self.addHost('h3', ip = '10.0.0.4/16')
         r1 = self.addNode('r1', cls=LinuxRouter)
-        r2 = self.addNode('r2', cls=LinuxRouter, ip='10.0.0.2/16')
         c1 = Controller( 'c1', ip='192.168.0.1', port=1234 )
         c2 = Controller( 'c2', port=555 )
 
@@ -40,7 +39,6 @@ class NetworkTopo(Topo):
         self.addLink(h3, s1)
         self.addLink(s1, c1)
         self.addLink(r1, s1)
-        self.addLink(r2, s1)
         self.addLink(s1, c2)
 
 

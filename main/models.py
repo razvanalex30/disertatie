@@ -2,6 +2,7 @@ from main import db
 from datetime import datetime
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
+from sqlalchemy.dialects.mysql import LONGTEXT
 
 
 # Create Topology Model
@@ -17,8 +18,8 @@ class Topologies(db.Model):
     topology_switches_names = db.Column(db.String(255))
     topology_hosts_nr = db.Column(db.Integer)
     topology_hosts_names = db.Column(db.String(255))
-    topology_connections_text = db.Column(db.String(255))
-    topology_setup_text = db.Column(db.String(255))
+    topology_connections_text = db.Column(db.Text)
+    topology_setup_text = db.Column(db.Text)
     #topology_creator = db.Column(db.String(255))
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
     # Foreign key to link users (refer to primary key)

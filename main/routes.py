@@ -321,6 +321,7 @@ def edit_topology(id):
     topology = Topologies.query.get_or_404(id)
     form = TopologyForm(obj=topology)
     print(f">>>>>>> NAME CHANGED{form.topology_name_changed}")
+    topology_name_begin = topology.topology_name
 
     if current_user.id == topology.topology_creator_id:
             if form.validate():
@@ -332,6 +333,7 @@ def edit_topology(id):
                 cleaned_lines = [''.join(line.split()) for line in non_empty_lines]
                 cleaned_text = '\n'.join(cleaned_lines)
 
+                topo_conn_text = cleaned_text
                 print(f">>>CONNECTIONS TEXT: {cleaned_text}")
 
                 controllers_list = form.topology_controllers_names.data.split(",")
@@ -372,6 +374,7 @@ def edit_topology(id):
                 cleaned_text = '\n'.join(cleaned_lines)
                 print(f">>>>cleaned text: {cleaned_text}")
 
+                topo_setup_text = cleaned_text
 
                 ##### metoda de apelat aici ####
                 valid_lines_setup, invalid_lines_setup, unused_hosts_setup, duplicate_lines_setup = form.validate_setup_text(
@@ -426,6 +429,30 @@ def edit_topology(id):
                 topology.topology_setup_text = form.topology_setup_text.data
                 db.session.add(topology)
                 db.session.commit()
+
+
+                # Update
+                if topology_name_begin != topology.topology_name:
+                    directory_path = os.path.join("/home/razvan/Disertatie/disertatie/TopologiesScripts",
+                                                 f"user_{topology.topology_creator_id}",
+                                                 f"created/{topology_name_begin}")
+                    shutil.rmtree(directory_path)
+
+                directory_path = os.path.join("/home/razvan/Disertatie/disertatie/TopologiesScripts",
+                                              f"user_{topology.topology_creator_id}", f"created/{form.topology_name.data}")
+                if not os.path.exists(directory_path):
+                    os.makedirs(directory_path)
+
+                create_topology_script(topo_conn_text=topo_conn_text,
+                                       topo_setup_text=topo_setup_text,
+                                       hosts_names=hosts_list,
+                                       controllers_names=controllers_list,
+                                       switches_names=switches_list,
+                                       routers_names=routers_list,
+                                       directory_path=directory_path,
+                                       file_name=form.topology_name.data)
+
+
                 flash("Topology updated successfully!")
                 return redirect(url_for('topologies'))
             else:
