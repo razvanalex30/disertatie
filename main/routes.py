@@ -43,6 +43,60 @@ def remove_duplicate_lines(valid_lines):
 
 
 
+def parse_controllers_info(topo_setup_text):
+    topo_text = topo_setup_text.strip().split("\n")
+
+
+    controllers_created_lines = []
+
+    valid_controller_line = re.compile(r'^(c\d+)\s*-\s*(?:([\d.]+):)?(\d+)$')
+
+    for line in topo_text:
+        controller_match = valid_controller_line.match(line)
+        if controller_match:
+            controller_name, ip_port, port_number = controller_match.groups()
+            if ip_port:
+                ip_address = ip_port.split(":")[0]
+                line = f"{controller_name} = Controller( '{controller_name}', ip='{ip_address}', port={port_number} )"
+                controllers_created_lines.append(line)
+            else:
+                line = f"{controller_name} = Controller( '{controller_name}', port={port_number} )"
+                controllers_created_lines.append(line)
+        else:
+            continue
+
+    return controllers_created_lines
+
+def parse_routers_info(topo_setup_text):
+    topo_text = topo_setup_text.strip().split("\n")
+
+    routers_created_lines = []
+    router_created_lines_intf = []
+
+    valid_router_line = re.compile(r'^(r\d+)\s*-\s*(\w+\s+)?([\d.]+)/([\d.]+)$')
+
+    for line in topo_text:
+        router_match = valid_router_line.match(line)
+        if router_match:
+            router_name, interface_name, ip_address, netmask = router_match.groups()
+            if not interface_name:  # creating a router with default IP for interface eth1 of the router
+                router_line = f"{router_name} = self.addNode('{router_name}', cls=LinuxRouter, ip='{ip_address}/{netmask}')"
+                routers_created_lines.append(router_line)
+            else:
+                router_line_intf_1 = f"{router_name} = net['{router_name}']"
+                router_line_intf_2 = f"{router_name}.cmd('ip link add {router_name}-{interface_name} type dummy')"
+                router_line_intf_3 = f"{router_name}.cmd('ip addr add {ip_address}/{netmask} dev {router_name}-{interface_name}')"
+                router_line_intf_4 = f"{router_name}.cmd('ip link set dev {router_name}-{interface_name} up')"
+                router_created_lines_intf.append(router_line_intf_1)
+                router_created_lines_intf.append(router_line_intf_2)
+                router_created_lines_intf.append(router_line_intf_3)
+                router_created_lines_intf.append(router_line_intf_4)
+        else:
+            continue
+
+    return routers_created_lines, router_created_lines_intf
+
+
 
 
 def parse_hosts_info(topo_setup_text):
@@ -86,15 +140,23 @@ def create_topology_script(**kwargs):
     switches_name = kwargs.get("switches_names")
     hosts_names = kwargs.get("hosts_names")
 
+
+    routers_lines = []
+    controllers_lines = []
+
+
     switches_lines = []
     for switch_name in switches_name:
         switch_line = f"{switch_name} = self.addSwitch('{switch_name}', failMode='standalone')"
         switches_lines.append(switch_line)
 
 
+    router_created_lines, routers_created_intf = parse_routers_info(setup_text)
+
+    controllers_lines = parse_controllers_info(setup_text)
 
     hosts_lines = parse_hosts_info(setup_text)
-    hosts_lines = switches_lines + hosts_lines
+    hosts_lines = switches_lines + hosts_lines + router_created_lines + controllers_lines
 
     with open('/home/razvan/Disertatie/disertatie/topologies_templates/switch_host_tmp.py', 'r') as f:
         existing_code = f.read()
@@ -105,10 +167,14 @@ def create_topology_script(**kwargs):
     # Append the new lines to the existing code
 
     new_code = re.sub(r'# Insert your code here', '\n        '.join(hosts_lines), existing_code)
+    new_code = re.sub(r'# Insert router code here', '\n    '.join(routers_created_intf), new_code)
 
     # Write the modified code back to the script
     with open('/home/razvan/Disertatie/disertatie/topologies_templates/switch_host_tmp.py', 'w') as f:
         f.write(new_code)
+        f.close()
+
+
 
 
 
