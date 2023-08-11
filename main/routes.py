@@ -83,6 +83,8 @@ def parse_routers_info(topo_setup_text):
                 router_line = f"{router_name} = self.addNode('{router_name}', cls=LinuxRouter, ip='{ip_address}/{netmask}')"
                 routers_created_lines.append(router_line)
             else:
+                router_line = f"{router_name} = self.addNode('{router_name}', cls=LinuxRouter)"
+                routers_created_lines.append(router_line)
                 router_line_intf_1 = f"{router_name} = net['{router_name}']"
                 router_line_intf_2 = f"{router_name}.cmd('ip link add {router_name}-{interface_name} type dummy')"
                 router_line_intf_3 = f"{router_name}.cmd('ip addr add {ip_address}/{netmask} dev {router_name}-{interface_name}')"
@@ -95,6 +97,9 @@ def parse_routers_info(topo_setup_text):
             continue
 
     return routers_created_lines, router_created_lines_intf
+
+
+
 
 
 
@@ -134,11 +139,21 @@ def parse_hosts_info(topo_setup_text):
 def create_topology_script(**kwargs):
     connections_text = kwargs.get("topo_conn_text")
     setup_text = kwargs.get("topo_setup_text")
+    directory_path = kwargs.get("directory_path")
+    file_name = kwargs.get("file_name")
 
     controllers_names = kwargs.get("controllers_names")
     routers_names = kwargs.get("routers_names")
     switches_name = kwargs.get("switches_names")
     hosts_names = kwargs.get("hosts_names")
+
+
+    connection_text_lines = []
+    conn_text = connections_text.strip().split("\n")
+    for line in conn_text:
+        conn_line = line.split("<->")
+        link_line = f"self.addLink({conn_line[0]}, {conn_line[1]})"
+        connection_text_lines.append(link_line)
 
 
     routers_lines = []
@@ -160,6 +175,7 @@ def create_topology_script(**kwargs):
 
     with open('/home/razvan/Disertatie/disertatie/topologies_templates/switch_host_tmp.py', 'r') as f:
         existing_code = f.read()
+        f.close()
 
 
 
@@ -168,9 +184,10 @@ def create_topology_script(**kwargs):
 
     new_code = re.sub(r'# Insert your code here', '\n        '.join(hosts_lines), existing_code)
     new_code = re.sub(r'# Insert router code here', '\n    '.join(routers_created_intf), new_code)
+    new_code = re.sub(r'# Insert links here', '\n        '.join(connection_text_lines), new_code)
 
     # Write the modified code back to the script
-    with open('/home/razvan/Disertatie/disertatie/topologies_templates/switch_host_tmp.py', 'w') as f:
+    with open(f'{directory_path}/{file_name}.py', 'w') as f:
         f.write(new_code)
         f.close()
 
@@ -691,12 +708,21 @@ def add_topology():
 
         # Create topology file with .py extension
 
+        directory_path = os.path.join("/home/razvan/Disertatie/disertatie/TopologiesScripts",
+                                      f"user_{topology_creator}", f"created/{form.topology_name.data}")
+        if not os.path.exists(directory_path):
+            os.makedirs(directory_path)
+
         create_topology_script(topo_conn_text=topo_conn_text,
                                topo_setup_text=topo_setup_text,
                                hosts_names=hosts_list,
                                controllers_names=controllers_list,
                                switches_names=switches_list,
-                               routers_names=routers_list)
+                               routers_names=routers_list,
+                               directory_path=directory_path,
+                               file_name=form.topology_name.data)
+
+
 
 
         # Clear the form
