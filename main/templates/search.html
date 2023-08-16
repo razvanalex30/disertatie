@@ -3,13 +3,16 @@
     <br/>
 
         <h2>Search Results:</h2>
-        <p>{{searched}}</p>
+        <p>Topology Name searched: {{searched}}</p>
         <br/>
-
+{% if topologies %}
 {% for topology in topologies %}
 <a href="{{url_for('topology', id=topology.id)}}">
    {{ topology.topology_name }}</a><br/>
 {% endfor %}
+{% else %}
+    <p>There are no topologies with name: {{searched}}</p>
+{% endif %}
 
 
 {% endblock %}

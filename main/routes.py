@@ -273,12 +273,22 @@ def base():
 @app.route('/search', methods=["POST"])
 def search():
     form = SearchForm()
-    topologies = Topologies.query
+    topologies_created = Topologies.query
+    topologies_uploaded = TopologiesUploaded.query
     if form.validate_on_submit():
         topology.searched = form.searched.data
-        topologies = topologies.filter(Topologies.topology_description.like('%' + topology.searched + '%'))
-        topologies = topologies.order_by(Topologies.topology_name).all()
-        return render_template("search.html", form=form, searched=topology.searched, topologies=topologies)
+        topologies_created = topologies_created.filter(Topologies.topology_name.like('%' + topology.searched + '%'))
+        topologies_created = topologies_created.order_by(Topologies.topology_name).all()
+        topologies_uploaded = topologies_uploaded.filter(TopologiesUploaded.topology_name.like('%' + topology.searched + '%'))
+        topologies_uploaded = topologies_uploaded.order_by(TopologiesUploaded.topology_name).all()
+
+        topologies = topologies_created + topologies_uploaded
+        # TO DO -> DE ADAUGAT REDIRECT LINK CATRE TOPOLOGIES UPLOADED/CREATED
+        return render_template("search.html", form=form,
+                               searched=topology.searched,
+                               topologies_created=topologies_created,
+                               topologies_uploaded=topologies_uploaded,
+                               topologies=topologies)
 
 
 
