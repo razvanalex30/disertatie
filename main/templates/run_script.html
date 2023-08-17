@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<head>
+    <title>Log Viewer</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/styles.css')}}">
+</head>
+<h1>Running Topology {{topology_name}}</h1>
+<div class="terminal">
+    <div class="terminal-header">Log Viewer</div>
+    <div id="log-content"></div>
+
+    <div class="input-container">
+        <input type="text" id="message-input" placeholder="Enter a message">
+        <button id="send-button">Send</button>
+    </div>
+</div>
+
+<div class="button-container">
+    <button id="start-script-button">Start Script</button>
+    <button id="stop-command-button">Stop Command</button>
+    <button id="stop-process-button">Stop Process</button>
+</div>
+
+<div class="capture-container" style="display: none;">
+    <div class="dropdown-container">
+        <select id="interface-select">
+            <!-- Options will be populated dynamically -->
+        </select>
+        <button id="start-capture-button">Start Capture</button>
+    </div>
+    <button id="stop-capture-button">Stop Capture</button>
+</div>
+
+<script src="{{ url_for('static', filename='styles/styles.js') }}"></script>
+{% endblock %}

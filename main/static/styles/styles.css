@@ -1,0 +1,77 @@
+.terminal {
+  background-color: #000;
+  color: #0f0;
+  font-family: monospace;
+  font-size: 14px;
+  line-height: 1.2;
+  overflow-y: scroll;
+  height: 300px; /* Adjust the height as per your requirements */
+  padding: 10px;
+  margin: 0 auto;
+  width: 80%; /* Adjust the width as per your requirements */
+}
+
+.terminal-header {
+  background-color: #222;
+  color: #fff;
+  padding: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.input-container {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.input-container input {
+  flex-grow: 1;
+  margin-right: 10px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+}
+
+.input-container button {
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.button-container {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.button-container button {
+  margin-right: 10px;
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.capture-container {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.dropdown-container select {
+  padding: 5px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+}
+
+.dropdown-container button {
+  margin-left: 10px;
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}

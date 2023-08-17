@@ -23,7 +23,7 @@
     {% if topology.topology_creator_id == current_user.id %}
         <div class="d-flex">
             <div class="me-2">
-                <a href="{{url_for('topology', id=topology.id)}}" class="btn btn-outline-secondary btn-sm">Run Topology</a>
+                <a href="{{url_for('run_script', topology_name=topology.topology_name)}}" class="btn btn-outline-secondary btn-sm">Run Topology</a>
             </div>
             <div class="me-2">
                 {% if topology.topology_name in created_topology_names %}

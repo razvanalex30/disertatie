@@ -1,9 +1,11 @@
-from flask import render_template, flash, request, redirect, url_for, session
+from flask import render_template, flash, request, redirect, url_for, session, Response, jsonify
 from main import app
 from main import db
 import os
 import shutil
 import re
+import time
+import logging
 
 
 import subprocess
@@ -15,6 +17,9 @@ from main.webforms import RegisterForm, LoginForm, PasswordForm, TopologyForm, S
 from main import login_manager
 from bs4 import BeautifulSoup
 
+log_content = ""
+log = logging.getLogger('werkzeug')
+log.disabled = True
 
 
 
@@ -914,14 +919,154 @@ def test_pw():
                            form=form)
 
 
-# @app.route('/register', methods=['GET', 'POST'])
-# def register():
-#     full_name = None
-#     form = RegisterForm()
-#     # Validate Form
-#     if form.validate_on_submit():
-#         full_name = form.full_name.data
-#         form.full_name.data = ''
-#         flash("Account registered successfully!")
-#
-#     return render_template("register.html", full_name=full_name, form=form)
+@app.route("/run_script/<string:topology_name>")
+@login_required
+def run_script(topology_name):
+    user_scripts_dir = os.path.join("/home/razvan/Disertatie/disertatie/TopologiesScripts",
+                                      f"user_{current_user.id}")
+
+    query_created = Topologies.query.filter_by(topology_name=topology_name)
+    query_uploaded = TopologiesUploaded.query.filter_by(topology_name=topology_name)
+    topologies_created = query_created.all()
+    topologies_uploaded = query_uploaded.all()
+    global script_dir_path
+    global script_path
+    if topologies_created != []:
+        script_dir_path = os.path.join(user_scripts_dir, f"created/{topology_name}")
+        script_path = os.path.join(user_scripts_dir, f"created/{topology_name}/{topology_name}.py")
+    elif topologies_uploaded != []:
+        script_dir_path = os.path.join(user_scripts_dir, f"uploaded/{topology_name}")
+        script_path = os.path.join(user_scripts_dir, f"uploaded/{topology_name}/{topology_name}.py")
+
+    with open(f"{script_dir_path}/logfile.log", "w") as logfile:
+        logfile.close()
+
+
+    return render_template('run_script.html', topology_name=topology_name)
+
+
+@app.route('/start_script', methods=['GET'])
+@login_required
+def start_script():
+    print(">>>> AM APASAT START SCRIPT")
+    print(f"{script_dir_path}")
+    # DE PUS LOGICA SA FAC RESTART DE SCRIPT DACA PORNESC IAR
+    with open(f"{script_dir_path}/logfile.log", "w") as logfile:
+        logfile.close()
+    global proc
+    proc = subprocess.Popen(["sudo", "python3", f"{script_path}"], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+    return 'Script started'
+
+@app.route('/update_log')
+@login_required
+def stream_logfile():
+    with open(f"{script_dir_path}/logfile.log", 'r') as file:
+        while True:
+            line = file.readline()
+            if not line:
+                time.sleep(1)  # Sleep for a second if the file is empty
+                continue
+            yield f"data: {line}\n\n"
+
+
+@app.route('/stream')
+@login_required
+def stream():
+    return Response(stream_logfile(), mimetype='text/event-stream')
+
+
+@app.route('/send_message', methods=['POST'])
+@login_required
+def send_message():
+    message = request.form['message']
+    logging.basicConfig(format='%(message)s', filename=f"{script_dir_path}/logfile.log", filemode='a', level=logging.INFO)
+    logging.info(f"\nCOMMAND: {message}\n")
+    proc.stdin.write(message.encode())
+    proc.stdin.flush()
+    proc.stdin.write("\n".encode())
+    proc.stdin.flush()
+    # logging.basicConfig(format='%(message)s', filename='logfile.log', filemode='a', level=logging.INFO)
+    # logging.info(f"\nCOMMAND: {message}\n")
+    # Do something with the message, e.g., log it
+    # with open('logfile.log', 'a') as file:
+    #     file.write(f'User: {message}\n')
+
+    return 'Message sent'
+
+
+@app.route('/stop_script', methods=['GET'])
+@login_required
+def stop_script():
+    if proc:
+        proc.stdin.write('\x03'.encode())
+        proc.stdin.flush()
+        return 'Command Stopped'
+    else:
+        return 'No running script to stop'
+
+
+@app.route('/stop_process', methods=['GET'])
+@login_required
+def stop_process():
+    if proc:
+        logging.basicConfig(format='%(message)s', filename=f"{script_dir_path}/logfile.log", filemode='a', level=logging.INFO)
+        logging.info(f"\nCOMMAND: exit\n")
+        proc.stdin.write('\nexit\n'.encode())
+        proc.stdin.flush()
+        proc.terminate()
+        return 'Process stopped'
+    else:
+        return 'No running process to stop'
+
+
+@app.route("/get_interfaces", methods=["GET"])
+@login_required
+def get_interfaces():
+    result = subprocess.run(["ifconfig"], stdout=subprocess.PIPE, text=True)
+    interfaces = result.stdout.split("\n\n")
+
+    available_interfaces = []
+    for interface in interfaces:
+        if "ens33" in interface or "lo" in interface:
+            continue
+        interface_name = interface.split(":")[0]
+        available_interfaces.append(interface_name)
+    available_interfaces.remove("")
+
+    return jsonify(available_interfaces)
+
+
+
+@app.route('/start_capture', methods=['POST'])
+@login_required
+def start_capture():
+    interface = request.form['interface']
+    global output_path
+    output_path = f"{script_dir_path}/{interface}.pcap"
+    if interface in interface_mapping:
+        interface_number = interface_mapping[interface]
+        global capture_proc
+        capture_proc = subprocess.Popen(["sudo", "tshark", "-i", interface_number, "-w", output_path], preexec_fn=os.setpgrp)
+        return 'Capture started for interface: ' + interface_number
+    else:
+        return 'Invalid interface'
+
+# @app.route('/stop_capture', methods=['GET'])
+# @login_required
+# def stop_capture():
+#     global capture_proc
+#     if capture_proc:
+#         os.killpg(os.getpgid(capture_proc.pid), signal.SIGTERM)
+#         print("executing command")
+#         commandus = f"sudo chmod 777 {output_path}"
+#         os.system(commandus)
+#         print("command executed")
+#         return 'Capture stopped'
+#     else:
+#         return 'No active capture to stop'
+
+
+
+
+
+
