@@ -7,21 +7,21 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.min.js"></script>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/styles.css')}}">
 </head>
-<h1>Running Topology {{topology_name}}</h1>
+<h1>Executing {{topology_name}}</h1>
 <div class="terminal">
-    <div class="terminal-header">Log Viewer</div>
+    <div class="terminal-header">Mininet Topology - {{topology_name}}</div>
     <div id="log-content"></div>
 
     <div class="input-container">
-        <input type="text" id="message-input" placeholder="Enter a message" style="display: none;">
+        <input type="text" id="message-input" placeholder="Enter a command" style="display: none;">
         <button id="send-button" style="display: none;">Send</button>
     </div>
 </div>
 
 <div class="button-container">
     <button id="start-script-button">Start Script</button>
-    <button id="stop-command-button">Stop Command</button>
-    <button id="stop-process-button">Stop Process</button>
+    <button id="stop-command-button" style="display: none;">Stop Command</button>
+    <button id="stop-process-button" style="display: none;">Stop Process</button>
 </div>
 
 <div class="capture-container" style="display: none;">
@@ -31,8 +31,8 @@
         </select>
         <input type="text" id="capture-name-input" placeholder="Enter Capture Name">
         <button id="start-capture-button">Start Capture</button>
+        <button id="stop-capture-button" style="display: none;">Stop Capture</button>
     </div>
-    <button id="stop-capture-button">Stop Capture</button>
 </div>
 
 <script src="{{ url_for('static', filename='styles/styles.js') }}"></script>

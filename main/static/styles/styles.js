@@ -59,16 +59,50 @@ function showSendButton() {
     sendButton.style.display = 'block';
 }
 
+function hidestartCaptureButton() {
+    startCaptureButton.style.display = 'none';
+}
+
+function showstartCaptureButton() {
+    startCaptureButton.style.display = 'inline-block';
+}
+
+function hidestopCaptureButton() {
+    stopCaptureButton.style.display = 'none';
+}
+
+function showstopCaptureButton() {
+    stopCaptureButton.style.display = 'inline-block';
+}
+
+
+function hideStopCommandButton() {
+    stopCommandButton.style.display = 'none';
+}
+
+function showStopCommandButton() {
+    stopCommandButton.style.display = 'inline-block';
+}
+
+function hidecaptureNameInput() {
+    captureNameInput.style.display = 'none';
+}
+
+function showcaptureNameInput() {
+    captureNameInput.style.display = 'inline-block';
+}
+
+
 
 function hideCaptureControls() {
     startCaptureButton.style.display = 'none';
-    stopCaptureButton.style.display = 'none';
+//    stopCaptureButton.style.display = 'none';
     interfaceSelect.style.display = 'none';
 }
 
 function showCaptureControls() {
     startCaptureButton.style.display = 'inline-block';
-    stopCaptureButton.style.display = 'inline-block';
+//    stopCaptureButton.style.display = 'inline-block';
     interfaceSelect.style.display = 'inline-block';
 }
 
@@ -139,6 +173,8 @@ function connectToStream() {
                 const captureContainer = document.querySelector('.capture-container');
                 captureContainer.style.display = 'block'; // Display the container
                 showCaptureControls();
+                showStopCommandButton();
+                showcaptureNameInput();
                 showMessageInput();
                 showSendButton();
             }
@@ -190,10 +226,12 @@ stopProcessButton.addEventListener('click', function() {
     .then(response => response.text())
     .then(data => {
         console.log(data); // Optional: log the response from the server
-        startScriptButton.style.display = 'block';
+        startScriptButton.style.display = 'inline-block';
         hideCaptureControls();
         hideMessageInput();
         hideSendButton();
+        hidecaptureNameInput();
+        hideStopCommandButton();
         stopProcessButton.style.display = 'none';
         dropdownVisible=false;
     })
@@ -227,6 +265,9 @@ startCaptureButton.addEventListener('click', function() {
     .then(response => response.text())
     .then(data => {
         console.log(data); // Optional: log the response from the server
+        hidestartCaptureButton();
+        showstopCaptureButton();
+
     })
     .catch(error => {
         console.error('Error:', error);
@@ -242,6 +283,8 @@ stopCaptureButton.addEventListener('click', function() {
     .then(data => {
         console.log(data); // Optional: log the response from the server
         captureNameInput.value = '';
+        showstartCaptureButton();
+        hidestopCaptureButton();
     })
     .catch(error => {
         console.error('Error:', error);
