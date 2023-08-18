@@ -10,6 +10,79 @@ const stopCaptureButton = document.getElementById('stop-capture-button');
 const captureNameInput = document.getElementById('capture-name-input')
 let eventSource = null;
 let dropdownVisible = false;
+let output_path = '';
+
+const captures = [];
+
+
+// This function adds a new capture to the captures array
+function addCapture(name, interface, filepath) {
+    captures.push({
+        name: name,
+        interface: interface,
+        date: new Date().toLocaleString(),
+        filepath: filepath
+    });
+}
+
+// This function updates the captures table with the information from the captures array
+function updateCapturesTable() {
+    const capturesTable = document.getElementById('captures-table');
+    capturesTable.innerHTML = ''; // Clear existing rows
+
+    if (captures.length === 0) {
+        capturesTable.innerHTML = '<tr><td colspan="6">No available captures</td></tr>';
+        return;
+    }
+
+    for (let i = 0; i < captures.length; i++) {
+        const capture = captures[i];
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${i + 1}</td>
+            <td>${capture.name}</td>
+            <td>${capture.date}</td>
+            <td><a href="#">Download</a></td>
+            <td><a href="#">Delete</a></td>
+        `;
+        capturesTable.appendChild(row);
+    }
+}
+
+
+// This function deletes a capture from the captures array and updates the table
+function deleteCapture(index) {
+    const capture = captures[index];
+    const confirmDelete = confirm(`Are you sure you want to delete "${capture.name}"?`);
+
+    if (confirmDelete) {
+        // Delete the capture file on the server
+        fetch('/delete_capture', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: `filepath=${encodeURIComponent(capture.filepath)}`
+        })
+        .then(response => response.text())
+        .then(data => {
+            console.log(data); // Optional: log the response from the server
+
+            // Remove the capture from the captures array
+            captures.splice(index, 1);
+
+            // Update the captures table
+            updateCapturesTable();
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+}
+
+
+
+
 
 function sendMessage() {
     const message = messageInput.value;
@@ -191,7 +264,6 @@ startScriptButton.addEventListener('click', function () {
     })
     .then(response => response.text())
     .then(data => {
-        console.log(data); // Optional: log the response from the server
         startScriptButton.style.display = 'none';
 
         hideCaptureControls();
@@ -232,6 +304,7 @@ stopProcessButton.addEventListener('click', function() {
         hideSendButton();
         hidecaptureNameInput();
         hideStopCommandButton();
+        hidestopCaptureButton();
         stopProcessButton.style.display = 'none';
         dropdownVisible=false;
     })
@@ -267,6 +340,12 @@ startCaptureButton.addEventListener('click', function() {
         console.log(data); // Optional: log the response from the server
         hidestartCaptureButton();
         showstopCaptureButton();
+        output_path = data;
+        const display_name = selectedInterface + "_" + captureName
+        addCapture(display_name, selectedInterface, output_path);
+
+    // Update the captures table to reflect the new capture
+        updateCapturesTable();
 
     })
     .catch(error => {

@@ -1052,11 +1052,17 @@ def start_capture():
     if not is_valid_capture_name(capture_name):
         return 'Invalid capture name'
 
+    captures_output_dir = os.path.join(f"{script_dir_path}", "captures")
+    print(f">>>>CAPTURES DIR: {captures_output_dir}")
+    if not os.path.exists(captures_output_dir):
+        print("SUNT IN IF")
+        os.mkdir(captures_output_dir)
+
     global output_path
-    output_path = f"{script_dir_path}/{capture_name}.pcap"
+    output_path = f"{captures_output_dir}/{interface}_{capture_name}.pcap"
     global capture_proc
     capture_proc = subprocess.Popen(["tshark", "-i", interface, "-w", output_path], preexec_fn=os.setpgrp)
-    return 'Capture started for interface: ' + interface
+    return output_path
 
 
 @app.route('/stop_capture', methods=['GET'])
@@ -1069,7 +1075,7 @@ def stop_capture():
         commandus = f"sudo chmod 777 {output_path}"
         os.system(commandus)
         print("command executed")
-        return 'Capture stopped'
+        return output_path
     else:
         return 'No active capture to stop'
 

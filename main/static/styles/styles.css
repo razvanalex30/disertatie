@@ -75,3 +75,20 @@
   border: none;
   cursor: pointer;
 }
+
+
+.captures-table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.captures-table th, .captures-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+.captures-table th {
+    background-color: #f2f2f2;
+}

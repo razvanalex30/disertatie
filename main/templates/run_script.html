@@ -35,5 +35,27 @@
     </div>
 </div>
 
+
+
+<!-- Table to display captures -->
+    <table id="captures-table" class="captures-table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Capture Name</th>
+                <th>Date Created</th>
+                <th>Download</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="6">No available captures</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+
 <script src="{{ url_for('static', filename='styles/styles.js') }}"></script>
 {% endblock %}
