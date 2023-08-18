@@ -6,7 +6,7 @@ import shutil
 import re
 import time
 import logging
-
+import signal
 
 import subprocess
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -21,6 +21,11 @@ log_content = ""
 log = logging.getLogger('werkzeug')
 log.disabled = True
 
+
+
+def is_valid_capture_name(name):
+    # Use a regular expression to check if the name contains only letters, numbers, and underscores
+    return re.match(r'^[a-zA-Z0-9_]+$', name) is not None
 
 
 def remove_duplicate_lines(valid_lines):
@@ -1041,29 +1046,32 @@ def get_interfaces():
 @login_required
 def start_capture():
     interface = request.form['interface']
-    global output_path
-    output_path = f"{script_dir_path}/{interface}.pcap"
-    if interface in interface_mapping:
-        interface_number = interface_mapping[interface]
-        global capture_proc
-        capture_proc = subprocess.Popen(["sudo", "tshark", "-i", interface_number, "-w", output_path], preexec_fn=os.setpgrp)
-        return 'Capture started for interface: ' + interface_number
-    else:
-        return 'Invalid interface'
+    capture_name = request.form['name']
 
-# @app.route('/stop_capture', methods=['GET'])
-# @login_required
-# def stop_capture():
-#     global capture_proc
-#     if capture_proc:
-#         os.killpg(os.getpgid(capture_proc.pid), signal.SIGTERM)
-#         print("executing command")
-#         commandus = f"sudo chmod 777 {output_path}"
-#         os.system(commandus)
-#         print("command executed")
-#         return 'Capture stopped'
-#     else:
-#         return 'No active capture to stop'
+    # Check if the capture name is valid
+    if not is_valid_capture_name(capture_name):
+        return 'Invalid capture name'
+
+    global output_path
+    output_path = f"{script_dir_path}/{capture_name}.pcap"
+    global capture_proc
+    capture_proc = subprocess.Popen(["tshark", "-i", interface, "-w", output_path], preexec_fn=os.setpgrp)
+    return 'Capture started for interface: ' + interface
+
+
+@app.route('/stop_capture', methods=['GET'])
+@login_required
+def stop_capture():
+    global capture_proc
+    if capture_proc:
+        os.killpg(os.getpgid(capture_proc.pid), signal.SIGTERM)
+        print("executing command")
+        commandus = f"sudo chmod 777 {output_path}"
+        os.system(commandus)
+        print("command executed")
+        return 'Capture stopped'
+    else:
+        return 'No active capture to stop'
 
 
 

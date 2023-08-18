@@ -53,7 +53,33 @@ r1-eth0 <-> s1-eth4 (r1 s1)
 *** Starting CLI:
 
 
-COMMAND: exit
+COMMAND: h1 ping h2
+
+PING 192.168.1.1 (192.168.1.1) 56(84) bytes of data.
+
+From 192.168.0.1 icmp_seq=1 Destination Host Unreachable
+From 192.168.0.1 icmp_seq=2 Destination Host Unreachable
+From 192.168.0.1 icmp_seq=3 Destination Host Unreachable
+
+From 192.168.0.1 icmp_seq=4 Destination Host Unreachable
+From 192.168.0.1 icmp_seq=5 Destination Host Unreachable
+From 192.168.0.1 icmp_seq=6 Destination Host Unreachable
+From 192.168.0.1 icmp_seq=7 Destination Host Unreachable
+
+From 192.168.0.1 icmp_seq=8 Destination Host Unreachable
+From 192.168.0.1 icmp_seq=9 Destination Host Unreachable
+From 192.168.0.1 icmp_seq=10 Destination Host Unreachable
+
+
+--- 192.168.1.1 ping statistics ---
+11 packets transmitted, 0 received, +10 errors, 100% packet loss, time 10201ms
+pipe 4
+
+
+
+Interrupt
+
+
 
 *** Stopping 3 controllers
 

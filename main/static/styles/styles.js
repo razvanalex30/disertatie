@@ -7,6 +7,7 @@ const stopProcessButton = document.getElementById('stop-process-button');
 const interfaceSelect = document.getElementById('interface-select');
 const startCaptureButton = document.getElementById('start-capture-button');
 const stopCaptureButton = document.getElementById('stop-capture-button');
+const captureNameInput = document.getElementById('capture-name-input')
 let eventSource = null;
 let dropdownVisible = false;
 
@@ -71,6 +72,12 @@ function showCaptureControls() {
     interfaceSelect.style.display = 'inline-block';
 }
 
+function isValidCaptureName(name) {
+    // Define a regular expression pattern for valid names (letters and numbers only)
+    const pattern = /^[a-zA-Z0-9_]+$/;
+    return pattern.test(name);
+}
+
 
 function populateInterfaceDropdown() {
     // Fetch the list of available interfaces from the server
@@ -124,7 +131,7 @@ function connectToStream() {
 
          // Check if the script is starting
         if (event.data.includes('*** Starting CLI')) {
-        
+
             if (!dropdownVisible) {
                 console.log('Dropdown and buttons should appear now.'); // Debug: Check if this line is reached
                 // Populate the dropdown and show the capture controls after the script starts
@@ -197,6 +204,17 @@ stopProcessButton.addEventListener('click', function() {
 
 startCaptureButton.addEventListener('click', function() {
     const selectedInterface = interfaceSelect.value;
+    const captureName = captureNameInput.value.trim();
+
+    if (captureName === '') {
+        alert('Please enter a capture name.');
+        return;
+    }
+
+    if (!isValidCaptureName(captureName)) {
+        alert('Capture name should only contain letters, numbers, and underscores.');
+        return;
+    }
 
     // Start the capture
     fetch('/start_capture', {
@@ -204,7 +222,7 @@ startCaptureButton.addEventListener('click', function() {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: `interface=${encodeURIComponent(selectedInterface)}`
+        body: `interface=${encodeURIComponent(selectedInterface)}&name=${encodeURIComponent(captureName)}`
     })
     .then(response => response.text())
     .then(data => {
@@ -223,6 +241,7 @@ stopCaptureButton.addEventListener('click', function() {
     .then(response => response.text())
     .then(data => {
         console.log(data); // Optional: log the response from the server
+        captureNameInput.value = '';
     })
     .catch(error => {
         console.error('Error:', error);
