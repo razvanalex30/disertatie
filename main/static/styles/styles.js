@@ -42,11 +42,33 @@ messageInput.addEventListener('keydown', function(event) {
     }
 });
 
+function hideMessageInput() {
+    messageInput.style.display = 'none';
+}
+
+function showMessageInput() {
+    messageInput.style.display = 'block';
+}
+
+function hideSendButton() {
+    sendButton.style.display = 'none';
+}
+
+function showSendButton() {
+    sendButton.style.display = 'block';
+}
+
 
 function hideCaptureControls() {
     startCaptureButton.style.display = 'none';
     stopCaptureButton.style.display = 'none';
     interfaceSelect.style.display = 'none';
+}
+
+function showCaptureControls() {
+    startCaptureButton.style.display = 'inline-block';
+    stopCaptureButton.style.display = 'inline-block';
+    interfaceSelect.style.display = 'inline-block';
 }
 
 
@@ -71,8 +93,8 @@ function populateInterfaceDropdown() {
             });
 
             // Display the dropdown and buttons
-            const captureContainer = document.querySelector('.capture-container');
-            captureContainer.style.display = 'block';
+            showCaptureControls();
+            dropdownVisible = true;
         })
         .catch(error => {
             console.error('Error:', error);
@@ -90,12 +112,32 @@ function connectToStream() {
     eventSource = new EventSource('/stream');
 
     eventSource.addEventListener('message', function(event) {
+        console.log('Received message:', event.data); // Debug: Log the received message
+
+
         const line = document.createElement('p');
         line.textContent = event.data;
         logContent.appendChild(line);
 
         // Scroll to the newly added line
         line.scrollIntoView();
+
+         // Check if the script is starting
+        if (event.data.includes('*** Starting CLI')) {
+        
+            if (!dropdownVisible) {
+                console.log('Dropdown and buttons should appear now.'); // Debug: Check if this line is reached
+                // Populate the dropdown and show the capture controls after the script starts
+                populateInterfaceDropdown();
+                const captureContainer = document.querySelector('.capture-container');
+                captureContainer.style.display = 'block'; // Display the container
+                showCaptureControls();
+                showMessageInput();
+                showSendButton();
+            }
+            stopProcessButton.style.display = 'inline-block';
+        }
+
     });
 }
 
@@ -109,13 +151,8 @@ startScriptButton.addEventListener('click', function () {
         console.log(data); // Optional: log the response from the server
         startScriptButton.style.display = 'none';
 
-        // Wait for 5 seconds, then populate the interface dropdown and show capture container
-        setTimeout(() => {
-            populateInterfaceDropdown();
-            const captureContainer = document.querySelector('.capture-container');
-            captureContainer.style.display = 'block';
-            dropdownVisible = true;
-        }, 7000);
+        hideCaptureControls();
+        stopProcessButton.style.display = 'none'
 
         connectToStream(); // Establish a new EventSource connection
     })
@@ -147,8 +184,11 @@ stopProcessButton.addEventListener('click', function() {
     .then(data => {
         console.log(data); // Optional: log the response from the server
         startScriptButton.style.display = 'block';
-        dropdownVisible = false;
-        hideCaptureControls(); // Hide capture controls
+        hideCaptureControls();
+        hideMessageInput();
+        hideSendButton();
+        stopProcessButton.style.display = 'none';
+        dropdownVisible=false;
     })
     .catch(error => {
         console.error('Error:', error);
