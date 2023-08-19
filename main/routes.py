@@ -16,11 +16,29 @@ from main.models import Users, Topologies, TopologiesUploaded
 from main.webforms import RegisterForm, LoginForm, PasswordForm, TopologyForm, SearchForm, FileForm
 from main import login_manager
 from bs4 import BeautifulSoup
+from datetime import datetime
 
 log_content = ""
 log = logging.getLogger('werkzeug')
 log.disabled = True
 
+
+
+@app.template_filter('file_no_extension')
+def file_extension_removal(filename):
+    formatted_name = filename.split(".")[0]
+
+    return formatted_name
+
+@app.template_filter('file_creation_date')
+def file_creation_date_filter(filename):
+    creation_time = os.path.getctime(os.path.join(captures_dir_path, filename))
+    formatted_date = datetime.fromtimestamp(creation_time)
+
+    month = formatted_date.month if formatted_date.month >= 10 else f"{formatted_date.month}"
+    day = formatted_date.day if formatted_date.day >= 10 else f"{formatted_date.day}"
+    formatted_date = f"{month}/{day}/{formatted_date.year}, {formatted_date.strftime('%-I:%M:%S %p')}"
+    return formatted_date
 
 
 def is_valid_capture_name(name):
@@ -952,12 +970,17 @@ def run_script(topology_name):
     if not os.path.exists(captures_dir_path):
         os.mkdir(captures_dir_path)
 
+    capture_files = [file for file in os.listdir(captures_dir_path) if file.endswith('.pcap')]
+    if capture_files:
+        capture_files.sort(key=lambda x: os.path.getctime(os.path.join(captures_dir_path, x)), reverse=True)
+
+
 
     with open(f"{script_dir_path}/logfile.log", "w") as logfile:
         logfile.close()
 
 
-    return render_template('run_script.html', topology_name=topology_name)
+    return render_template('run_script.html', topology_name=topology_name, capture_files=capture_files)
 
 
 @app.route('/start_script', methods=['GET'])

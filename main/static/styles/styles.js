@@ -7,7 +7,9 @@ const stopProcessButton = document.getElementById('stop-process-button');
 const interfaceSelect = document.getElementById('interface-select');
 const startCaptureButton = document.getElementById('start-capture-button');
 const stopCaptureButton = document.getElementById('stop-capture-button');
-const captureNameInput = document.getElementById('capture-name-input')
+const captureNameInput = document.getElementById('capture-name-input');
+const spinnerHTML = document.getElementById('spinner');
+
 let eventSource = null;
 let dropdownVisible = false;
 let output_path = '';
@@ -29,26 +31,22 @@ function addCapture(name, interface, filepath) {
 // This function updates the captures table with the information from the captures array
 function updateCapturesTable() {
     const capturesTableBody = document.getElementById('captures-table-body');
-    capturesTableBody.innerHTML = ''; // Clear existing rows
-
-
-    if (captures.length === 0) {
-        capturesTableBody.innerHTML = '<tr><td colspan="6">No available captures</td></tr>';
-        return;
+    console.log("CAPTURES TABLE INNER HTML: " + capturesTableBody.innerHTML);
+    if (capturesTableBody.innerHTML.includes('No captures available for this topology')) {
+        capturesTableBody.innerHTML = '';
     }
+    console.log("CAPTURES LENGTH ESTE: " + captures.length);
+    const capture = captures[captures.length-1];
+    console.log("CAPTURE ESTE: " + JSON.stringify(capture));
+    const row = document.createElement('tr');
+    row.innerHTML = `
+        <td>${capture.name}</td>
+        <td>${capture.date}</td>
+        <td><button  name="${capture.name}">Download</button></td>
+        <td><button  name="${capture.name}" onclick={deleteCapture}>Delete</button></td>
+    `;
+    capturesTableBody.insertBefore(row, capturesTableBody.firstChild);
 
-    for (let i = 0; i < captures.length; i++) {
-        const capture = captures[i];
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>${i + 1}</td>
-            <td>${capture.name}</td>
-            <td>${capture.date}</td>
-            <td><button id="download-button-${i + 1}" name="${capture.name}">Download</button></td>
-            <td><button id="delete-button-${i + 1}" name="${capture.name}" index="${i + 1}" onclick={deleteCapture}>Delete</button></td>
-        `;
-        capturesTableBody.appendChild(row);
-    }
 }
 
 
@@ -346,6 +344,8 @@ startCaptureButton.addEventListener('click', function() {
         const display_name = selectedInterface + "_" + captureName
         addCapture(display_name, selectedInterface, output_path);
 
+        spinnerHTML.style.display = 'inline-block';
+
     // Update the captures table to reflect the new capture
 //        updateCapturesTable();
 
@@ -367,6 +367,7 @@ stopCaptureButton.addEventListener('click', function() {
         showstartCaptureButton();
         hidestopCaptureButton();
         updateCapturesTable();
+        spinnerHTML.style.display = 'none';
     })
     .catch(error => {
         console.error('Error:', error);
