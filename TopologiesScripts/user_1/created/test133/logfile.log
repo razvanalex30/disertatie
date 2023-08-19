@@ -53,7 +53,9 @@ r1-eth0 <-> s1-eth4 (r1 s1)
 *** Starting CLI:
 
 
-COMMAND: exit
+Interrupt
+
+
 
 *** Stopping 3 controllers
 

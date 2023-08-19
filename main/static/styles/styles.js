@@ -23,15 +23,17 @@ function addCapture(name, interface, filepath) {
         date: new Date().toLocaleString(),
         filepath: filepath
     });
+
 }
 
 // This function updates the captures table with the information from the captures array
 function updateCapturesTable() {
-    const capturesTable = document.getElementById('captures-table');
-    capturesTable.innerHTML = ''; // Clear existing rows
+    const capturesTableBody = document.getElementById('captures-table-body');
+    capturesTableBody.innerHTML = ''; // Clear existing rows
+
 
     if (captures.length === 0) {
-        capturesTable.innerHTML = '<tr><td colspan="6">No available captures</td></tr>';
+        capturesTableBody.innerHTML = '<tr><td colspan="6">No available captures</td></tr>';
         return;
     }
 
@@ -42,10 +44,10 @@ function updateCapturesTable() {
             <td>${i + 1}</td>
             <td>${capture.name}</td>
             <td>${capture.date}</td>
-            <td><a href="#">Download</a></td>
-            <td><a href="#">Delete</a></td>
+            <td><button id="download-button-${i + 1}" name="${capture.name}">Download</button></td>
+            <td><button id="delete-button-${i + 1}" name="${capture.name}" index="${i + 1}" onclick={deleteCapture}>Delete</button></td>
         `;
-        capturesTable.appendChild(row);
+        capturesTableBody.appendChild(row);
     }
 }
 
@@ -226,7 +228,7 @@ function connectToStream() {
     eventSource = new EventSource('/stream');
 
     eventSource.addEventListener('message', function(event) {
-        console.log('Received message:', event.data); // Debug: Log the received message
+//        console.log('Received message:', event.data); // Debug: Log the received message
 
 
         const line = document.createElement('p');
@@ -345,7 +347,7 @@ startCaptureButton.addEventListener('click', function() {
         addCapture(display_name, selectedInterface, output_path);
 
     // Update the captures table to reflect the new capture
-        updateCapturesTable();
+//        updateCapturesTable();
 
     })
     .catch(error => {
@@ -364,6 +366,7 @@ stopCaptureButton.addEventListener('click', function() {
         captureNameInput.value = '';
         showstartCaptureButton();
         hidestopCaptureButton();
+        updateCapturesTable();
     })
     .catch(error => {
         console.error('Error:', error);
