@@ -8,6 +8,7 @@ const interfaceSelect = document.getElementById('interface-select');
 const startCaptureButton = document.getElementById('start-capture-button');
 const stopCaptureButton = document.getElementById('stop-capture-button');
 const captureNameInput = document.getElementById('capture-name-input');
+const capturesTableBody = document.getElementById('captures-table-body');
 const spinnerHTML = document.getElementById('spinner');
 
 let eventSource = null;
@@ -30,60 +31,53 @@ function addCapture(name, interface, filepath) {
 
 // This function updates the captures table with the information from the captures array
 function updateCapturesTable() {
-    const capturesTableBody = document.getElementById('captures-table-body');
-    console.log("CAPTURES TABLE INNER HTML: " + capturesTableBody.innerHTML);
+    //If the table is initially empty remove the default text
     if (capturesTableBody.innerHTML.includes('No captures available for this topology')) {
         capturesTableBody.innerHTML = '';
     }
-    console.log("CAPTURES LENGTH ESTE: " + captures.length);
+
+    //Get the capture the user is trying to input in the table
     const capture = captures[captures.length-1];
-    console.log("CAPTURE ESTE: " + JSON.stringify(capture));
+
+    //Prepare to create a new table row
     const row = document.createElement('tr');
+
+    //Populate the table row with the capture info
     row.innerHTML = `
         <td>${capture.name}</td>
         <td>${capture.date}</td>
         <td><button  name="${capture.name}">Download</button></td>
-        <td><button  name="${capture.name}" onclick={deleteCapture}>Delete</button></td>
+        <td><button  onclick="deleteCapture('${capture.name}')">Delete</button></td>
     `;
-    capturesTableBody.insertBefore(row, capturesTableBody.firstChild);
 
+    //Insert the new row at the very top of the table
+    capturesTableBody.insertBefore(row, capturesTableBody.firstChild);
 }
 
 
 // This function deletes a capture from the captures array and updates the table
-function deleteCapture(index) {
-    const capture = captures[index];
-    const confirmDelete = confirm(`Are you sure you want to delete "${capture.name}"?`);
+function deleteCapture(fileName) {
+    //Get all the table rows
+    let rows = capturesTableBody.getElementsByTagName("tr");
 
-    if (confirmDelete) {
-        // Delete the capture file on the server
-        fetch('/delete_capture', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: `filepath=${encodeURIComponent(capture.filepath)}`
-        })
-        .then(response => response.text())
-        .then(data => {
-            console.log(data); // Optional: log the response from the server
+    //Iterate through the table rows
+    for(let index = 0; index < rows.length; index++){
 
-            // Remove the capture from the captures array
-            captures.splice(index, 1);
+        //Check which rows has the capture name of the one the user is trying to delete via the button and remove the row visually
+        if(rows[index].cells[0].innerText.includes(fileName)){
+            rows[index].parentNode.removeChild(rows[index]);
+        }
 
-            // Update the captures table
-            updateCapturesTable();
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+        //If the user is trying to remove the last capture row, replace the table content with the default message
+        if(rows.length == 0){
+            capturesTableBody.innerHTML = `<tr>
+                    <td colspan="4">No captures available for this topology.</td>
+                </tr>`
+        }
     }
 }
 
-
-
-
-
+//Razvan to add
 function sendMessage() {
     const message = messageInput.value;
 

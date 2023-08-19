@@ -55,7 +55,7 @@
                         <td>{{ file|file_no_extension }}</td>
                         <td>{{ file|file_creation_date }}</td>
                         <td><button>Download</button></td>
-                        <td><button>Delete</button></td>
+                        <td><button onclick="deleteCapture('{{file|file_no_extension}}')">Delete</button></td>
                     </tr>
                 {% endfor %}
                 {% else %}

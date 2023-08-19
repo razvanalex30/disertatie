@@ -1112,6 +1112,11 @@ def stop_capture():
     else:
         return 'No active capture to stop'
 
+# @app.route('/delete_capture', methods=['POST'])
+# @login_required
+# def delete_capture():
+
+
 
 
 
