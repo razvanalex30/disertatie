@@ -1,13 +1,13 @@
 *** Creating network
 
-*** Adding controller
-
 *** Adding hosts:
 
-h1 
-h2 
-h3 
-r1 
+d1 
+d2 
+d3 
+d4 
+d5 
+d6 
 
 *** Adding switches:
 
@@ -15,23 +15,26 @@ s1
 
 *** Adding links:
 
-(h1, s1) 
-(h2, s1) 
-(h3, s1) 
-(r1, s1) 
+(d1, s1) 
+(d2, s1) 
+(d3, s1) 
+(d4, s1) 
+(d5, s1) 
+(d6, s1) 
 
 
 *** Configuring hosts
 
-h1 
-h2 
-h3 
-r1 
+d1 
+d2 
+d3 
+d4 
+d5 
+d6 
 
 
 *** Starting controller
 
-c0 
 
 
 *** Starting 1 switches
@@ -40,32 +43,19 @@ s1
 ...
 
 
-*** Waiting for switches to connect
-
-s1 
-
-
-TOPOLOGY LINKS
-h1-eth0 <-> s1-eth1 (h1 s1)
-h2-eth0 <-> s1-eth2 (h2 s1)
-h3-eth0 <-> s1-eth3 (h3 s1)
-r1-eth0 <-> s1-eth4 (r1 s1)
 *** Starting CLI:
 
 
-Interrupt
+COMMAND: exit
+
+*** Stopping 0 controllers
 
 
 
-*** Stopping 3 controllers
+*** Stopping 6 links
 
-c0 
-c1 
-c2 
-
-
-*** Stopping 4 links
-
+.
+.
 .
 .
 .
@@ -77,12 +67,14 @@ c2
 s1 
 
 
-*** Stopping 4 hosts
+*** Stopping 6 hosts
 
-h1 
-h2 
-h3 
-r1 
+d1 
+d2 
+d3 
+d4 
+d5 
+d6 
 
 *** Done
 

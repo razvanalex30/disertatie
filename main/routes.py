@@ -943,6 +943,16 @@ def run_script(topology_name):
         script_dir_path = os.path.join(user_scripts_dir, f"uploaded/{topology_name}")
         script_path = os.path.join(user_scripts_dir, f"uploaded/{topology_name}/{topology_name}.py")
 
+    global captures_dir_path
+    if topologies_created != []:
+        captures_dir_path = os.path.join(user_scripts_dir, f"created/{topology_name}/captures")
+    elif topologies_uploaded != []:
+        captures_dir_path = os.path.join(user_scripts_dir, f"uploaded/{topology_name}/captures")
+
+    if not os.path.exists(captures_dir_path):
+        os.mkdir(captures_dir_path)
+
+
     with open(f"{script_dir_path}/logfile.log", "w") as logfile:
         logfile.close()
 
@@ -1052,14 +1062,14 @@ def start_capture():
     if not is_valid_capture_name(capture_name):
         return 'Invalid capture name'
 
-    captures_output_dir = os.path.join(f"{script_dir_path}", "captures")
-    print(f">>>>CAPTURES DIR: {captures_output_dir}")
-    if not os.path.exists(captures_output_dir):
-        print("SUNT IN IF")
-        os.mkdir(captures_output_dir)
+    # captures_output_dir = os.path.join(f"{script_dir_path}", "captures")
+    print(f">>>>CAPTURES DIR: {captures_dir_path}")
+    # if not os.path.exists(captures_output_dir):
+    #     print("SUNT IN IF")
+    #     os.mkdir(captures_output_dir)
 
     global output_path
-    output_path = f"{captures_output_dir}/{interface}_{capture_name}.pcap"
+    output_path = f"{captures_dir_path}/{interface}_{capture_name}.pcap"
     global capture_proc
     capture_proc = subprocess.Popen(["tshark", "-i", interface, "-w", output_path], preexec_fn=os.setpgrp)
     return output_path
