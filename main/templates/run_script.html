@@ -54,8 +54,8 @@
                     <tr>
                         <td>{{ file|file_no_extension }}</td>
                         <td>{{ file|file_creation_date }}</td>
-                        <td><button>Download</button></td>
-                        <td><button onclick="deleteCapture('{{file|file_no_extension}}')">Delete</button></td>
+                        <td><a href="{{url_for('download_capture', filename=file|file_no_extension)}}" class="btn btn-primary">Download</a></td>
+                        <td><button onclick="deleteCapture('{{file|file_no_extension}}')" class="btn btn-primary">Delete</button></td>
                     </tr>
                 {% endfor %}
                 {% else %}

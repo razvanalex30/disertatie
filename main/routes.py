@@ -1,4 +1,4 @@
-from flask import render_template, flash, request, redirect, url_for, session, Response, jsonify
+from flask import render_template, flash, request, redirect, url_for, session, Response, jsonify, send_file
 from main import app
 from main import db
 import os
@@ -1111,6 +1111,17 @@ def stop_capture():
         return output_path
     else:
         return 'No active capture to stop'
+
+@app.route('/download_capture/<filename>', methods=['GET'])
+@login_required
+def download_capture(filename):
+    capture_name = filename + ".pcap"
+    file_path = os.path.join(captures_dir_path, capture_name)
+
+    if os.path.exists(file_path):
+        return send_file(file_path, as_attachment=True)
+    else:
+        return "File not found", 404
 
 @app.route('/delete_capture', methods=['POST'])
 @login_required

@@ -46,13 +46,18 @@ function updateCapturesTable() {
     row.innerHTML = `
         <td>${capture.name}</td>
         <td>${capture.date}</td>
-        <td><button  name="${capture.name}">Download</button></td>
-        <td><button  onclick="deleteCapture('${capture.name}')">Delete</button></td>
+        <td><a href="/download_capture/${capture.name}" class="btn btn-primary">Download</a></td>
+        <td><button  onclick="deleteCapture('${capture.name}')" class="btn btn-primary">Delete</button></td>
     `;
 
     //Insert the new row at the very top of the table
     capturesTableBody.insertBefore(row, capturesTableBody.firstChild);
 }
+
+
+
+
+
 
 
 // This function deletes a capture from the captures array and updates the table
