@@ -1112,9 +1112,21 @@ def stop_capture():
     else:
         return 'No active capture to stop'
 
-# @app.route('/delete_capture', methods=['POST'])
-# @login_required
-# def delete_capture():
+@app.route('/delete_capture', methods=['POST'])
+@login_required
+def delete_capture():
+    capture_name = request.form['filepath']
+    capture_name = capture_name + ".pcap"
+    file_path = os.path.join(captures_dir_path, capture_name)
+    try:
+        os.remove(file_path)
+        return f"Capture {capture_name} was deleted"
+    except Exception as e:
+        return f'Error deleting capture: {str(e)}'
+
+
+
+
 
 
 

@@ -59,23 +59,41 @@ function updateCapturesTable() {
 function deleteCapture(fileName) {
     //Get all the table rows
     let rows = capturesTableBody.getElementsByTagName("tr");
+    const confirmDelete = confirm(`Are you sure you want to delete "${fileName}"?`);
 
-    //Iterate through the table rows
-    for(let index = 0; index < rows.length; index++){
+    if (confirmDelete) {
 
-        //Check which rows has the capture name of the one the user is trying to delete via the button and remove the row visually
-        if(rows[index].cells[0].innerText.includes(fileName)){
-            rows[index].parentNode.removeChild(rows[index]);
-        }
+        //Iterate through the table rows
+        for(let index = 0; index < rows.length; index++){
 
-        //If the user is trying to remove the last capture row, replace the table content with the default message
-        if(rows.length == 0){
-            capturesTableBody.innerHTML = `<tr>
-                    <td colspan="4">No captures available for this topology.</td>
-                </tr>`
-        }
-    }
-}
+            //Check which rows has the capture name of the one the user is trying to delete via the button and remove the row visually
+            if(rows[index].cells[0].innerText.includes(fileName)){
+                rows[index].parentNode.removeChild(rows[index]);
+            }
+
+            //If the user is trying to remove the last capture row, replace the table content with the default message
+            if(rows.length == 0){
+                capturesTableBody.innerHTML = `<tr>
+                        <td colspan="4">No captures available for this topology.</td>
+                    </tr>`
+            }
+            }
+        fetch('/delete_capture', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: `filepath=${encodeURIComponent(fileName)}`
+        })
+        .then(response => response.text())
+        .then(data => {
+            console.log(data); // Optional: log the response from the server
+
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}}
 
 //Razvan to add
 function sendMessage() {
