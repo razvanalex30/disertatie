@@ -333,6 +333,7 @@ stopProcessButton.addEventListener('click', function() {
 startCaptureButton.addEventListener('click', function() {
     const selectedInterface = interfaceSelect.value;
     const captureName = captureNameInput.value.trim();
+    let rows = capturesTableBody.getElementsByTagName("tr");
 
     if (captureName === '') {
         alert('Please enter a capture name.');
@@ -343,6 +344,15 @@ startCaptureButton.addEventListener('click', function() {
         alert('Capture name should only contain letters, numbers, and underscores.');
         return;
     }
+
+    for(let index = 0; index < rows.length; index++){
+
+            //Check which rows has the capture name of the one the user is trying to delete via the button and remove the row visually
+            if(rows[index].cells[0].innerText.includes(captureName) && rows[index].cells[0].innerText.includes(selectedInterface)){
+                alert('There is a capture with this name already! Please choose another name or another interface.');
+                return;
+            }}
+
 
     // Start the capture
     fetch('/start_capture', {
