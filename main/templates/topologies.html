@@ -17,8 +17,10 @@
 {% set created_topology_names = topologies_created|map(attribute='topology_name')|list %}
 {% for topology in topologies %}
 <div class="shadow p-3 mb-5 bg-body-tertiary rounded">
-    <h2><a href="{{url_for('topology', id=topology.id)}}">{{topology.topology_name}}</a></h2><br/>
-    {{topology.topology_description|safe}}<br/>
+    <h2><a>{{topology.topology_name}}</a></h2><br/>
+    <h6>Description:</h6>
+        <a>{{topology.topology_description|safe}}</a>
+    <br/>
     <br/>
     {% if topology.topology_creator_id == current_user.id %}
         <div class="d-flex">
