@@ -1,0 +1,48 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% for message in get_flashed_messages() %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+
+{% endfor %}
+
+
+    <h1>Reset Password</h1>
+    <br/><br/>
+
+
+<div class="shadow p-3 mb-5 bg-body-tertiary rounded">
+
+    <form method="POST">
+        {{ form.hidden_tag() }}
+
+
+        {{ form.email.label(class="form-label") }}
+
+        {% if form.email.errors %}
+            {{ form.email(class="form-control is-invalid") }}
+        <div class="invalid-feedback">
+            {% for error in form.email.errors %}
+                <span>{{ error }}</span>
+            {% endfor %}
+        </div>
+        {% else %}
+            {{ form.email(class="form-control") }}
+        {% endif %}
+        <br/>
+        {{ form.submit(class="btn btn-primary") }}
+        <br/>
+    </form>
+    <br/>
+</div>
+<br/>
+<br/> <br/> <br/>
+
+
+{% endblock %}

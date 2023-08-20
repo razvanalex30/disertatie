@@ -617,3 +617,21 @@ class TopologyForm(FlaskForm):
         return True
 
 
+
+
+class RequestResetForm(FlaskForm):
+    email = StringField("Email", validators=[DataRequired(), Email()])
+    submit = SubmitField("Request Password Reset")
+
+    def validate_email(self, email):
+        user = Users.query.filter_by(email=email.data).first()
+        if not user:
+            raise ValidationError("Error - There is no account with this email. Please register first!")
+
+
+class ResetPasswordForm(FlaskForm):
+    password_hash = PasswordField("Password", validators=[DataRequired(),
+                                                          EqualTo("password_hash2", message="Passwords must match!")])
+    password_hash2 = PasswordField("Confirm Password", validators=[DataRequired()])
+
+    submit = SubmitField("Reset Password")

@@ -13,10 +13,12 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from flask_login import login_user, login_required, logout_user, current_user
 from main.models import Users, Topologies, TopologiesUploaded
-from main.webforms import RegisterForm, LoginForm, PasswordForm, TopologyForm, SearchForm, FileForm
+from main.webforms import RegisterForm, LoginForm, PasswordForm, TopologyForm, SearchForm, FileForm, RequestResetForm, ResetPasswordForm
 from main import login_manager
 from bs4 import BeautifulSoup
 from datetime import datetime
+from main import app, mail
+from flask_mail import Message
 
 log_content = ""
 log = logging.getLogger('werkzeug')
@@ -881,6 +883,7 @@ def add_user():
         form.password_hash.data = ''
         form.master_name.data = ''
         flash("User added successfully")
+        return redirect(url_for('login'))
     our_users = Users.query.order_by(Users.date_added)
     return render_template("add_user.html", form=form,
                            full_name=full_name,
@@ -1136,6 +1139,59 @@ def delete_capture():
         return f'Error deleting capture: {str(e)}'
 
 
+
+def send_reset_email(user):
+    token = user.get_reset_token()
+    msg = Message('Password Reset Request',
+                  sender='noreply@demo.com',
+                  recipients=[user.email])
+
+    msg.body = f''' To reset your password, please access the following link:
+{url_for('reset_token', token=token, _external=True)}
+If you did not make this request, please ignore this request and no changes will be made to you account.
+
+Regards,
+Disertatie Demo - Razvan Alexandru
+'''
+    mail.send(msg)
+
+@app.route('/reset_password', methods=['GET','POST'])
+def reset_request():
+    if current_user.is_authenticated:
+        return redirect(url_for('dashboard'))
+
+    form = RequestResetForm()
+    if form.validate_on_submit():
+        user = Users.query.filter_by(email=form.email.data).first()
+        send_reset_email(user)
+        flash('An email has been sent with instructions to reset your password', 'info')
+        return redirect(url_for('login'))
+
+
+
+    return render_template('reset_request.html', title='Reset Password', form=form)
+
+
+@app.route('/reset_password/<token>', methods=['GET','POST'])
+def reset_token(token):
+    if current_user.is_authenticated:
+        return redirect(url_for('dashboard'))
+
+    user = Users.verify_reset_token(token)
+    if not user:
+        flash('That is an invalid or expired token', 'warning')
+        return redirect(url_for('reset_request'))
+
+    form = ResetPasswordForm()
+    if form.validate_on_submit():
+
+        hashed_passwrd = generate_password_hash(form.password_hash.data, "sha256")
+        user.password_hash = hashed_passwrd
+        db.session.commit()
+        flash("Your password has been updated successfully! You are now able to login into your account")
+        return redirect(url_for('login'))
+
+    return render_template('reset_token.html', title='Reset Password', form=form)
 
 
 

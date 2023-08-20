@@ -1,8 +1,8 @@
-from main import db
+from main import db, app
 from datetime import datetime
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
-from sqlalchemy.dialects.mysql import LONGTEXT
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 
 
 # Create Topology Model
@@ -54,6 +54,23 @@ class Users(db.Model, UserMixin):
     date_added = db.Column(db.DateTime, default=datetime.utcnow)
     # A user can have many topologies
     topologies = db.relationship("Topologies", backref="topology_creator", lazy=True)
+
+
+    def get_reset_token(self, expires_sec=1800):
+        s = Serializer(app.config['SECRET_KEY'], expires_sec)
+        return s.dumps({'user_id': self.id}).decode('utf-8')
+
+    @staticmethod
+    def verify_reset_token(token):
+        s = Serializer(app.config['SECRET_KEY'])
+        try:
+            user_id = s.loads(token)['user_id']
+        except:
+            return None
+
+        return Users.query.get(user_id)
+
+
 
 
     @property
