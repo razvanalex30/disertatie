@@ -324,22 +324,27 @@ def search():
 
 # Show Topologies
 
+@app.route("/topologies_uploaded")
+@login_required
+def topologies_uploaded():
+    topology_creator = current_user.id
+    # Grab all the topologies from the database for the current user
+    page = request.args.get('page', 1, type=int)
+    topologies_uploaded = TopologiesUploaded.query.filter_by(topology_creator_id=topology_creator).order_by(TopologiesUploaded.date_created.desc()).paginate(page=page, per_page=5)
+
+    return render_template("topologies_uploaded.html", topologies_uploaded=topologies_uploaded)
+
+
+
 @app.route("/topologies")
 @login_required
 def topologies():
     topology_creator = current_user.id
     # Grab all the topologies from the database for the current user
-    query_created = Topologies.query.filter_by(topology_creator_id=topology_creator).order_by(Topologies.date_created.desc())
-    query_uploaded = TopologiesUploaded.query.filter_by(topology_creator_id=topology_creator).order_by(TopologiesUploaded.date_created.desc())
-    topologies_created = query_created.all()
-    topologies_uploaded = query_uploaded.all()
-    topologies = topologies_created + topologies_uploaded
-    topologies = sorted(topologies, key=lambda x: x.date_created, reverse=True)
+    page = request.args.get('page', 1, type=int)
+    topologies_created = Topologies.query.filter_by(topology_creator_id=topology_creator).order_by(Topologies.date_created.desc()).paginate(page=page, per_page=5)
 
-    return render_template("topologies.html", topologies=topologies,
-                           topologies_created=topologies_created,
-                           topologies_uploaded=topologies_uploaded)
-
+    return render_template("topologies.html", topologies_created=topologies_created)
 
 @app.route("/topologies/<int:id>")
 @login_required
@@ -549,16 +554,16 @@ def delete_topology_uploaded(id):
             db.session.commit()
             # Return a message
             flash("Topology was deleted!")
-            return redirect(url_for('topologies'))
+            return redirect(url_for('topologies_uploaded'))
 
         except:
             # Return error message
             flash("ERROR when deleting Topology, please try again")
-            return redirect(url_for('topologies'))
+            return redirect(url_for('topologies_uploaded'))
     else:
         # Return a message
         flash("You are not authorized to delete this topology!")
-        return redirect(url_for('topologies'))
+        return redirect(url_for('topologies_uploaded'))
 
 
 
@@ -589,7 +594,7 @@ def edit_topology_uploaded(id):
         db.session.commit()
 
         flash("Topology updated successfully!")
-        return redirect(url_for('topologies'))
+        return redirect(url_for('topologies_uploaded'))
 
     return render_template('edit_topology_uploaded.html', form=form, file_name=file_name)
 
@@ -640,7 +645,7 @@ def create_topology():
         form.topology_description.data = ''
 
         flash('Topology created successfully!', 'success')
-        return redirect(url_for('topologies'))
+        return redirect(url_for('topologies_uploaded'))
 
 
     return render_template('create_topology.html', form=form)
@@ -892,10 +897,10 @@ def add_user():
 
 @app.route('/')
 def index():
-    first_name = "John"
-    stuff = "This is <strong>Bold</strong> Text"
-    return render_template("index.html", first_name=first_name,
-                           stuff=stuff)
+    if current_user.is_authenticated:
+        return redirect(url_for('dashboard'))
+    else:
+        return redirect(url_for('login'))
 
 @app.route('/user/<name>')
 def user(name):
