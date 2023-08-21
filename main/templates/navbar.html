@@ -9,9 +9,6 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="{{url_for('index')}}">Home</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{{url_for('user', name='Razvan')}}">My Profile</a>
-        </li>
         {% if current_user.is_authenticated %}
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="{{url_for('dashboard')}}">Dashboard</a>
@@ -32,12 +29,20 @@
           <a class="nav-link active" aria-current="page" href="{{url_for('login')}}">Login</a>
         </li>
         {% endif %}
+        {% if current_user.is_authenticated %}
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{{url_for('add_topology')}}">Add Topology</a>
+          <a class="nav-link active" aria-current="page" href="{{url_for('add_topology')}}">Create Topology</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{{url_for('topologies')}}">My Topologies</a>
+          <a class="nav-link active" aria-current="page" href="{{url_for('create_topology')}}">Upload Topology</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{{url_for('topologies')}}">Topologies Created</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{{url_for('topologies_uploaded')}}">Topologies Uploaded</a>
+        </li>
+        {% endif %}
       </ul>
       <form method="POST" action="{{url_for('search')}}" class="d-flex" role="search">
         {{ form.hidden_tag() }}

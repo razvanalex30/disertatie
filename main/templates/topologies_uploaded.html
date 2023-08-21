@@ -16,13 +16,13 @@
     <h1 class="mb-3">Topologies uploaded ({{topologies_uploaded.total}}) </h1>
     {% for topology in topologies_uploaded.items %}
     <div class="shadow p-3 mb-5 bg-body-tertiary rounded">
-        <h2><a>{{topology.topology_name}}</a></h2><br/>
+        <h2 style="text-align: center"><a>{{topology.topology_name}}</a></h2><br/>
         <h6>Description:</h6>
-            <a>{{topology.topology_description|safe}}</a>
+        <p class="cutoff-text">{{topology.topology_description|safe|remove_tags}}</p>
         <br/>
         <br/>
         {% if topology.topology_creator_id == current_user.id %}
-            <div class="d-flex">
+            <div class="d-flex" style="justify-content: center">
                 <div class="me-2">
                     <a href="{{url_for('run_script', topology_name=topology.topology_name)}}" class="btn btn-outline-secondary btn-sm">Run Topology</a>
                 </div>

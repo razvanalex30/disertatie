@@ -25,6 +25,13 @@ log = logging.getLogger('werkzeug')
 log.disabled = True
 
 
+@app.template_filter('remove_tags')
+def remove_tags_text(text):
+    soup = BeautifulSoup(text, 'html.parser')
+    plain_text = soup.get_text()
+
+    return plain_text
+
 
 @app.template_filter('file_no_extension')
 def file_extension_removal(filename):
@@ -313,12 +320,14 @@ def search():
         topologies_uploaded = topologies_uploaded.order_by(TopologiesUploaded.topology_name).all()
 
         topologies = topologies_created + topologies_uploaded
+        topologies_nr = len(topologies)
         # TO DO -> DE ADAUGAT REDIRECT LINK CATRE TOPOLOGIES UPLOADED/CREATED
         return render_template("search.html", form=form,
                                searched=topology.searched,
                                topologies_created=topologies_created,
                                topologies_uploaded=topologies_uploaded,
-                               topologies=topologies)
+                               topologies=topologies,
+                               topologies_nr=topologies_nr)
 
 
 
