@@ -214,7 +214,7 @@ def create_topology_script(**kwargs):
         existing_code = f.read()
         f.close()
 
-
+    logfile = f'{directory_path}/logfile.log'
 
 
     # Append the new lines to the existing code
@@ -222,6 +222,7 @@ def create_topology_script(**kwargs):
     new_code = re.sub(r'# Insert your code here', '\n        '.join(hosts_lines), existing_code)
     new_code = re.sub(r'# Insert router code here', '\n    '.join(routers_created_intf), new_code)
     new_code = re.sub(r'# Insert links here', '\n        '.join(connection_text_lines), new_code)
+    new_code = re.sub(r'#LOGFILE', logfile, new_code)
 
     # Write the modified code back to the script
     with open(f'{directory_path}/{file_name}.py', 'w') as f:
@@ -987,10 +988,18 @@ def run_script(topology_name):
     global script_path
     if topologies_created != []:
         script_dir_path = os.path.join(user_scripts_dir, f"created/{topology_name}")
-        script_path = os.path.join(user_scripts_dir, f"created/{topology_name}/{topology_name}.py")
+        files = os.listdir(script_dir_path)
+        for file in files:
+            if file.endswith(".py"):
+                script_path = os.path.join(script_dir_path, file)
+                break
     elif topologies_uploaded != []:
         script_dir_path = os.path.join(user_scripts_dir, f"uploaded/{topology_name}")
-        script_path = os.path.join(user_scripts_dir, f"uploaded/{topology_name}/{topology_name}.py")
+        files = os.listdir(script_dir_path)
+        for file in files:
+            if file.endswith(".py"):
+                script_path = os.path.join(script_dir_path, file)
+                break
 
     global captures_dir_path
     if topologies_created != []:
