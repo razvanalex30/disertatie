@@ -488,10 +488,17 @@ def edit_topology(id):
 
                 # Update
                 if topology_name_begin != topology.topology_name:
-                    directory_path = os.path.join("/home/razvan/Disertatie/disertatie/TopologiesScripts",
+                    directory_path_old = os.path.join("/home/razvan/Disertatie/disertatie/TopologiesScripts",
                                                  f"user_{topology.topology_creator_id}",
                                                  f"created/{topology_name_begin}")
-                    shutil.rmtree(directory_path)
+                    directory_path_new = os.path.join("/home/razvan/Disertatie/disertatie/TopologiesScripts",
+                                                 f"user_{topology.topology_creator_id}",
+                                                 f"created/{topology.topology_name}")
+
+                    file_path_old = os.path.join(directory_path_old, f"{topology_name_begin}.py")
+                    file_path_new = os.path.join(directory_path_old, f"{topology.topology_name}.py")
+                    os.rename(file_path_old, file_path_new)
+                    os.rename(directory_path_old, directory_path_new)
 
                 directory_path = os.path.join("/home/razvan/Disertatie/disertatie/TopologiesScripts",
                                               f"user_{topology.topology_creator_id}", f"created/{form.topology_name.data}")
