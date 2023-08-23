@@ -164,12 +164,27 @@ class FileForm(FlaskForm):
         file_path = os.path.join("/home/razvan/Disertatie/disertatie/uploads", field.data.filename)
         field.data.save(file_path)
 
+        valid_tag = "#LOGFILE"
+        valid_tag_count = 0
+        with open(file_path, 'r') as file:
+            lines = file.readlines()
+            for line in lines:
+                if valid_tag in line:
+                    valid_tag_count += 1
+            file.close()
+
+        if valid_tag_count != 1:
+            os.remove(file_path)
+            raise ValidationError("The script doesn't include the valid line, please check the file!")
+
 
         run_python = run_python_script(file_path)
         print(f">>>> VALOARE {run_python}")
         if not run_python:
             os.remove(file_path)
             raise ValidationError("Python file has errors, please check!")
+
+
 
 
         session['file_path'] = file_path

@@ -605,6 +605,7 @@ def edit_topology_uploaded(id):
                     os.remove(os.path.join(directory_path, file))
             file_path = os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(form.topology_python_file.data.filename))
             print(f"#### FILE_PATH NOU ESTE: {file_path}")
+            file_name_new = file_path.split("/")[-1]
             shutil.move(file_path, directory_path)
             form.topology_python_file.data.save(file_path)
             topology.topology_file_path = file_path
@@ -612,6 +613,19 @@ def edit_topology_uploaded(id):
                 if not f.endswith(".py"):
                     continue
                 os.remove(os.path.join(app.config['UPLOAD_FOLDER'], f))
+
+            logfile = f'{directory_path}/logfile.log'
+            file_path_new = os.path.join(directory_path, file_name_new)
+            with open(file_path_new, 'r') as file:
+                existing_code = file.read()
+                file.close()
+
+            new_code = re.sub(r'#LOGFILE', logfile, existing_code)
+
+            with open(file_path_new, 'w') as file:
+                file.write(new_code)
+                file.close()
+
 
         # Commit the changes to the database
         db.session.add(topology)
@@ -645,12 +659,24 @@ def create_topology():
         if not os.path.exists(directory_path):
             os.makedirs(directory_path)
         shutil.move(file_path, directory_path)
-        directory_path = os.path.join(directory_path, file_name)
-        print(f"DIRECTORY_PATH ESTE: {directory_path}")
+        file_path_new = os.path.join(directory_path, file_name)
+        print(f"FILE_PATH NEW ESTE: {file_path_new}")
+        logfile = f'{directory_path}/logfile.log'
+
+        with open(file_path_new, 'r') as file:
+            existing_code = file.read()
+            file.close()
+
+        new_code = re.sub(r'#LOGFILE', logfile, existing_code)
+
+        with open(file_path_new, 'w') as file:
+            file.write(new_code)
+            file.close()
+
 
         post = TopologiesUploaded(topology_name=form.topology_name.data,
                           topology_description=form.topology_description.data,
-                          topology_file_path=directory_path,
+                          topology_file_path=file_path_new,
                           topology_creator_id=topology_creator,
                           )
 
