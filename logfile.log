@@ -403,3 +403,249 @@ r1
 
 *** Done
 
+*** Creating network
+
+*** Adding hosts:
+
+d1 
+d2 
+d3 
+d4 
+d5 
+d6 
+
+*** Adding switches:
+
+s1 
+
+*** Adding links:
+
+(d1, s1) 
+(d2, s1) 
+(d3, s1) 
+(d4, s1) 
+(d5, s1) 
+(d6, s1) 
+
+
+*** Configuring hosts
+
+d1 
+d2 
+d3 
+d4 
+d5 
+d6 
+
+
+*** Starting controller
+
+
+
+*** Starting 1 switches
+
+s1 
+...
+
+
+*** Starting CLI:
+
+
+Interrupt
+
+
+
+*** Stopping 0 controllers
+
+
+
+*** Stopping 6 links
+
+.
+.
+.
+.
+.
+.
+
+
+*** Stopping 1 switches
+
+s1 
+
+
+*** Stopping 6 hosts
+
+d1 
+d2 
+d3 
+d4 
+d5 
+d6 
+
+*** Done
+
+*** Creating network
+
+*** Adding hosts:
+
+d1 
+d2 
+d3 
+d4 
+d5 
+d6 
+
+*** Adding switches:
+
+s1 
+
+*** Adding links:
+
+(d1, s1) 
+(d2, s1) 
+(d3, s1) 
+(d4, s1) 
+(d5, s1) 
+(d6, s1) 
+
+
+*** Configuring hosts
+
+d1 
+d2 
+d3 
+d4 
+d5 
+d6 
+
+
+*** Starting controller
+
+
+
+*** Starting 1 switches
+
+s1 
+...
+
+
+*** Starting CLI:
+
+
+Interrupt
+
+
+
+*** Stopping 0 controllers
+
+
+
+*** Stopping 6 links
+
+.
+.
+.
+.
+.
+.
+
+
+*** Stopping 1 switches
+
+s1 
+
+
+*** Stopping 6 hosts
+
+d1 
+d2 
+d3 
+d4 
+d5 
+d6 
+
+*** Done
+
+*** Creating network
+
+*** Adding hosts:
+
+d1 
+d2 
+d3 
+d4 
+d5 
+d6 
+
+*** Adding switches:
+
+s1 
+
+*** Adding links:
+
+(d1, s1) 
+(d2, s1) 
+(d3, s1) 
+(d4, s1) 
+(d5, s1) 
+(d6, s1) 
+
+
+*** Configuring hosts
+
+d1 
+d2 
+d3 
+d4 
+d5 
+d6 
+
+
+*** Starting controller
+
+
+
+*** Starting 1 switches
+
+s1 
+...
+
+
+*** Starting CLI:
+
+
+Interrupt
+
+
+
+*** Stopping 0 controllers
+
+
+
+*** Stopping 6 links
+
+.
+.
+.
+.
+.
+.
+
+
+*** Stopping 1 switches
+
+s1 
+
+
+*** Stopping 6 hosts
+
+d1 
+d2 
+d3 
+d4 
+d5 
+d6 
+
+*** Done
+

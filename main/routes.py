@@ -529,24 +529,24 @@ def delete_topology(id):
     if id == topology_to_delete.topology_creator.id:
 
         try:
+            directory_path = os.path.join("/home/razvan/Disertatie/disertatie/TopologiesScripts",
+                                          f"user_{current_user.id}", f"created/{topology_to_delete.topology_name}")
+            shutil.rmtree(directory_path)
             db.session.delete(topology_to_delete)
             db.session.commit()
             # Return a message
             flash("Topology was deleted!")
-            topologies = Topologies.query.order_by(Topologies.date_created)
             return redirect(url_for('topologies'))
 
         except:
             # Return error message
             flash("ERROR when deleting Topology, please try again")
-            topologies = Topologies.query.order_by(Topologies.date_created)
 
-            return render_template("topologies.html", topologies=topologies)
+            return redirect(url_for('topologies'))
     else:
         # Return a message
         flash("You are not authorized to delete this topology!")
-        topologies = Topologies.query.order_by(Topologies.date_created)
-        return render_template("topologies.html", topologies=topologies)
+        return redirect(url_for('topologies'))
 
 
 @app.route("/topologies/delete_uploaded/<int:id>", methods=['GET', 'POST'])
@@ -557,8 +557,9 @@ def delete_topology_uploaded(id):
     if id == topology_to_delete.topology_creator_id:
 
         try:
-            print(f">>>>>>>>>> {topology_to_delete.topology_file_path}")
-            os.remove(topology_to_delete.topology_file_path)
+            directory_path = os.path.join("/home/razvan/Disertatie/disertatie/TopologiesScripts",
+                                          f"user_{current_user.id}", f"uploaded/{topology_to_delete.topology_name}")
+            shutil.rmtree(directory_path)
             db.session.delete(topology_to_delete)
             db.session.commit()
             # Return a message
@@ -583,20 +584,33 @@ def edit_topology_uploaded(id):
     topology = TopologiesUploaded.query.get_or_404(id)
     # Create an instance of FileForm and pass the topology to prepopulate the form
     form = FileForm(obj=topology)
-
+    topology_creator = current_user.id
     file_name = topology.topology_file_path.split("/")[-1]
     print(f">>>>>> FILE_PATH: {topology.topology_file_path}")
+
+    directory_path = os.path.join("/home/razvan/Disertatie/disertatie/TopologiesScripts",
+                                  f"user_{topology_creator}", f"uploaded/{form.topology_name.data}")
+
+
     if form.validate_on_submit():
         topology.topology_name = form.topology_name.data
         topology.topology_description = form.topology_description.data
-
         # Check if the user has uploaded a new file
         if form.topology_python_file.data is not None:
             # Save the new file and update the topology_file_path in the database
-            os.remove(topology.topology_file_path)
+            files = os.listdir(directory_path)
+            for file in files:
+                if file.endswith(".py"):
+                    os.remove(os.path.join(directory_path, file))
             file_path = os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(form.topology_python_file.data.filename))
+            print(f"#### FILE_PATH NOU ESTE: {file_path}")
+            shutil.move(file_path, directory_path)
             form.topology_python_file.data.save(file_path)
             topology.topology_file_path = file_path
+            for f in os.listdir(app.config['UPLOAD_FOLDER']):
+                if not f.endswith(".py"):
+                    continue
+                os.remove(os.path.join(app.config['UPLOAD_FOLDER'], f))
 
         # Commit the changes to the database
         db.session.add(topology)

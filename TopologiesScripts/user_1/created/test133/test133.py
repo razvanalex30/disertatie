@@ -88,7 +88,7 @@
 
 from __future__ import print_function
 
-# import os
+import os
 from mininet.topo import Topo
 from mininet.net import Mininet
 # from mininet.node import Node
@@ -107,7 +107,8 @@ class NetworkTopo(Topo):
     def build(self, **_opts):
 
         s1 = self.addSwitch('s1', failMode='standalone')
-
+        working_dir = os.getcwd()
+        print(f">>>> WORKING DIR: {working_dir}")
         # Adding hosts
         d1 = self.addHost('d1', ip='192.168.0.1/28')
         d2 = self.addHost('d2', ip='192.168.0.2/28')
@@ -143,5 +144,5 @@ def run():
 
 if __name__ == '__main__':
     setLogLevel('info')
-    logging.basicConfig(format='%(message)s', filename='/home/razvan/Disertatie/disertatie/TopologiesScripts/user_1/created/test133/logfile.log', filemode='a', level=logging.INFO)
+    logging.basicConfig(format='%(message)s', filename=f'/home/razvan/Disertatie/disertatie/TopologiesScripts/user_1/created/test133/logfile.log', filemode='a', level=logging.INFO)
     run()
