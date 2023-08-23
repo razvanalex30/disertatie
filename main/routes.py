@@ -601,9 +601,47 @@ def edit_topology_uploaded(id):
                                   f"user_{topology_creator}", f"uploaded/{form.topology_name.data}")
 
 
+
+
+
+
     if form.validate_on_submit():
         topology.topology_name = form.topology_name.data
         topology.topology_description = form.topology_description.data
+
+
+        if topology_name_begin != topology.topology_name:
+            print("INCEPE VALIDAREA NAME CHANGE")
+            directory_path_old = os.path.join("/home/razvan/Disertatie/disertatie/TopologiesScripts",
+                                              f"user_{topology.topology_creator_id}",
+                                              f"uploaded/{topology_name_begin}")
+            directory_path_new = os.path.join("/home/razvan/Disertatie/disertatie/TopologiesScripts",
+                                              f"user_{topology.topology_creator_id}",
+                                              f"uploaded/{topology.topology_name}")
+            script_file = None
+            files = os.listdir(directory_path_old)
+            for file in files:
+                if file.endswith(".py"):
+                    script_file = file
+                    break
+            file_path = os.path.join(directory_path_old, script_file)
+            old_directory_name = directory_path_old.split("/")[-1]
+            new_directory_name = directory_path_new.split("/")[-1]
+            with open(file_path, 'r') as file:
+                existing_code = file.read()
+                file.close()
+
+            new_code = re.sub(r'{}'.format(old_directory_name), new_directory_name, existing_code)
+            with open(file_path, 'w') as file:
+                file.write(new_code)
+                file.close()
+
+
+            os.rename(directory_path_old, directory_path_new)
+
+
+
+
         # Check if the user has uploaded a new file
         if form.topology_python_file.data is not None:
             # Save the new file and update the topology_file_path in the database
@@ -635,35 +673,8 @@ def edit_topology_uploaded(id):
                 file.close()
 
 
-        if topology_name_begin != topology.topology_name:
-            directory_path_old = os.path.join("/home/razvan/Disertatie/disertatie/TopologiesScripts",
-                                              f"user_{topology.topology_creator_id}",
-                                              f"uploaded/{topology_name_begin}")
-            directory_path_new = os.path.join("/home/razvan/Disertatie/disertatie/TopologiesScripts",
-                                              f"user_{topology.topology_creator_id}",
-                                              f"uploaded/{topology.topology_name}")
-            script_file = None
-            files = os.listdir(directory_path_old)
-            for file in files:
-                if file.endswith(".py"):
-                    script_file = file
-                    break
-            file_path = os.path.join(directory_path_old, script_file)
-            old_directory_name = directory_path_old.split("/")[-1]
-            new_directory_name = directory_path_new.split("/")[-1]
-            with open(file_path, 'r') as file:
-                existing_code = file.read()
-                file.close()
 
-            new_code = re.sub(r'{}'.format(old_directory_name), new_directory_name, existing_code)
-            with open(file_path, 'w') as file:
-                file.write(new_code)
-                file.close()
-
-
-
-
-            os.rename(directory_path_old, directory_path_new)
+ 
 
 
         # Commit the changes to the database
