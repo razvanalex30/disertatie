@@ -56,6 +56,5 @@ def run():
 
 if __name__ == '__main__':
     setLogLevel('info')
-    logfile="#LOGFILE"
-    logging.basicConfig(format='%(message)s', filename=logfile, filemode='a', level=logging.INFO)
+    logging.basicConfig(format='%(message)s', filename='/home/razvan/Disertatie/disertatie/TopologiesScripts/user_1/uploaded/TOPO_UP100/logfile.log', filemode='a', level=logging.INFO)
     run()

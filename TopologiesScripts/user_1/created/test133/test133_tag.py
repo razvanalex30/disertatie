@@ -56,5 +56,6 @@ def run():
 
 if __name__ == '__main__':
     setLogLevel('info')
-    logging.basicConfig(format='%(message)s', filename='#LOGFILE', filemode='a', level=logging.INFO)
+    logfile="#LOGFILE"
+    logging.basicConfig(format='%(message)s', filename=logfile, filemode='a', level=logging.INFO)
     run()

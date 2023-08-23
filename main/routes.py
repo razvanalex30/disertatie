@@ -595,6 +595,7 @@ def edit_topology_uploaded(id):
     topology_creator = current_user.id
     file_name = topology.topology_file_path.split("/")[-1]
     print(f">>>>>> FILE_PATH: {topology.topology_file_path}")
+    topology_name_begin = topology.topology_name
 
     directory_path = os.path.join("/home/razvan/Disertatie/disertatie/TopologiesScripts",
                                   f"user_{topology_creator}", f"uploaded/{form.topology_name.data}")
@@ -632,6 +633,37 @@ def edit_topology_uploaded(id):
             with open(file_path_new, 'w') as file:
                 file.write(new_code)
                 file.close()
+
+
+        if topology_name_begin != topology.topology_name:
+            directory_path_old = os.path.join("/home/razvan/Disertatie/disertatie/TopologiesScripts",
+                                              f"user_{topology.topology_creator_id}",
+                                              f"uploaded/{topology_name_begin}")
+            directory_path_new = os.path.join("/home/razvan/Disertatie/disertatie/TopologiesScripts",
+                                              f"user_{topology.topology_creator_id}",
+                                              f"uploaded/{topology.topology_name}")
+            script_file = None
+            files = os.listdir(directory_path_old)
+            for file in files:
+                if file.endswith(".py"):
+                    script_file = file
+                    break
+            file_path = os.path.join(directory_path_old, script_file)
+            old_directory_name = directory_path_old.split("/")[-1]
+            new_directory_name = directory_path_new.split("/")[-1]
+            with open(file_path, 'r') as file:
+                existing_code = file.read()
+                file.close()
+
+            new_code = re.sub(r'{}'.format(old_directory_name), new_directory_name, existing_code)
+            with open(file_path, 'w') as file:
+                file.write(new_code)
+                file.close()
+
+
+
+
+            os.rename(directory_path_old, directory_path_new)
 
 
         # Commit the changes to the database
