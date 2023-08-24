@@ -22,6 +22,12 @@ class LinuxRouter( Node ):
         super( LinuxRouter, self ).terminate()
 
 
+class MultiSwitch( OVSSwitch ):
+    "Custom Switch() subclass that connects to different controllers"
+    def start( self, controllers ):
+        return OVSSwitch.start( self, [ cmap[ self.name ] ] )
+
+
 
 class NetworkTopo(Topo):
     # Builds network topology
@@ -34,7 +40,7 @@ class NetworkTopo(Topo):
 def run():
     "Test linux router"
     topo = NetworkTopo()
-    net = Mininet(topo=topo,
+    net = Mininet(topo=topo, switch=OVSSwitch,
                   waitConnected=True, link=TCLink)  # controller is used by s1-s3
     net.start()
     # Insert router code here

@@ -94,10 +94,10 @@ def parse_controllers_info(topo_setup_text):
             controller_name, ip_port, port_number = controller_match.groups()
             if ip_port:
                 ip_address = ip_port.split(":")[0]
-                line = f"{controller_name} = Controller( '{controller_name}', ip='{ip_address}', port={port_number} )"
+                line = f"{controller_name} = net.addController( name='{controller_name}', controller=RemoteController, protocol='tcp', ip='{ip_address}', port={port_number} )"
                 controllers_created_lines.append(line)
             else:
-                line = f"{controller_name} = Controller( '{controller_name}', port={port_number} )"
+                line = f"{controller_name} = net.addController( name='{controller_name}', controller=Controller, protocol='tcp', port={port_number} )"
                 controllers_created_lines.append(line)
         else:
             continue
@@ -117,16 +117,18 @@ def parse_routers_info(topo_setup_text):
         if router_match:
             router_name, interface_name, ip_address, netmask = router_match.groups()
             if not interface_name:  # creating a router with default IP for interface eth1 of the router
-                router_line = f"{router_name} = self.addNode('{router_name}', cls=LinuxRouter, ip='{ip_address}/{netmask}')"
+                router_line = f"{router_name} = net.addHost('{router_name}', cls=Node, ip='{ip_address}/{netmask}')"
                 routers_created_lines.append(router_line)
+                router_line_forward = f"{router_name}.cmd('sysctl -w net.ipv4.ip_forward=1')"
+                routers_created_lines.append(router_line_forward)
             else:
-                router_line = f"{router_name} = self.addNode('{router_name}', cls=LinuxRouter)"
+                router_line = f"{router_name} = net.addHost('{router_name}', cls=Node)"
+                router_line_intf_1 = f"{router_name}.cmd('sysctl -w net.ipv4.ip_forward=1')"
                 routers_created_lines.append(router_line)
-                router_line_intf_1 = f"{router_name} = net['{router_name}']"
+                routers_created_lines.append(router_line_intf_1)
                 router_line_intf_2 = f"{router_name}.cmd('ip link add {router_name}-{interface_name} type dummy')"
                 router_line_intf_3 = f"{router_name}.cmd('ip addr add {ip_address}/{netmask} dev {router_name}-{interface_name}')"
                 router_line_intf_4 = f"{router_name}.cmd('ip link set dev {router_name}-{interface_name} up')"
-                router_created_lines_intf.append(router_line_intf_1)
                 router_created_lines_intf.append(router_line_intf_2)
                 router_created_lines_intf.append(router_line_intf_3)
                 router_created_lines_intf.append(router_line_intf_4)
@@ -154,16 +156,16 @@ def parse_hosts_info(topo_setup_text):
         if host_match:
             host_name, ip_address_netmask, default_route, mac_address = host_match.groups()
             if default_route == "None" and mac_address == "random":
-                host_line = f"{host_name} = self.addHost('{host_name}', ip = '{ip_address_netmask}')"
+                host_line = f"{host_name} = net.addHost('{host_name}', cls=Host, ip = '{ip_address_netmask}')"
                 hosts_created_lines.append(host_line)
             elif default_route != "None" and mac_address == "random":
-                host_line = f"{host_name} = self.addHost('{host_name}', ip = '{ip_address_netmask}', defaultRoute='via {default_route}')"
+                host_line = f"{host_name} = net.addHost('{host_name}', cls=Host, ip = '{ip_address_netmask}', defaultRoute='via {default_route}')"
                 hosts_created_lines.append(host_line)
             elif default_route != "None" and mac_address != "random":
-                host_line = f"{host_name} = self.addHost('{host_name}', ip = '{ip_address_netmask}', mac = '{mac_address}', defaultRoute='via {default_route}')"
+                host_line = f"{host_name} = net.addHost('{host_name}', cls=Host, ip = '{ip_address_netmask}', mac = '{mac_address}', defaultRoute='via {default_route}')"
                 hosts_created_lines.append(host_line)
             elif default_route == "None" and mac_address != "random":
-                host_line = f"{host_name} = self.addHost('{host_name}', ip = '{ip_address_netmask}', mac = '{mac_address}')"
+                host_line = f"{host_name} = net.addHost('{host_name}', cls=Host, ip = '{ip_address_netmask}', mac = '{mac_address}')"
                 hosts_created_lines.append(host_line)
         else:
             continue
@@ -181,16 +183,36 @@ def create_topology_script(**kwargs):
 
     controllers_names = kwargs.get("controllers_names")
     routers_names = kwargs.get("routers_names")
-    switches_name = kwargs.get("switches_names")
+    switches_names = kwargs.get("switches_names")
     hosts_names = kwargs.get("hosts_names")
 
 
+
+    all_devices_names = controllers_names + routers_names + switches_names + hosts_names
+
+
+    switch_controller_conn_lines = []
     connection_text_lines = []
     conn_text = connections_text.strip().split("\n")
     for line in conn_text:
         conn_line = line.split("<->")
-        link_line = f"self.addLink({conn_line[0]}, {conn_line[1]})"
-        connection_text_lines.append(link_line)
+        # if conn_line[0] not in controllers_names and conn_line[1] not in switches_names:
+        #     link_line = f"net.addLink({conn_line[0]}, {conn_line[1]})"
+        #     connection_text_lines.append(link_line)
+        # elif conn_line[0] not in switches_names and conn_line[1] not in controllers_names:
+        #     link_line = f"net.addLink({conn_line[0]}, {conn_line[1]})"
+        #     connection_text_lines.append(link_line)
+        if conn_line[0] in switches_names and conn_line[1] in controllers_names:
+            link_line = f"net.get('{conn_line[0]}').start([{conn_line[1]}])"
+            switch_controller_conn_lines.append(link_line)
+        elif conn_line[0] in controllers_names and conn_line[0] in switches_names:
+            link_line = f"net.get('{conn_line[1]}').start([{conn_line[0]}])"
+            switch_controller_conn_lines.append(link_line)
+        else:
+            link_line = f"net.addLink({conn_line[0]}, {conn_line[1]})"
+            connection_text_lines.append(link_line)
+
+
 
 
     routers_lines = []
@@ -198,8 +220,8 @@ def create_topology_script(**kwargs):
 
 
     switches_lines = []
-    for switch_name in switches_name:
-        switch_line = f"{switch_name} = self.addSwitch('{switch_name}', failMode='standalone')"
+    for switch_name in switches_names:
+        switch_line = f"{switch_name} = net.addSwitch('{switch_name}', cls=OVSKernelSwitch)"
         switches_lines.append(switch_line)
 
 
@@ -208,9 +230,9 @@ def create_topology_script(**kwargs):
     controllers_lines = parse_controllers_info(setup_text)
 
     hosts_lines = parse_hosts_info(setup_text)
-    hosts_lines = switches_lines + hosts_lines + router_created_lines + controllers_lines
+    # hosts_lines = switches_lines + hosts_lines + router_created_lines + controllers_lines
 
-    with open('/home/razvan/Disertatie/disertatie/topologies_templates/switch_host_tmp.py', 'r') as f:
+    with open('/home/razvan/Disertatie/disertatie/topologies_templates/switch_host_tmp_new.py', 'r') as f:
         existing_code = f.read()
         f.close()
 
@@ -219,9 +241,39 @@ def create_topology_script(**kwargs):
 
     # Append the new lines to the existing code
 
-    new_code = re.sub(r'# Insert your code here', '\n        '.join(hosts_lines), existing_code)
-    new_code = re.sub(r'# Insert router code here', '\n    '.join(routers_created_intf), new_code)
-    new_code = re.sub(r'# Insert links here', '\n        '.join(connection_text_lines), new_code)
+    # Adding Controllers
+    if controllers_lines:
+        new_code = re.sub(r'# Insert Controllers here', '\n    '.join(controllers_lines), existing_code)
+    else:
+        new_code = existing_code
+
+    # Adding Switches
+    new_code = re.sub(r'# Insert Switches here', '\n    '.join(switches_lines), new_code)
+
+    # Adding Routers
+    if router_created_lines:
+        new_code = re.sub(r'# Insert Routers here', '\n    '.join(router_created_lines), new_code)
+
+    # Adding Hosts
+    new_code = re.sub(r'# Insert Hosts here', '\n    '.join(hosts_lines), new_code)
+
+    # Adding links
+    new_code = re.sub(r'# Insert links here', '\n    '.join(connection_text_lines), new_code)
+
+    # Adding Switches-Controllers connections
+    print(f">>>> SWITCH CONTROLLER LINES: {switch_controller_conn_lines}")
+    print(f">>>> CONNECTION LINES: {connection_text_lines}")
+    if switch_controller_conn_lines:
+        new_code = re.sub(r'# Insert switches controllers links here',
+                          '\n    '.join(switch_controller_conn_lines), new_code)
+
+    # Adding Routers Config
+    if routers_created_intf:
+        new_code = re.sub(r'# Insert router config here',
+                          '\n    '.join(routers_created_intf), new_code)
+
+
+
     new_code = re.sub(r'#LOGFILE', logfile, new_code)
 
     # Write the modified code back to the script

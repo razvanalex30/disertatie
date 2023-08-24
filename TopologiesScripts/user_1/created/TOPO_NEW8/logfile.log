@@ -1,0 +1,131 @@
+*** Adding controller
+
+*** Add switches
+
+*** Add routers
+
+*** Add hosts
+
+*** Add links
+
+*** Starting network
+
+*** Configuring hosts
+
+h1 
+h2 
+h3 
+h4 
+h5 
+h6 
+
+
+*** Starting controllers
+
+*** Starting switches
+
+*** Post configure switches and hosts
+
+TOPOLOGY LINKS
+h1-eth0 <-> s1-eth1 (h1 s1)
+h2-eth0 <-> s1-eth2 (h2 s1)
+h3-eth0 <-> s1-eth3 (h3 s1)
+h4-eth0 <-> s2-eth1 (h4 s2)
+h5-eth0 <-> s2-eth2 (h5 s2)
+h6-eth0 <-> s2-eth3 (h6 s2)
+*** Starting CLI:
+
+
+COMMAND: h1 ifconfig
+
+h1-eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+
+
+        inet 192.168.0.1  netmask 255.255.255.0  broadcast 192.168.0.255
+        inet6 fe80::211:22ff:fe33:4455  prefixlen 64  scopeid 0x20<link>
+        ether 00:11:22:33:44:55  txqueuelen 1000  (Ethernet)
+        RX packets 21  bytes 2670 (2.6 KB)
+
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 13  bytes 1142 (1.1 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+
+
+
+COMMAND: h1 ping h2
+
+PING 192.168.1.1 (192.168.1.1) 56(84) bytes of data.
+
+From 192.168.0.1 icmp_seq=1 Destination Host Unreachable
+From 192.168.0.1 icmp_seq=2 Destination Host Unreachable
+From 192.168.0.1 icmp_seq=3 Destination Host Unreachable
+
+From 192.168.0.1 icmp_seq=4 Destination Host Unreachable
+From 192.168.0.1 icmp_seq=5 Destination Host Unreachable
+From 192.168.0.1 icmp_seq=6 Destination Host Unreachable
+
+From 192.168.0.1 icmp_seq=7 Destination Host Unreachable
+From 192.168.0.1 icmp_seq=8 Destination Host Unreachable
+From 192.168.0.1 icmp_seq=9 Destination Host Unreachable
+
+From 192.168.0.1 icmp_seq=10 Destination Host Unreachable
+From 192.168.0.1 icmp_seq=11 Destination Host Unreachable
+From 192.168.0.1 icmp_seq=12 Destination Host Unreachable
+
+From 192.168.0.1 icmp_seq=13 Destination Host Unreachable
+From 192.168.0.1 icmp_seq=14 Destination Host Unreachable
+From 192.168.0.1 icmp_seq=15 Destination Host Unreachable
+
+
+--- 192.168.1.1 ping statistics ---
+18 packets transmitted, 0 received, +15 errors, 100% packet loss, time 17395ms
+pipe 4
+
+
+
+Interrupt
+
+
+
+*** Stopping 0 controllers
+
+
+
+*** Stopping 6 links
+
+.
+.
+.
+.
+.
+.
+
+
+*** Stopping 2 switches
+
+s1 
+s2 
+
+
+*** Stopping 6 hosts
+
+h1 
+h2 
+h3 
+h4 
+h5 
+h6 
+
+*** Done
+
