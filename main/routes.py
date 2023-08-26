@@ -1156,6 +1156,7 @@ def run_script(topology_name):
 def start_script():
     print(">>>> AM APASAT START SCRIPT")
     print(f"{script_dir_path}")
+    subprocess.run(["sudo", 'mn', '-c'])
     # DE PUS LOGICA SA FAC RESTART DE SCRIPT DACA PORNESC IAR
     with open(f"{script_dir_path}/logfile.log", "w") as logfile:
         logfile.close()
