@@ -549,6 +549,13 @@ class TopologyForm(FlaskForm):
                         except ipaddress.AddressValueError:
                             invalid_lines.append(line)
                             continue
+                    elif not ip_port:
+                        port_number = int(port_number)
+                        if not 1 <= port_number <= 65535:
+                            invalid_lines.append(line)
+                            continue
+                        else:
+                            valid_lines.append(line)
             else:
                 invalid_lines.append(line)
 
