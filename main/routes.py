@@ -427,7 +427,6 @@ def strip_lines_filter(text):
 def edit_topology(id):
     topology = Topologies.query.get_or_404(id)
     form = TopologyForm(obj=topology)
-    print(f">>>>>>> NAME CHANGED{form.topology_name_changed}")
     topology_name_begin = topology.topology_name
 
     if current_user.id == topology.topology_creator_id:
@@ -569,10 +568,6 @@ def edit_topology(id):
 
                 flash("Topology updated successfully!")
                 return redirect(url_for('topologies'))
-            else:
-                flash("Form validation failed. Please check the errors below.")
-                for field, errors in form.errors.items():
-                    flash(f"{field}: {', '.join(errors)}")
 
             return render_template("edit_topology.html", form=form)
     else:
@@ -646,7 +641,6 @@ def edit_topology_uploaded(id):
     form = FileForm(obj=topology)
     topology_creator = current_user.id
     file_name = topology.topology_file_path.split("/")[-1]
-    print(f">>>>>> FILE_PATH: {topology.topology_file_path}")
     topology_name_begin = topology.topology_name
 
     directory_path = os.path.join("/home/razvan/Disertatie/disertatie/TopologiesScripts",
@@ -663,7 +657,6 @@ def edit_topology_uploaded(id):
 
 
         if topology_name_begin != topology.topology_name:
-            print("INCEPE VALIDAREA NAME CHANGE")
             directory_path_old = os.path.join("/home/razvan/Disertatie/disertatie/TopologiesScripts",
                                               f"user_{topology.topology_creator_id}",
                                               f"uploaded/{topology_name_begin}")
@@ -702,7 +695,6 @@ def edit_topology_uploaded(id):
                 if file.endswith(".py"):
                     os.remove(os.path.join(directory_path, file))
             file_path = os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(form.topology_python_file.data.filename))
-            print(f"#### FILE_PATH NOU ESTE: {file_path}")
             file_name_new = file_path.split("/")[-1]
             shutil.move(file_path, directory_path)
             form.topology_python_file.data.save(file_path)
@@ -724,9 +716,6 @@ def edit_topology_uploaded(id):
                 file.write(new_code)
                 file.close()
 
-
-
- 
 
 
         # Commit the changes to the database
@@ -753,7 +742,6 @@ def create_topology():
 
 
         file_path = session.get('file_path')
-        print(f"FILE PATH ESTE: {file_path}")
         file_name = file_path.split("/")[-1]
 
         directory_path = os.path.join("/home/razvan/Disertatie/disertatie/TopologiesScripts",
@@ -762,7 +750,6 @@ def create_topology():
             os.makedirs(directory_path)
         shutil.move(file_path, directory_path)
         file_path_new = os.path.join(directory_path, file_name)
-        print(f"FILE_PATH NEW ESTE: {file_path_new}")
         logfile = f'{directory_path}/logfile.log'
 
         with open(file_path_new, 'r') as file:
@@ -862,7 +849,6 @@ def add_topology():
 
 
         topo_conn_text = cleaned_text
-        print(f"TOPO CONNECTION: {topo_conn_text}")
 
         soup = BeautifulSoup(form.topology_setup_text.data, 'html.parser')
         plain_text = soup.get_text(separator='\n')
@@ -907,7 +893,6 @@ def add_topology():
         form.topology_setup_text.data = cleaned_text
 
         topo_setup_text = cleaned_text
-        print(f"TOPO SETUP: {topo_setup_text}")
 
         post = Topologies(topology_name=form.topology_name.data,
                           topology_description=form.topology_description.data,

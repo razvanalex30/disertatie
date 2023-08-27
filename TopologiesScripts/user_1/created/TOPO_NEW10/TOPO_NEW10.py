@@ -35,11 +35,13 @@ def myNetwork():
     h1 = net.addHost('h1', cls=Host, ip = '192.168.0.1/24', mac = '00:11:22:33:44:55', defaultRoute='via 192.168.0.2')
     h2 = net.addHost('h2', cls=Host, ip = '192.168.1.1/24', defaultRoute='via 192.168.0.3')
     h3 = net.addHost('h3', cls=Host, ip = '10.0.0.4/16')
+    h4 = net.addHost('h4', cls=Host, ip = '20.0.0.4/16')
 
     info( '*** Add links\n')
     net.addLink(h1, s1)
     net.addLink(h2, s1)
     net.addLink(h3, s1)
+    net.addLink(h4, s1)
     net.addLink(r1, s1)
     net.addLink(r2, s1)
 
