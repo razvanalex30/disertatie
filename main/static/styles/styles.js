@@ -218,8 +218,13 @@ function populateInterfaceDropdown() {
             // Populate the dropdown with interface options
             data.forEach(interfaceName => {
                 const option = document.createElement('option');
+                if(interfaceName=='lo'){
+                console.log("SUNT IN IF")
+                option.value = 'Loopback';
+                option.textContent = 'Loopback';}
+                else {
                 option.value = interfaceName;
-                option.textContent = interfaceName;
+                option.textContent = interfaceName;}
                 interfaceSelect.appendChild(option);
             });
 

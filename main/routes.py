@@ -1223,6 +1223,7 @@ def get_interfaces():
             continue
         interface_name = interface.split(":")[0]
         available_interfaces.append(interface_name)
+    available_interfaces.append("lo")
     available_interfaces.remove("")
 
     return jsonify(available_interfaces)
@@ -1234,6 +1235,11 @@ def get_interfaces():
 def start_capture():
     interface = request.form['interface']
     capture_name = request.form['name']
+
+    if interface == "Loopback":
+        interface_name = "lo"
+    else:
+        interface_name = interface
 
     # Check if the capture name is valid
     if not is_valid_capture_name(capture_name):
@@ -1248,7 +1254,7 @@ def start_capture():
     global output_path
     output_path = f"{captures_dir_path}/{interface}_{capture_name}.pcap"
     global capture_proc
-    capture_proc = subprocess.Popen(["tshark", "-i", interface, "-w", output_path], preexec_fn=os.setpgrp)
+    capture_proc = subprocess.Popen(["tshark", "-i", interface_name, "-w", output_path], preexec_fn=os.setpgrp)
     return output_path
 
 
