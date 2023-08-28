@@ -51,6 +51,7 @@ def myNetwork():
         logging.log(level=logging.INFO,
                     msg=f"{link.intf1.name} <-> {link.intf2.name} ({link.intf1.node.name} {link.intf2.node.name})")
 
+    net.start()
     CLI(net)
     net.stop()
 
