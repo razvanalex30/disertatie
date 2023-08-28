@@ -30,56 +30,59 @@ h3-eth0 <-> s2-eth1 (h3 s2)
 *** Starting CLI:
 
 
-COMMAND: links
-
-h1-eth0<->s1-eth1 (OK OK) 
-
-h2-eth0<->s1-eth2 (OK OK) 
-
-h3-eth0<->s2-eth1 (OK OK) 
-
-
 COMMAND: h1 ping h2
 
 PING 192.168.1.1 (192.168.1.1) 56(84) bytes of data.
 
 From 192.168.0.1 icmp_seq=1 Destination Host Unreachable
-From 192.168.0.1 icmp_seq=2 Destination Host Unreachable
-From 192.168.0.1 icmp_seq=3 Destination Host Unreachable
 
-From 192.168.0.1 icmp_seq=4 Destination Host Unreachable
 From 192.168.0.1 icmp_seq=5 Destination Host Unreachable
 From 192.168.0.1 icmp_seq=6 Destination Host Unreachable
-
 From 192.168.0.1 icmp_seq=7 Destination Host Unreachable
+
 From 192.168.0.1 icmp_seq=8 Destination Host Unreachable
 From 192.168.0.1 icmp_seq=9 Destination Host Unreachable
+From 192.168.0.1 icmp_seq=10 Destination Host Unreachable
+
+From 192.168.0.1 icmp_seq=11 Destination Host Unreachable
+From 192.168.0.1 icmp_seq=12 Destination Host Unreachable
+From 192.168.0.1 icmp_seq=13 Destination Host Unreachable
 
 
 --- 192.168.1.1 ping statistics ---
-10 packets transmitted, 0 received, +9 errors, 100% packet loss, time 9209ms
+15 packets transmitted, 0 received, +10 errors, 100% packet loss, time 14256ms
 pipe 4
 
 
 
-COMMAND: d1 ping d2
-
-
 COMMAND: exit
 
-
-Interrupt
-
-
-Interrupt
-
-
-
-
-
-*** Stopping 2 controllers
+*** Unknown command: 
 
 *** Stopping 2 controllers
 
 c1 
-c1 
+c2 
+
+
+*** Stopping 3 links
+
+.
+.
+.
+
+
+*** Stopping 2 switches
+
+s1 
+s2 
+
+
+*** Stopping 3 hosts
+
+h1 
+h2 
+h3 
+
+*** Done
+

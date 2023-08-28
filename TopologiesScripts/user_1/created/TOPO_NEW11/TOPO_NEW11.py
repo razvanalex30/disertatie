@@ -15,27 +15,29 @@ import logging
 def myNetwork():
 
     net = Mininet( topo=None,
-                   build=False,
-                   waitConnected=False)
-
-    info('*** Adding default controllers\n')
-    # Insert DEFAULT CONTROLLER HERE
-
+                   build=False)
 
     info( '*** Adding controllers\n' )
-    # Insert Controllers here
+    net.addController(name='c1', controller=RemoteController, ip='127.0.0.1', port=6633)
 
     info( '*** Add switches\n')
-    # Insert Switches here
+    s1 = net.addSwitch('s1', cls=OVSKernelSwitch)
+    s2 = net.addSwitch('s2', cls=OVSKernelSwitch)
 
     info('*** Add routers\n')
     # Insert Routers here
 
     info( '*** Add hosts\n')
-    # Insert Hosts here
+    h1 = net.addHost('h1', cls=Host, ip = '192.168.0.1/24', mac = '00:11:22:33:44:55')
+    h2 = net.addHost('h2', cls=Host, ip = '192.168.0.2/24', mac = 'AA:AA:AA:AA:AA:AA')
+    h3 = net.addHost('h3', cls=Host, ip = '192.168.0.3/24', mac = 'BB:BB:BB:BB:BB:BB')
+    h4 = net.addHost('h4', cls=Host, ip = '192.168.0.4/24', mac='BB:BB:BB:BB:BB:BB')
 
     info( '*** Add links\n')
-    # Insert links here
+    net.addLink(h1, s1)
+    net.addLink(h2, s1)
+    net.addLink(h3, s1)
+    net.addLink(h4, s2)
 
     info( '*** Starting network\n')
     net.build()
@@ -54,13 +56,12 @@ def myNetwork():
     for link in net.links:
         logging.log(level=logging.INFO,
                     msg=f"{link.intf1.name} <-> {link.intf2.name} ({link.intf1.node.name} {link.intf2.node.name})")
-
     net.start()
     CLI(net)
     net.stop()
 
 if __name__ == '__main__':
     setLogLevel( 'info' )
-    logfile = "#LOGFILE"
+    logfile = "/home/razvan/Disertatie/disertatie/TopologiesScripts/user_1/created/TOPO_NEW11/logfile.log"
     logging.basicConfig(format='%(message)s', filename=logfile, filemode='a', level=logging.INFO)
     myNetwork()

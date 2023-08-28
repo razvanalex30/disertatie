@@ -1,0 +1,126 @@
+*** Adding controllers
+
+*** Add switches
+
+*** Add routers
+
+*** Add hosts
+
+*** Add links
+
+*** Starting network
+
+*** Configuring hosts
+
+h1 
+h2 
+h3 
+h4 
+
+
+*** Starting controllers
+
+*** Starting switches
+
+*** Post configure switches and hosts
+
+TOPOLOGY LINKS
+h1-eth0 <-> s1-eth1 (h1 s1)
+h2-eth0 <-> s1-eth2 (h2 s1)
+h3-eth0 <-> s1-eth3 (h3 s1)
+h4-eth0 <-> s2-eth1 (h4 s2)
+*** Starting controller
+
+c1 
+
+
+*** Starting 2 switches
+
+s1 
+s2 
+...
+
+
+*** Starting CLI:
+
+
+COMMAND: sh ovs-ofctl dump-flows s1
+
+NXST_FLOW reply (xid=0x4):
+
+COMMAND: h2 ping h3
+
+PING 192.168.0.3 (192.168.0.3) 56(84) bytes of data.
+
+64 bytes from 192.168.0.3: icmp_seq=1 ttl=64 time=49.7 ms
+
+64 bytes from 192.168.0.3: icmp_seq=2 ttl=64 time=0.110 ms
+
+64 bytes from 192.168.0.3: icmp_seq=3 ttl=64 time=0.095 ms
+
+64 bytes from 192.168.0.3: icmp_seq=4 ttl=64 time=0.064 ms
+
+64 bytes from 192.168.0.3: icmp_seq=5 ttl=64 time=0.064 ms
+
+64 bytes from 192.168.0.3: icmp_seq=6 ttl=64 time=0.085 ms
+
+64 bytes from 192.168.0.3: icmp_seq=7 ttl=64 time=0.064 ms
+
+64 bytes from 192.168.0.3: icmp_seq=8 ttl=64 time=0.050 ms
+
+
+--- 192.168.0.3 ping statistics ---
+8 packets transmitted, 8 received, 0% packet loss, time 7140ms
+rtt min/avg/max/mdev = 0.050/6.273/49.653/16.396 ms
+
+
+
+COMMAND: sh ovs-ofctl dump-flows s1
+
+NXST_FLOW reply (xid=0x4):
+ cookie=0x0, duration=15.704s, table=0, n_packets=9, n_bytes=826, idle_age=8, dl_src=aa:aa:aa:aa:aa:aa,dl_dst=46:7c:df:83:fe:5c actions=output:3
+ cookie=0x0, duration=15.704s, table=0, n_packets=9, n_bytes=826, idle_age=8, dl_src=46:7c:df:83:fe:5c,dl_dst=aa:aa:aa:aa:aa:aa actions=output:2
+
+COMMAND: exit
+
+*** Stopping 1 controllers
+
+c1 
+
+
+*** Stopping 4 links
+
+.
+.
+.
+.
+
+
+*** Stopping 2 switches
+
+s1 
+s2 
+
+
+*** Stopping 4 hosts
+
+h1 
+h2 
+h3 
+h4 
+
+*** Done
+
+
+Interrupt
+
+
+
+*** Stopping 1 controllers
+
+c1 
+
+
+*** Stopping 4 links
+
+.

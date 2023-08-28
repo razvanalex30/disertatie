@@ -106,6 +106,8 @@ class NetworkTopo(Topo):
     # Builds network topology
     def build(self, **_opts):
 
+
+
         s1 = self.addSwitch('s1', failMode='standalone')
         working_dir = os.getcwd()
         print(f">>>> WORKING DIR: {working_dir}")
@@ -127,6 +129,8 @@ class NetworkTopo(Topo):
 def run():
     topo = NetworkTopo()
     net = Mininet(topo=topo, controller=None)
+    net.addController(name='c1', controller=Controller, ip='127.0.0.1', port=6633)
+    # net.build()
     net.start()
     # Make Switch act like a normal switch
     # net['s1'].cmd('ovs-ofctl add-flow s1 action=normal')

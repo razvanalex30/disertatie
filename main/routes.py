@@ -1140,13 +1140,16 @@ def run_script(topology_name):
 @login_required
 def start_script():
     print(">>>> AM APASAT START SCRIPT")
-    print(f"{script_dir_path}")
+
+
     subprocess.run(["sudo", 'mn', '-c'])
     # DE PUS LOGICA SA FAC RESTART DE SCRIPT DACA PORNESC IAR
     with open(f"{script_dir_path}/logfile.log", "w") as logfile:
         logfile.close()
+
     global proc
     proc = subprocess.Popen(["sudo", "python3", f"{script_path}"], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+
     return 'Script started'
 
 @app.route('/update_log')
@@ -1173,10 +1176,17 @@ def send_message():
     message = request.form['message']
     logging.basicConfig(format='%(message)s', filename=f"{script_dir_path}/logfile.log", filemode='a', level=logging.INFO)
     logging.info(f"\nCOMMAND: {message}\n")
-    proc.stdin.write(message.encode())
-    proc.stdin.flush()
-    proc.stdin.write("\n".encode())
-    proc.stdin.flush()
+    if message.startswith("sh "):
+        message = message.rstrip() + f" >> {script_dir_path}/logfile.log"
+        proc.stdin.write(message.encode())
+        proc.stdin.flush()
+        proc.stdin.write("\n".encode())
+        proc.stdin.flush()
+    else:
+        proc.stdin.write(message.encode())
+        proc.stdin.flush()
+        proc.stdin.write("\n".encode())
+        proc.stdin.flush()
     # logging.basicConfig(format='%(message)s', filename='logfile.log', filemode='a', level=logging.INFO)
     # logging.info(f"\nCOMMAND: {message}\n")
     # Do something with the message, e.g., log it
