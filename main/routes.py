@@ -1141,7 +1141,7 @@ def run_script(topology_name):
 def start_script():
     print(">>>> AM APASAT START SCRIPT")
 
-
+    subprocess.run(["sudo", 'fuser', '-k', '6653/tcp'])
     subprocess.run(["sudo", 'mn', '-c'])
     # DE PUS LOGICA SA FAC RESTART DE SCRIPT DACA PORNESC IAR
     with open(f"{script_dir_path}/logfile.log", "w") as logfile:
@@ -1212,6 +1212,8 @@ def stop_script():
 def stop_process():
     if proc:
         logging.basicConfig(format='%(message)s', filename=f"{script_dir_path}/logfile.log", filemode='a', level=logging.INFO)
+        proc.stdin.write('\x03'.encode())
+        proc.stdin.flush()
         logging.info(f"\nCOMMAND: exit\n")
         proc.stdin.write('\nexit\n'.encode())
         proc.stdin.flush()

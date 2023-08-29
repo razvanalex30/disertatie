@@ -19,7 +19,7 @@ def myNetwork():
                    waitConnected=False)
 
     info('*** Adding default controllers\n')
-    # Insert DEFAULT CONTROLLER HERE
+    net.addController(name='default_controller', controller=Controller, ip='127.0.0.1', port=6653)
 
 
     info( '*** Adding controllers\n' )
