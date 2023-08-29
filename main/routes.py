@@ -94,10 +94,10 @@ def parse_controllers_info(topo_setup_text):
             controller_name, ip_port, port_number = controller_match.groups()
             if ip_port:
                 ip_address = ip_port.split(":")[0]
-                line = f"{controller_name} = net.addController( name='{controller_name}', controller=RemoteController, protocol='tcp', ip='{ip_address}', port={port_number} )"
+                line = f"{controller_name} = net.addController( name='{controller_name}', controller=Controller, ip='{ip_address}', port={port_number} )"
                 controllers_created_lines.append(line)
             else:
-                line = f"{controller_name} = net.addController( name='{controller_name}', controller=Controller, protocol='tcp', port={port_number} )"
+                line = f"{controller_name} = net.addController( name='{controller_name}', controller=Controller, port={port_number} )"
                 controllers_created_lines.append(line)
         else:
             continue
