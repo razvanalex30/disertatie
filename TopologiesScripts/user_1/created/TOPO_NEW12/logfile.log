@@ -48,10 +48,89 @@ s1
 *** Starting CLI:
 
 
+COMMAND: sh ovs-ofctl dump-flows s1
+
+NXST_FLOW reply (xid=0x4):
+
+COMMAND: h1 ping h2
+
+PING 10.0.0.2 (10.0.0.2) 56(84) bytes of data.
+
+64 bytes from 10.0.0.2: icmp_seq=1 ttl=64 time=7.38 ms
+
+64 bytes from 10.0.0.2: icmp_seq=2 ttl=64 time=1.57 ms
+
+64 bytes from 10.0.0.2: icmp_seq=3 ttl=64 time=0.180 ms
+
+64 bytes from 10.0.0.2: icmp_seq=4 ttl=64 time=0.070 ms
+
+64 bytes from 10.0.0.2: icmp_seq=5 ttl=64 time=0.065 ms
+
+
+--- 10.0.0.2 ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 4033ms
+rtt min/avg/max/mdev = 0.065/1.853/7.382/2.822 ms
+
+
+
+COMMAND: sh ovs-ofctl dump-flows s1
+
+NXST_FLOW reply (xid=0x4):
+ cookie=0x0, duration=9.769s, table=0, n_packets=0, n_bytes=0, idle_timeout=60, idle_age=9, priority=65535,arp,in_port=2,vlan_tci=0x0000,dl_src=ae:94:c4:e8:8f:23,dl_dst=00:11:22:33:44:55,arp_spa=10.0.0.2,arp_tpa=10.0.0.1,arp_op=2 actions=output:1
+ cookie=0x0, duration=9.769s, table=0, n_packets=0, n_bytes=0, idle_timeout=60, idle_age=9, priority=65535,arp,in_port=5,vlan_tci=0x0000,dl_src=a2:2d:e5:cd:51:3a,dl_dst=00:11:22:33:44:55,arp_spa=10.0.0.2,arp_tpa=10.0.0.1,arp_op=2 actions=output:1
+ cookie=0x0, duration=4.524s, table=0, n_packets=0, n_bytes=0, idle_timeout=60, idle_age=4, priority=65535,arp,in_port=2,vlan_tci=0x0000,dl_src=ae:94:c4:e8:8f:23,dl_dst=00:11:22:33:44:55,arp_spa=10.0.0.2,arp_tpa=10.0.0.1,arp_op=1 actions=output:1
+ cookie=0x0, duration=4.522s, table=0, n_packets=0, n_bytes=0, idle_timeout=60, idle_age=4, priority=65535,arp,in_port=1,vlan_tci=0x0000,dl_src=00:11:22:33:44:55,dl_dst=ae:94:c4:e8:8f:23,arp_spa=10.0.0.1,arp_tpa=10.0.0.2,arp_op=2 actions=output:2
+ cookie=0x0, duration=9.768s, table=0, n_packets=4, n_bytes=392, idle_timeout=60, idle_age=5, priority=65535,icmp,in_port=1,vlan_tci=0x0000,dl_src=00:11:22:33:44:55,dl_dst=ae:94:c4:e8:8f:23,nw_src=10.0.0.1,nw_dst=10.0.0.2,nw_tos=0,icmp_type=8,icmp_code=0 actions=output:2
+ cookie=0x0, duration=9.766s, table=0, n_packets=4, n_bytes=392, idle_timeout=60, idle_age=5, priority=65535,icmp,in_port=2,vlan_tci=0x0000,dl_src=ae:94:c4:e8:8f:23,dl_dst=00:11:22:33:44:55,nw_src=10.0.0.2,nw_dst=10.0.0.1,nw_tos=0,icmp_type=0,icmp_code=0 actions=output:1
+
+COMMAND: h1 ping h2
+
+PING 10.0.0.2 (10.0.0.2) 56(84) bytes of data.
+
+64 bytes from 10.0.0.2: icmp_seq=1 ttl=64 time=0.914 ms
+
+64 bytes from 10.0.0.2: icmp_seq=2 ttl=64 time=1.52 ms
+
+64 bytes from 10.0.0.2: icmp_seq=3 ttl=64 time=0.083 ms
+
+64 bytes from 10.0.0.2: icmp_seq=4 ttl=64 time=0.096 ms
+
+
 COMMAND: exit
 
-*** Unknown command: 
 
+--- 10.0.0.2 ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 3017ms
+rtt min/avg/max/mdev = 0.083/0.652/1.515/0.601 ms
+
+
 *** Stopping 2 controllers
 
 default_controller 
+c1 
+
+
+*** Stopping 5 links
+
+.
+.
+.
+.
+.
+
+
+*** Stopping 1 switches
+
+s1 
+
+
+*** Stopping 5 hosts
+
+r1 
+r2 
+h1 
+h2 
+h3 
+
+*** Done
+

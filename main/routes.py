@@ -1218,9 +1218,11 @@ def stop_process():
         proc.stdin.write('\nexit\n'.encode())
         proc.stdin.flush()
         proc.terminate()
+        subprocess.run(["sudo", 'mn', '-c'])
         return 'Process stopped'
     else:
         return 'No running process to stop'
+
 
 
 @app.route("/get_interfaces", methods=["GET"])
