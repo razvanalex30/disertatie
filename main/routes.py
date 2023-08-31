@@ -19,6 +19,7 @@ from bs4 import BeautifulSoup
 from datetime import datetime
 from main import app, mail
 from flask_mail import Message
+from sqlalchemy import and_
 
 log_content = ""
 log = logging.getLogger('werkzeug')
@@ -361,15 +362,21 @@ def base():
 
 # Create Search Function
 @app.route('/search', methods=["POST"])
+@login_required
 def search():
     form = SearchForm()
     topologies_created = Topologies.query
     topologies_uploaded = TopologiesUploaded.query
+    topology_creator = current_user.id
     if form.validate_on_submit():
         topology.searched = form.searched.data
-        topologies_created = topologies_created.filter(Topologies.topology_name.like('%' + topology.searched + '%'))
+        topologies_created = topologies_created.filter(and_(
+                                                            Topologies.topology_name.like('%' + topology.searched + '%'),
+                                                            Topologies.topology_creator_id == topology_creator))
         topologies_created = topologies_created.order_by(Topologies.topology_name).all()
-        topologies_uploaded = topologies_uploaded.filter(TopologiesUploaded.topology_name.like('%' + topology.searched + '%'))
+        topologies_uploaded = topologies_uploaded.filter(and_(
+                                                              TopologiesUploaded.topology_name.like('%' + topology.searched + '%'),
+                                                              TopologiesUploaded.topology_creator_id == topology_creator))
         topologies_uploaded = topologies_uploaded.order_by(TopologiesUploaded.topology_name).all()
 
         topologies = topologies_created + topologies_uploaded
