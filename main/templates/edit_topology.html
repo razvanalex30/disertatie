@@ -152,14 +152,15 @@ Please use all your devices mentioned earlier. If there are devices unused, an e
         {% else %}
             {{ form.topology_setup_text(class="form-control", rows="7") }}
         {% endif %}
+         <br/>
         <p><strong>Hint:</strong> In this section, you should provide details about the hosts, controllers (if they are used) and routers (if they are used).
         Here are a few examples of how you can describe the devices:</p>
         <p>- Host lines: <strong>device_name - ip_address/netmask default_route: (None or an ip_address) MAC: (random or MAC address)</strong></p>
-        <p><strong>e.g. h1 - 192.168.0.1/24 default_route: 192.168.0.2 MAC: 00:11:22:33:44:55</strong></p>
+        <p><strong>e.g. <i>h1 - 192.168.0.1/24 default_route: 192.168.0.2 MAC: 00:11:22:33:44:55</i></strong></p>
         <p>- Controllers lines: <strong>device_name - ip_address:port</strong> or <strong>device_name - port</strong></p>
-        <p><strong>e.g. c2 - 128.0.0.1:555</strong></p>
+        <p><strong>e.g. <i>c2 - 128.0.0.1:555</i></strong></p>
         <p>- Routers lines: <strong>device_name - interface_name ip_address/netmask</strong> or <strong>device_name - ip_address/netmask</strong></p>
-        <p><strong>e.g. r1 - eth0 192.168.0.1/24</strong></p>
+        <p><strong>e.g. <i>r1 - eth0 192.168.0.1/24</i></strong></p>
         <br/>
 
         {{ form.submit(class="btn btn-primary") }}

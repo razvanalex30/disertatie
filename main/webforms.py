@@ -160,7 +160,6 @@ class FileForm(FlaskForm):
 
         if not allowed_file(field.data.filename):
             raise ValidationError('Please upload a valid .py file.')
-        print("SUNTEM IN VALIDATE PYTHON FILE")
         file_path = os.path.join("/home/razvan/Disertatie/disertatie/uploads", field.data.filename)
         field.data.save(file_path)
 
@@ -179,7 +178,6 @@ class FileForm(FlaskForm):
 
 
         run_python = run_python_script(file_path)
-        print(f">>>> VALOARE {run_python}")
         if not run_python:
             os.remove(file_path)
             raise ValidationError("Python file has errors, please check!")
@@ -499,14 +497,10 @@ class TopologyForm(FlaskForm):
         unused_hosts = []
 
         for line in setup_text.split('\n'):
-            # print(f">>>LINIA ESTE: {line}")
-            # Handle hosts
             host_match = valid_host_line.match(line)
             router_match = valid_router_line.match(line)
             controller_match = valid_controller_line.match(line)
-            # print(f">>>HOST MATCH ESTE: {host_match}")
-            # print(f">>>ROUTER MATCH ESTE: {router_match}")
-            # print(f">>>CONTROLLER MATCH ESTE: {controller_match}")
+
             if host_match and not router_match and not controller_match:
                 host_name, ip_address_netmask, default_route, mac_address = host_match.groups()
                 print(host_name, ip_address_netmask, default_route, mac_address)
@@ -571,10 +565,6 @@ class TopologyForm(FlaskForm):
             hosts_not_used = list(set(seen_host_names) ^ set(hosts_names_list))
             unused_hosts.extend(hosts_not_used)
 
-        # print(f"VALID LINES SETUP: {valid_lines}")
-        # print(f"DUPLICATE LINES SETUP: {duplicate_lines}")
-        # print(f"INVALID LINES SETUP: {invalid_lines}")
-        # print(f"UNSED HOSTS SETUP: {unused_hosts}")
         return valid_lines, invalid_lines, unused_hosts, duplicate_lines
 
 
