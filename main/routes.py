@@ -195,6 +195,8 @@ def create_topology_script(**kwargs):
     switch_controller_conn_lines = []
     connection_text_lines = []
     conn_text = connections_text.strip().split("\n")
+    print(f">>>> SWITCHES NAMES: {switches_names}")
+    print(f">>>> CONTROLLERS NAMES: {controllers_names}")
     for line in conn_text:
         conn_line = line.split("<->")
         # if conn_line[0] not in controllers_names and conn_line[1] not in switches_names:
@@ -204,9 +206,11 @@ def create_topology_script(**kwargs):
         #     link_line = f"net.addLink({conn_line[0]}, {conn_line[1]})"
         #     connection_text_lines.append(link_line)
         if conn_line[0] in switches_names and conn_line[1] in controllers_names:
+            print("SUNT IN PRIMUL IF")
             link_line = f"net.get('{conn_line[0]}').start([{conn_line[1]}])"
             switch_controller_conn_lines.append(link_line)
-        elif conn_line[0] in controllers_names and conn_line[0] in switches_names:
+        elif conn_line[0] in controllers_names and conn_line[1] in switches_names:
+            print("SUNT IN AL DOILEA IF")
             link_line = f"net.get('{conn_line[1]}').start([{conn_line[0]}])"
             switch_controller_conn_lines.append(link_line)
         else:

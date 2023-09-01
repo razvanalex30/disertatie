@@ -424,21 +424,21 @@ class TopologyForm(FlaskForm):
                         continue
 
                     # Perform the specific validations based on the rules you provided
-                    if device1 in controllers_names_list and (device2 in switches_names_list or device2 in routers_names_list):
+                    if device1 in controllers_names_list and (device2 in switches_names_list):
                         valid_lines.append(line)
-                    elif device1 in routers_names_list and (device2 in switches_names_list or device2 in controllers_names_list):
+                    elif device1 in routers_names_list and (device2 in switches_names_list or device2 in hosts_names_list or device2 in routers_names_list):
                         valid_lines.append(line)
                     elif device1 in switches_names_list and (device2 in controllers_names_list or device2 in routers_names_list or device2 in hosts_names_list or device2 in switches_names_list):
                         valid_lines.append(line)
-                    elif device1 in hosts_names_list and device2 in switches_names_list:
+                    elif device1 in hosts_names_list and (device2 in switches_names_list or device2 in routers_names_list):
                         valid_lines.append(line)
-                    elif device2 in controllers_names_list and (device1 in switches_names_list or device1 in routers_names_list):
+                    elif device2 in controllers_names_list and (device1 in switches_names_list):
                         valid_lines.append(line)
-                    elif device2 in hosts_names_list and (device1 in switches_names_list or device1 in controllers_names_list):
+                    elif device2 in routers_names_list and (device1 in switches_names_list or device1 in routers_names_list or device1 in routers_names_list):
                         valid_lines.append(line)
                     elif device2 in switches_names_list and (device1 in controllers_names_list or device1 in routers_names_list or device1 in hosts_names_list or device1 in switches_names_list):
                         valid_lines.append(line)
-                    elif device2 in hosts_names_list and device1 in switches_names_list:
+                    elif device2 in hosts_names_list and (device1 in switches_names_list or device1 in routers_names_list):
                         valid_lines.append(line)
                     else:
                         invalid_lines.append(line)
