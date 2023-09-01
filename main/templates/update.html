@@ -14,7 +14,7 @@
 
 {% if id==current_user.id %}
 
-    <h1>Update User...</h1>
+    <h1>Update User</h1>
     <br/><br/>
 
     <div class="shadow p-3 mb-5 bg-body-tertiary rounded">
@@ -26,11 +26,6 @@
         {{ form.full_name.label(class="form-label") }}
 
         {{ form.full_name(class="form-control", value=name_to_update.full_name) }}
-        <br/>
-
-        {{ form.email.label(class="form-label") }}
-
-        {{ form.email(class="form-control", value=name_to_update.email) }}
         <br/>
 
 

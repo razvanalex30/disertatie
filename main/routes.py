@@ -976,12 +976,11 @@ def update(id):
     name_to_update = Users.query.get_or_404(id)
     if request.method == "POST":
         name_to_update.full_name = request.form["full_name"]
-        name_to_update.email = request.form["email"]
         name_to_update.master_name = request.form["master_name"]
         try:
             db.session.commit()
-            flash("User Updated Successfully!")
-            return render_template("update.html", form=form, name_to_update=name_to_update, id=id)
+            flash("User information updated successfully!")
+            return redirect(url_for('dashboard'))
         except:
             flash("ERROR!")
             return render_template("update.html", form=form, name_to_update=name_to_update, id=id)
@@ -1013,10 +1012,8 @@ def add_user():
         form.master_name.data = ''
         flash("User added successfully")
         return redirect(url_for('login'))
-    our_users = Users.query.order_by(Users.date_added)
     return render_template("add_user.html", form=form,
-                           full_name=full_name,
-                           our_users=our_users)
+                           full_name=full_name)
 
 
 @app.route('/')
