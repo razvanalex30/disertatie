@@ -127,3 +127,25 @@
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+.hint {
+    font-size: 16px;
+    color: #007bff; /* You can change the color to suit your design */
+    cursor: pointer;
+    margin-left: 5px; /* Adjust the spacing between the input field and the icon */
+}
+
+.hint:hover::before {
+    content: attr(title);
+    background-color: #ffffff; /* You can adjust the background color */
+    color: #000000; /* You can adjust the text color */
+    padding: 5px;
+    white-space: normal; /* Allow text to wrap */
+    max-width: 400px; /* Set a maximum width for the tooltip */
+    max-height: 200px; /* Set a maximum height for the tooltip */
+    border: 3px solid #000000; /* Add a border with the color of your choice */
+    border-radius: 5px;
+    position: absolute;
+    margin-top: -30px; /* Adjust the distance from the icon */
+    z-index: 1;
+}

@@ -30,14 +30,14 @@
 
         <br/>
 
-        {{ form.topology_controllers_nr.label(class="form-label") }}
+        {{ form.topology_controllers_nr.label(class="form-label") }}<span class="hint" title="Hint: If you don't want to use any other controllers, you can set this field to 0">?</span>
 
         {{ form.topology_controllers_nr(class="form-control") }}
 
 
         <br/>
 
-        {{ form.topology_controllers_names.label(class="form-label") }}
+        {{ form.topology_controllers_names.label(class="form-label") }}<span class="hint" title="Hint: Please provide the controller's names separated by ','">?</span>
 
         {% if form.topology_controllers_names.errors %}
             {{ form.topology_controllers_names(class="form-control is-invalid") }}
@@ -54,14 +54,14 @@
 
 
 
-         {{ form.topology_routers_nr.label(class="form-label") }}
+         {{ form.topology_routers_nr.label(class="form-label") }}<span class="hint" title="Hint: If you don't want to use any routers, you can set this field to 0">?</span>
 
         {{ form.topology_routers_nr(class="form-control") }}
 
 
         <br/>
 
-        {{ form.topology_routers_names.label(class="form-label") }}
+        {{ form.topology_routers_names.label(class="form-label") }}<span class="hint" title="Hint: Please provide the router's names separated by ','">?</span>
 
         {% if form.topology_routers_names.errors %}
             {{ form.topology_routers_names(class="form-control is-invalid") }}
@@ -77,13 +77,13 @@
         <br/>
 
 
-        {{ form.topology_switches_nr.label(class="form-label") }}
+        {{ form.topology_switches_nr.label(class="form-label") }}<span class="hint" title="Hint: Please provide the number of switches, it must be greater than 0">?</span>
 
         {{ form.topology_switches_nr(class="form-control") }}
 
         <br/>
 
-        {{ form.topology_switches_names.label(class="form-label") }}
+        {{ form.topology_switches_names.label(class="form-label") }}<span class="hint" title="Hint: Please provide the switches names separated by ','">?</span>
 
 
         {% if form.topology_switches_names.errors %}
@@ -100,13 +100,13 @@
 
         <br/>
 
-        {{ form.topology_hosts_nr.label(class="form-label") }}
+        {{ form.topology_hosts_nr.label(class="form-label") }}<span class="hint" title="Hint: Please provide the number of hosts, it must be greater than 0">?</span>
 
         {{ form.topology_hosts_nr(class="form-control") }}
 
         <br/>
 
-        {{ form.topology_hosts_names.label(class="form-label") }}
+        {{ form.topology_hosts_names.label(class="form-label") }}<span class="hint" title="Hint: Please provide the hosts names separated by ','">?</span>
 
         {% if form.topology_hosts_names.errors %}
             {{ form.topology_hosts_names(class="form-control is-invalid") }}
@@ -121,7 +121,8 @@
 
         <br/>
 
-        {{ form.topology_connections_text.label(class="form-label") }}
+        {{ form.topology_connections_text.label(class="form-label") }}<span class="hint" title="Hint: Please provide the connections in this format 'device1<->device2'. No duplicate lines will be allowed.
+Please use all your devices mentioned earlier. If there are devices unused, an error will be raised when the form is submitted.">?</span>
 
         {% if form.topology_connections_text.errors %}
             {{ form.topology_connections_text(class="form-control is-invalid", rows="7") }}
@@ -150,9 +151,14 @@
         {% else %}
             {{ form.topology_setup_text(class="form-control", rows="7") }}
         {% endif %}
-
-
-
+        <p><strong>Hint:</strong> In this section, you should provide details about the hosts, controllers (if they are used) and routers (if they are used).
+        Here are a few examples of how you can describe the devices:</p>
+        <p>- Host lines: <strong>device_name - ip_address/netmask default_route: (None or an ip_address) MAC: (random or MAC address)</strong></p>
+        <p><strong>e.g. h1 - 192.168.0.1/24 default_route: 192.168.0.2 MAC: 00:11:22:33:44:55</strong></p>
+        <p>- Controllers lines: <strong>device_name - ip_address:port</strong> or <strong>device_name - port</strong></p>
+        <p><strong>e.g. c2 - 128.0.0.1:555</strong></p>
+        <p>- Routers lines: <strong>device_name - interface_name ip_address/netmask</strong> or <strong>device_name - ip_address/netmask</strong></p>
+        <p><strong>e.g. r1 - eth0 192.168.0.1/24</strong></p>
         <br/>
 
         {{ form.submit(class="btn btn-primary") }}

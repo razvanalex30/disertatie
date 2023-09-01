@@ -1,0 +1,95 @@
+*** Adding default controllers
+
+*** Adding controllers
+
+*** Add switches
+
+*** Add routers
+
+*** Add hosts
+
+*** Add links
+
+*** Starting network
+
+*** Configuring hosts
+
+h1 
+h2 
+h3 
+h4 
+
+
+*** Starting controllers
+
+*** Starting switches
+
+*** Post configure switches and hosts
+
+TOPOLOGY LINKS
+s1-eth1 <-> h1-eth0 (s1 h1)
+s1-eth2 <-> h2-eth0 (s1 h2)
+s2-eth1 <-> h3-eth0 (s2 h3)
+s2-eth2 <-> h4-eth0 (s2 h4)
+s1-eth3 <-> s2-eth3 (s1 s2)
+*** Starting controller
+
+default_controller 
+
+
+*** Starting 2 switches
+
+s1 
+s2 
+...
+
+
+*** Starting CLI:
+
+
+COMMAND: NODES
+
+*** Unknown command: NODES
+
+
+COMMAND: nodes
+
+available nodes are: 
+default_controller h1 h2 h3 h4 s1 s2
+
+
+COMMAND: exit
+
+*** Unknown command: 
+
+*** Stopping 1 controllers
+
+default_controller 
+
+
+*** Stopping 5 links
+
+.
+.
+.
+.
+.
+
+
+*** Stopping 2 switches
+
+s1 
+s2 
+
+
+*** Stopping 4 hosts
+
+h1 
+h2 
+h3 
+h4 
+
+*** Done
+
+The CSRF token is missing.
+The CSRF token is missing.

@@ -103,8 +103,8 @@ class RegisterForm(FlaskForm):
 
 
 class FileForm(FlaskForm):
-    topology_name = StringField('Topology Name', validators=[DataRequired()])
-    topology_description = TextAreaField('Topology Description', validators=[DataRequired()])
+    topology_name = StringField('Topology Name:', validators=[DataRequired()])
+    topology_description = TextAreaField('Topology Description:', validators=[DataRequired()])
     topology_python_file = FileField('Python File (Only .py)', validators=[FileAllowed(['py'])])
     submit = SubmitField('Submit')
 
@@ -204,18 +204,18 @@ class FileForm(FlaskForm):
 
 # Create a Topology Form
 class TopologyForm(FlaskForm):
-    topology_name = StringField("Topology Name", validators=[DataRequired()])
-    topology_description = CKEditorField("Description", validators=[DataRequired()])
-    topology_controllers_nr = IntegerField("Controllers Number", validators=[InputRequired(), NumberRange(min=0)])
-    topology_controllers_names = StringField("Controller's Names", validators=[DataRequired()])
-    topology_routers_nr = IntegerField("Routers Number", validators=[InputRequired(), NumberRange(min=0)])
-    topology_routers_names = StringField("Router's Names", validators=[DataRequired()])
-    topology_switches_nr = IntegerField("Switches Number", validators=[DataRequired(), NumberRange(min=1)])
-    topology_switches_names = StringField("Switche's Names", validators=[DataRequired()])
-    topology_hosts_nr = IntegerField("Hosts Number", validators=[DataRequired(), NumberRange(min=1)])
-    topology_hosts_names = StringField("Host's Names", validators=[DataRequired()])
-    topology_connections_text = TextAreaField("Topology Connections", validators=[DataRequired()])
-    topology_setup_text = TextAreaField("Topology Setup", validators=[DataRequired()])
+    topology_name = StringField("Topology Name:", validators=[DataRequired()])
+    topology_description = CKEditorField("Description:", validators=[DataRequired()])
+    topology_controllers_nr = IntegerField("Controllers Number:", validators=[InputRequired(), NumberRange(min=0)])
+    topology_controllers_names = StringField("Controller's Names:", validators=[DataRequired()])
+    topology_routers_nr = IntegerField("Routers Number:", validators=[InputRequired(), NumberRange(min=0)])
+    topology_routers_names = StringField("Router's Names:", validators=[DataRequired()])
+    topology_switches_nr = IntegerField("Switches Number:", validators=[DataRequired(), NumberRange(min=1)])
+    topology_switches_names = StringField("Switches Names:", validators=[DataRequired()])
+    topology_hosts_nr = IntegerField("Hosts Number:", validators=[DataRequired(), NumberRange(min=1)])
+    topology_hosts_names = StringField("Hosts Names:", validators=[DataRequired()])
+    topology_connections_text = TextAreaField("Topology Connections:", validators=[DataRequired()])
+    topology_setup_text = TextAreaField("Topology Setup:", validators=[DataRequired()])
     topology_creator = StringField("Topology Creator")
     submit = SubmitField("Submit")
 
@@ -225,14 +225,20 @@ class TopologyForm(FlaskForm):
         self.edit_topology = obj is not None
         self.meta.obj = obj  # Store the object in the form meta
         if request.path == "/add_topology":
-            self.topology_controllers_names.default = "No Controllers"
+            self.topology_controllers_nr.default = 0
+            self.topology_routers_nr.default = 0
             self.topology_routers_names.default = "No Routers"
+            self.topology_controllers_names.default = "No Controllers"
         else:
             self.topology_controllers_names.default = obj.topology_controllers_names or "No Controllers"
             self.topology_routers_names.default = obj.topology_routers_names or "No Routers"
+            self.topology_controllers_nr.default = obj.topology_controllers_nr or 0
+            self.topology_routers_nr.default = obj.topology_routers_nr or 0
 
         self.topology_controllers_names.process(request.form)
         self.topology_routers_names.process(request.form)
+        self.topology_controllers_nr.process(request.form)
+        self.topology_routers_nr.process(request.form)
 
 
 
