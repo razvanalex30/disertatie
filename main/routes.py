@@ -57,7 +57,6 @@ def is_valid_capture_name(name):
 
 
 def remove_duplicate_lines(valid_lines):
-    # print(f"VALID LINES: {valid_lines}")
     unique_lines = []
     duplicate_lines = []
 
@@ -72,9 +71,6 @@ def remove_duplicate_lines(valid_lines):
             unique_lines.append(line)
         else:
             duplicate_lines.append(line)
-
-    # print(f"UNIQUE LINES:   {unique_lines}")
-    # print(f"DUPLICATE LINES:  {duplicate_lines}")
 
     return duplicate_lines
 
@@ -141,9 +137,6 @@ def parse_routers_info(topo_setup_text):
 
 
 
-
-
-
 def parse_hosts_info(topo_setup_text):
     topo_text = topo_setup_text.strip().split("\n")
 
@@ -206,11 +199,9 @@ def create_topology_script(**kwargs):
         #     link_line = f"net.addLink({conn_line[0]}, {conn_line[1]})"
         #     connection_text_lines.append(link_line)
         if conn_line[0] in switches_names and conn_line[1] in controllers_names:
-            print("SUNT IN PRIMUL IF")
             link_line = f"net.get('{conn_line[0]}').start([{conn_line[1]}])"
             switch_controller_conn_lines.append(link_line)
         elif conn_line[0] in controllers_names and conn_line[1] in switches_names:
-            print("SUNT IN AL DOILEA IF")
             link_line = f"net.get('{conn_line[1]}').start([{conn_line[0]}])"
             switch_controller_conn_lines.append(link_line)
         else:
@@ -285,21 +276,6 @@ def create_topology_script(**kwargs):
     with open(f'{directory_path}/{file_name}.py', 'w') as f:
         f.write(new_code)
         f.close()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 @login_manager.user_loader
