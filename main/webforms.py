@@ -153,10 +153,8 @@ class FileForm(FlaskForm):
         if field.data is None and self._is_add_topology_route():
             raise ValidationError('Please upload a valid .py file.')
 
-
         if field.data is None and self._is_edit_topology_route():
             return
-
 
         if not allowed_file(field.data.filename):
             raise ValidationError('Please upload a valid .py file.')
@@ -176,14 +174,10 @@ class FileForm(FlaskForm):
             os.remove(file_path)
             raise ValidationError("The script doesn't include the valid line, please check the file!")
 
-
         run_python = run_python_script(file_path)
         if not run_python:
             os.remove(file_path)
             raise ValidationError("Python file has errors, please check!")
-
-
-
 
         session['file_path'] = file_path
 
@@ -614,8 +608,6 @@ class TopologyForm(FlaskForm):
             all_names.extend(names)
             routers_names_list.extend(names)
 
-        # print(f">>>>>DEVICES NAMES: {all_names}")
-
         if len(all_names) != len(set(all_names)):
             duplicates = Counter(all_names)
             duplicates_list = list([elem for elem in duplicates if duplicates[elem] > 1])
@@ -630,7 +622,6 @@ class TopologyForm(FlaskForm):
         cleaned_lines = [''.join(line.split()) for line in non_empty_lines]
         cleaned_text = '\n'.join(cleaned_lines)
         print(f">>>>> CONNECTIONS TEXT: {cleaned_text}")
-
 
         return True
 

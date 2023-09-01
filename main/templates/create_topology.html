@@ -54,9 +54,10 @@
         </div>
         <br/>
         <p><strong>Disclaimer:</strong> In order to have a successful run with your script in the web application, please make sure that you include the following two lines inside your script:</p>
-        <p><strong>setLogLevel( 'info' )</strong></p>
-        <p><strong>logfile = "#LOGFILE"</strong></p>
-        <p><strong>logging.basicConfig(format='%(message)s', filename=logfile, filemode='a', level=logging.INFO)</strong></p>
+        <p><strong><i>setLogLevel( 'info' )</i></strong></p>
+        <p><strong><i>logfile = "#LOGFILE"</i></strong></p>
+        <p><strong><i>logging.basicConfig(format='%(message)s', filename=logfile, filemode='a', level=logging.INFO)</i></strong></p>
+        <p><strong>Please be aware that it would take around 15-20 seconds to validate the Python script and the form.</strong></p>
         <br/>
 
         {{ form.submit(class="btn btn-primary") }}
