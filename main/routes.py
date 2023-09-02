@@ -180,24 +180,14 @@ def create_topology_script(**kwargs):
     switches_names = kwargs.get("switches_names")
     hosts_names = kwargs.get("hosts_names")
 
-
-
     all_devices_names = controllers_names + routers_names + switches_names + hosts_names
 
 
     switch_controller_conn_lines = []
     connection_text_lines = []
     conn_text = connections_text.strip().split("\n")
-    print(f">>>> SWITCHES NAMES: {switches_names}")
-    print(f">>>> CONTROLLERS NAMES: {controllers_names}")
     for line in conn_text:
         conn_line = line.split("<->")
-        # if conn_line[0] not in controllers_names and conn_line[1] not in switches_names:
-        #     link_line = f"net.addLink({conn_line[0]}, {conn_line[1]})"
-        #     connection_text_lines.append(link_line)
-        # elif conn_line[0] not in switches_names and conn_line[1] not in controllers_names:
-        #     link_line = f"net.addLink({conn_line[0]}, {conn_line[1]})"
-        #     connection_text_lines.append(link_line)
         if conn_line[0] in switches_names and conn_line[1] in controllers_names:
             link_line = f"net.get('{conn_line[0]}').start([{conn_line[1]}])"
             switch_controller_conn_lines.append(link_line)
@@ -208,11 +198,6 @@ def create_topology_script(**kwargs):
             link_line = f"net.addLink({conn_line[0]}, {conn_line[1]})"
             connection_text_lines.append(link_line)
 
-
-
-
-    routers_lines = []
-    controllers_lines = []
 
 
     switches_lines = []
@@ -226,14 +211,12 @@ def create_topology_script(**kwargs):
     controllers_lines = parse_controllers_info(setup_text)
 
     hosts_lines = parse_hosts_info(setup_text)
-    # hosts_lines = switches_lines + hosts_lines + router_created_lines + controllers_lines
 
     with open('/home/razvan/Disertatie/disertatie/topologies_templates/switch_host_tmp_new.py', 'r') as f:
         existing_code = f.read()
         f.close()
 
     logfile = f'{directory_path}/logfile.log'
-
 
     # Append the new lines to the existing code
 
@@ -257,8 +240,6 @@ def create_topology_script(**kwargs):
     new_code = re.sub(r'# Insert links here', '\n    '.join(connection_text_lines), new_code)
 
     # Adding Switches-Controllers connections
-    print(f">>>> SWITCH CONTROLLER LINES: {switch_controller_conn_lines}")
-    print(f">>>> CONNECTION LINES: {connection_text_lines}")
     if switch_controller_conn_lines:
         new_code = re.sub(r'# Insert switches controllers links here',
                           '\n    '.join(switch_controller_conn_lines), new_code)
@@ -267,8 +248,6 @@ def create_topology_script(**kwargs):
     if routers_created_intf:
         new_code = re.sub(r'# Insert router config here',
                           '\n    '.join(routers_created_intf), new_code)
-
-
 
     new_code = re.sub(r'#LOGFILE', logfile, new_code)
 
@@ -634,10 +613,6 @@ def edit_topology_uploaded(id):
                                   f"user_{topology_creator}", f"uploaded/{form.topology_name.data}")
 
 
-
-
-
-
     if form.validate_on_submit():
         topology.topology_name = form.topology_name.data
         topology.topology_description = form.topology_description.data
@@ -672,8 +647,6 @@ def edit_topology_uploaded(id):
             os.rename(directory_path_old, directory_path_new)
 
 
-
-
         # Check if the user has uploaded a new file
         if form.topology_python_file.data is not None:
             # Save the new file and update the topology_file_path in the database
@@ -702,7 +675,6 @@ def edit_topology_uploaded(id):
             with open(file_path_new, 'w') as file:
                 file.write(new_code)
                 file.close()
-
 
 
         # Commit the changes to the database
@@ -760,11 +732,6 @@ def create_topology():
         db.session.add(post)
         db.session.commit()
 
-        # directory_path = os.path.join("/home/razvan/Disertatie/disertatie/TopologiesScripts",
-        #                               f"user_{topology_creator}", f"uploaded/{form.topology_name.data}")
-        # if not os.path.exists(directory_path):
-        #     os.makedirs(directory_path)
-        # shutil.move(file_path, directory_path)
 
         # Clear the form
         form.topology_name.data = ''
@@ -811,7 +778,6 @@ def add_topology():
                                                                                    switches_list=switches_list,
                                                                                    hosts_list=hosts_list)
 
-        # print(f">>>>>>> VALID LINES: {valid_lines}")
         if unused_devices and invalid_lines:
             flash("Unused devices found: {}".format(", ".join(unused_devices)), 'error')
             flash("Invalid lines found: {}".format(", ".join(invalid_lines)), 'error')
@@ -830,9 +796,7 @@ def add_topology():
             return render_template('add_topology.html', form=form)
 
 
-
-
-        form.topology_connections_text.data = cleaned_text      # de revazut aici
+        form.topology_connections_text.data = cleaned_text
 
 
         topo_conn_text = cleaned_text
@@ -844,7 +808,6 @@ def add_topology():
         cleaned_lines = [' '.join(line.split()) for line in non_empty_lines]
         cleaned_text = '\n'.join(cleaned_lines)
 
-        ##### metoda de apelat aici ####
         valid_lines_setup, invalid_lines_setup, unused_hosts_setup, duplicate_lines_setup = form.validate_setup_text(cleaned_text=cleaned_text,
                                                                                              controllers_list=controllers_list,
                                                                                              routers_list=routers_list,
@@ -896,8 +859,6 @@ def add_topology():
                           topology_setup_text=form.topology_setup_text.data
                           )
 
-
-
         # Add topology to database
         db.session.add(post)
         db.session.commit()
@@ -917,8 +878,6 @@ def add_topology():
                                routers_names=routers_list,
                                directory_path=directory_path,
                                file_name=form.topology_name.data)
-
-
 
 
         # Clear the form
