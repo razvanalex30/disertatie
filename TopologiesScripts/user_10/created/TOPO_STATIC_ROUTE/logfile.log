@@ -1,0 +1,1952 @@
+
+*** Done
+
+*** Adding default controllers
+
+*** Adding controllers
+
+*** Add switches
+
+*** Add routers
+
+*** Add hosts
+
+*** Add links
+
+*** Starting network
+
+*** Configuring hosts
+
+r5 
+r6 
+h1 
+h2 
+h3 
+h4 
+
+
+*** Starting controllers
+
+*** Starting switches
+
+*** Post configure switches and hosts
+
+TOPOLOGY LINKS
+h1-eth0 <-> s1-eth1 (h1 s1)
+h2-eth0 <-> s1-eth2 (h2 s1)
+h3-eth0 <-> s2-eth1 (h3 s2)
+h4-eth0 <-> s2-eth2 (h4 s2)
+s1-eth3 <-> s3-eth1 (s1 s3)
+r6-eth0 <-> s4-eth1 (r6 s4)
+s3-eth2 <-> r5-eth0 (s3 r5)
+r5-eth1 <-> r6-eth1 (r5 r6)
+s4-eth2 <-> s2-eth3 (s4 s2)
+*** Starting controller
+
+default_controller 
+c1 
+c2 
+
+
+*** Starting 4 switches
+
+s1 
+s2 
+s3 
+s4 
+...
+
+
+*** Starting CLI:
+
+
+COMMAND: h1 ping h2
+
+PING 10.0.0.3 (10.0.0.3) 56(84) bytes of data.
+
+64 bytes from 10.0.0.3: icmp_seq=1 ttl=64 time=5.92 ms
+64 bytes from 10.0.0.3: icmp_seq=1 ttl=64 time=5.99 ms (DUP!)
+64 bytes from 10.0.0.3: icmp_seq=1 ttl=64 time=6.01 ms (DUP!)
+64 bytes from 10.0.0.3: icmp_seq=1 ttl=64 time=6.04 ms (DUP!)
+64 bytes from 10.0.0.3: icmp_seq=1 ttl=64 time=6.06 ms (DUP!)
+64 bytes from 10.0.0.3: icmp_seq=1 ttl=64 time=6.08 ms (DUP!)
+64 bytes from 10.0.0.3: icmp_seq=1 ttl=64 time=6.11 ms (DUP!)
+64 bytes from 10.0.0.3: icmp_seq=1 ttl=64 time=6.13 ms (DUP!)
+
+64 bytes from 10.0.0.3: icmp_seq=1 ttl=64 time=6.54 ms (DUP!)
+
+64 bytes from 10.0.0.3: icmp_seq=2 ttl=64 time=1.36 ms
+
+64 bytes from 10.0.0.3: icmp_seq=3 ttl=64 time=0.064 ms
+
+64 bytes from 10.0.0.3: icmp_seq=4 ttl=64 time=0.124 ms
+
+64 bytes from 10.0.0.3: icmp_seq=5 ttl=64 time=0.211 ms
+
+64 bytes from 10.0.0.3: icmp_seq=6 ttl=64 time=0.080 ms
+
+64 bytes from 10.0.0.3: icmp_seq=7 ttl=64 time=0.057 ms
+
+64 bytes from 10.0.0.3: icmp_seq=8 ttl=64 time=0.065 ms
+
+64 bytes from 10.0.0.3: icmp_seq=9 ttl=64 time=0.132 ms
+
+64 bytes from 10.0.0.3: icmp_seq=10 ttl=64 time=0.092 ms
+
+64 bytes from 10.0.0.3: icmp_seq=11 ttl=64 time=0.065 ms
+
+64 bytes from 10.0.0.3: icmp_seq=12 ttl=64 time=0.060 ms
+
+64 bytes from 10.0.0.3: icmp_seq=13 ttl=64 time=0.063 ms
+
+64 bytes from 10.0.0.3: icmp_seq=14 ttl=64 time=0.138 ms
+
+64 bytes from 10.0.0.3: icmp_seq=15 ttl=64 time=0.063 ms
+
+64 bytes from 10.0.0.3: icmp_seq=16 ttl=64 time=0.140 ms
+
+64 bytes from 10.0.0.3: icmp_seq=17 ttl=64 time=0.114 ms
+
+64 bytes from 10.0.0.3: icmp_seq=18 ttl=64 time=0.179 ms
+
+64 bytes from 10.0.0.3: icmp_seq=19 ttl=64 time=0.065 ms
+
+64 bytes from 10.0.0.3: icmp_seq=20 ttl=64 time=0.121 ms
+
+64 bytes from 10.0.0.3: icmp_seq=21 ttl=64 time=0.149 ms
+
+64 bytes from 10.0.0.3: icmp_seq=22 ttl=64 time=0.064 ms
+
+64 bytes from 10.0.0.3: icmp_seq=23 ttl=64 time=0.076 ms
+
+64 bytes from 10.0.0.3: icmp_seq=24 ttl=64 time=0.067 ms
+
+64 bytes from 10.0.0.3: icmp_seq=25 ttl=64 time=0.061 ms
+
+64 bytes from 10.0.0.3: icmp_seq=26 ttl=64 time=0.065 ms
+
+64 bytes from 10.0.0.3: icmp_seq=27 ttl=64 time=0.066 ms
+
+64 bytes from 10.0.0.3: icmp_seq=28 ttl=64 time=0.095 ms
+
+64 bytes from 10.0.0.3: icmp_seq=29 ttl=64 time=0.066 ms
+
+64 bytes from 10.0.0.3: icmp_seq=30 ttl=64 time=0.065 ms
+
+64 bytes from 10.0.0.3: icmp_seq=31 ttl=64 time=0.154 ms
+
+64 bytes from 10.0.0.3: icmp_seq=32 ttl=64 time=0.065 ms
+
+64 bytes from 10.0.0.3: icmp_seq=33 ttl=64 time=0.247 ms
+
+64 bytes from 10.0.0.3: icmp_seq=34 ttl=64 time=0.061 ms
+
+64 bytes from 10.0.0.3: icmp_seq=35 ttl=64 time=0.101 ms
+
+64 bytes from 10.0.0.3: icmp_seq=36 ttl=64 time=0.122 ms
+
+64 bytes from 10.0.0.3: icmp_seq=37 ttl=64 time=0.102 ms
+
+64 bytes from 10.0.0.3: icmp_seq=38 ttl=64 time=0.135 ms
+
+64 bytes from 10.0.0.3: icmp_seq=39 ttl=64 time=0.065 ms
+
+64 bytes from 10.0.0.3: icmp_seq=40 ttl=64 time=0.142 ms
+
+64 bytes from 10.0.0.3: icmp_seq=41 ttl=64 time=0.066 ms
+
+64 bytes from 10.0.0.3: icmp_seq=42 ttl=64 time=0.065 ms
+
+64 bytes from 10.0.0.3: icmp_seq=43 ttl=64 time=0.066 ms
+
+64 bytes from 10.0.0.3: icmp_seq=44 ttl=64 time=0.101 ms
+
+64 bytes from 10.0.0.3: icmp_seq=45 ttl=64 time=0.059 ms
+
+64 bytes from 10.0.0.3: icmp_seq=46 ttl=64 time=0.081 ms
+
+64 bytes from 10.0.0.3: icmp_seq=47 ttl=64 time=0.084 ms
+
+64 bytes from 10.0.0.3: icmp_seq=48 ttl=64 time=0.067 ms
+
+
+--- 10.0.0.3 ping statistics ---
+48 packets transmitted, 48 received, +8 duplicates, 0% packet loss, time 48065ms
+rtt min/avg/max/mdev = 0.057/1.082/6.535/2.202 ms
+
+
+
+COMMAND: sh ovs-ofctl dump-flows s1
+
+NXST_FLOW reply (xid=0x4):
+ cookie=0x0, duration=56.318s, table=0, n_packets=3, n_bytes=126, idle_timeout=60, idle_age=23, priority=65535,arp,in_port=2,vlan_tci=0x0000,dl_src=22:22:22:22:22:22,dl_dst=aa:bb:aa:bb:aa:bb,arp_spa=10.0.0.3,arp_tpa=10.0.0.2,arp_op=2 actions=output:1
+ cookie=0x0, duration=51.137s, table=0, n_packets=1, n_bytes=42, idle_timeout=60, idle_age=5, priority=65535,arp,in_port=2,vlan_tci=0x0000,dl_src=22:22:22:22:22:22,dl_dst=aa:bb:aa:bb:aa:bb,arp_spa=10.0.0.3,arp_tpa=10.0.0.2,arp_op=1 actions=output:1
+ cookie=0x0, duration=51.135s, table=0, n_packets=1, n_bytes=42, idle_timeout=60, idle_age=5, priority=65535,arp,in_port=1,vlan_tci=0x0000,dl_src=aa:bb:aa:bb:aa:bb,dl_dst=22:22:22:22:22:22,arp_spa=10.0.0.2,arp_tpa=10.0.0.3,arp_op=2 actions=output:2
+ cookie=0x0, duration=23.484s, table=0, n_packets=0, n_bytes=0, idle_timeout=60, idle_age=23, priority=65535,arp,in_port=1,vlan_tci=0x0000,dl_src=aa:bb:aa:bb:aa:bb,dl_dst=22:22:22:22:22:22,arp_spa=10.0.0.2,arp_tpa=10.0.0.3,arp_op=1 actions=output:2
+ cookie=0x0, duration=56.318s, table=0, n_packets=47, n_bytes=4606, idle_timeout=60, idle_age=8, priority=65535,icmp,in_port=1,vlan_tci=0x0000,dl_src=aa:bb:aa:bb:aa:bb,dl_dst=22:22:22:22:22:22,nw_src=10.0.0.2,nw_dst=10.0.0.3,nw_tos=0,icmp_type=8,icmp_code=0 actions=output:2
+ cookie=0x0, duration=56.316s, table=0, n_packets=47, n_bytes=4606, idle_timeout=60, idle_age=8, priority=65535,icmp,in_port=2,vlan_tci=0x0000,dl_src=22:22:22:22:22:22,dl_dst=aa:bb:aa:bb:aa:bb,nw_src=10.0.0.3,nw_dst=10.0.0.2,nw_tos=0,icmp_type=0,icmp_code=0 actions=output:1
+
+COMMAND: sh ovs-ofctl dump-flows s2
+
+NXST_FLOW reply (xid=0x4):
+
+COMMAND: r5 ip route add 20.0.0.0/24 via 30.0.0.2
+
+
+
+COMMAND: r6 ip route add 10.0.0.0/24 via 30.0.0.1
+
+
+
+COMMAND: h1 ping h3
+
+PING 20.0.0.2 (20.0.0.2) 56(84) bytes of data.
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=95.9 ms
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=96.0 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=96.1 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=96.1 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=96.2 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=96.3 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=96.4 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=96.4 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=96.5 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=96.6 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=96.6 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=96.7 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=96.7 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=96.7 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=96.8 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=96.8 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=96.8 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=96.8 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=96.8 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=96.9 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=96.9 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=96.9 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=96.9 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=96.9 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=97.0 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=97.0 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=97.0 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=97.0 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=97.1 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=97.1 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=97.1 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=97.1 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=97.1 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=97.2 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=97.2 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=97.2 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=97.2 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=97.2 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=97.2 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=97.3 ms (DUP!)
+64 bytes from 20
+.0.0.2: icmp_seq=1 ttl=62 time=97.3 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=97.3 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=97.3 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=97.3 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=97.3 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=97.4 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=97.4 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=97.4 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=97.4 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=97.5 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=97.5 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=97.5 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=97.6 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=97.6 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=97.6 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=97.6 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=97.7 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=97.7 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=97.7 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=97.7 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=97.7 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=97.7 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=97.8 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=97.8 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=97.8 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=97.8 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=97.8 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=97.9 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=97.9 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=97.9 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=97.9 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=97.9 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=97.9 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=98.0 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=98.0 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=105 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=105 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=105 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=105 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=105 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=105 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=105 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=105 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=105 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=105 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=105 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=105 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=105 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=105 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=105 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=105 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=105 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=105 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=105 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=105 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=105 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=105 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=105 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=105 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=106 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=106 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=106 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=106 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=106 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=106 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=106 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=106 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=106 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=106 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=106 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=106 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=106 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=106 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=106 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=106 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=106 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=106 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=106 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=106 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=106 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=106 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=106 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=107 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=107 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=107 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=107 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=107 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=107 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=107 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=107 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=107 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=107 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=107 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=107 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=107 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=107 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=108 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=108 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=108 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=108 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=108 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=108 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=108 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=108 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=108 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=108 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=113 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=113 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=113 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=113 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=114 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=114 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=114 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=114 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=114 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=114 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=114 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=114 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=114 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=114 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=114 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=114 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=114 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=114 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=114 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=114 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=114 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=114 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=114 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=114 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=114 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=114 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=114 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=114 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=114 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=114 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=114 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=114 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=114 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=114 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=114 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=114 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=115 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=115 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=115 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=115 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=115 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=115 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=115 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=115 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=115 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=115 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=115 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=115 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=115 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=115 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=115 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=115 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=115 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=115 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=115 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=115 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=115 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=116 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=116 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=116 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=116 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=116 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=116 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=116 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=116 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=116 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=116 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=116 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=116 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=116 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=116 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=116 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=116 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=116 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=116 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=116 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=116 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=116 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=116 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=116 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=116 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=116 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=116 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=116 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=116 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=116 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=116 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=116 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=116 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=116 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=116 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=116 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=116 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq
+=1 ttl=62 time=116 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=116 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=117 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=117 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=117 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=117 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=117 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=117 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=117 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=117 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=117 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=117 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=117 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=117 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=117 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=117 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=117 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=117 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=117 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=117 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=117 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=117 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=117 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=117 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=117 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=117 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=117 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=117 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=117 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=117 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=117 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=117 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_s
+eq=1 ttl=62 time=117 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=117 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=117 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=117 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=117 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=117 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=117 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=117 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=117 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=117 ms (DUP!)
+
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=117 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=117 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=117 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=117 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=117 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=117 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=118 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=118 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=118 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=118 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=118 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=118 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=118 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=118 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=118 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=118 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=118 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_s
+eq=1 ttl=62 time=118 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=118 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=118 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=118 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=118 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=118 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=118 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=118 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=118 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=118 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=118 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=118 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=118 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=118 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=118 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=118 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=118 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=118 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=118 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=118 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=118 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=118 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=119 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=119 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=119 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=119 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=119 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=120 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=120 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=120 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=120 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=120 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=120 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=120 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=120 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=120 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=120 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=120 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=120 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=120 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=120 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=120 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=120 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=120 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=120 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=120 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=120 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=120 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=120 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=120 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=120 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=120 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=120 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=120 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=120 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=121 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=121 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=121 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=121 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=121 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=121 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=121 ms (DUP!)
+
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=121 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=121 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=121 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=121 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=121 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=121 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=121 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=121 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=121 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=121 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=121 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=121 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=121 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=121 ms (DUP!)
+
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=121 ms (DUP!)
+
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=121 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=121 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=121 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=121 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=121 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=121 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=121 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=121 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=122 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=122 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=122 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=122 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=122 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=122 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=122 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=122 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq
+=1 ttl=62 time=122 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=122 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=122 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=122 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=122 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=122 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=122 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=122 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=122 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=122 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=122 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=122 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=122 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=122 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=122 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=122 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=122 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=122 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=122 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=122 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=122 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=122 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=122 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=122 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=122 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=122 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=122 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=122 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=122 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=122 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=122 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq
+=1 ttl=62 time=122 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=123 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=123 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=123 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=123 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=123 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=123 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=123 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=123 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=123 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=123 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=123 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=123 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=123 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=123 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=123 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=123 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=123 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=123 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=123 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=123 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=123 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=123 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=123 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=123 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=123 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=123 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=123 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=123 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=123 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=123 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=123 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=123 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=123 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=123 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=123 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=123 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=123 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=123 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=123 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=123 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=123 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=123 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=124 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=124 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=124 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=124 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=124 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=124 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=124 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=124 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=125 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=125 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=125 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=125 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=125 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=125 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=125 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=125 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=125 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=125 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=125 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=126 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=126 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=126 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=126 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=126 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=126 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=126 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=126 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=126 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=126 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=126 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=127 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=127 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=127 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=127 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=127 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=127 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=127 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=127 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=127 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=127 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=128 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=128 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=128 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=128 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=128 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=128 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=128 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=128 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=128 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=128 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=128 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=129 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=129 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=129 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=129 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=129 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=129 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=129 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=129 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=129 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=129 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=130 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=130 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=130 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=130 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=130 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=130 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=130 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=130 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=130 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=130 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=130 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=131 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=131 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=131 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=131 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=131 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=131 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=131 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=131 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=131 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=132 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=132 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=132 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=132 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=132 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=132 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=132 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=132 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=132 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=132 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=132 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=132 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=132 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=132 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=133 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=133 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=133 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=133 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=133 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=133 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=133 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=133 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=133 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=133 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=133 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=133 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=134 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=134 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=134 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=134 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=134 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=134 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=134 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=134 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=134 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=134 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=134 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=134 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=134 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=135 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=135 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=135 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=135 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=135 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=135 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=135 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=135 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=135 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=135 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=135 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=135 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=136 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=136 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=136 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=136 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=136 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=136 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=136 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=136 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=136 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=136 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=136 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=136 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=136 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=136 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=137 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=137 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=137 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=137 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=137 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=137 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=137 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=137 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=137 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=138 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=138 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=138 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=138 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=138 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=138 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=138 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=138 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=138 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=139 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=139 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=139 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=139 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=139 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=139 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=139 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=139 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=139 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=139 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=139 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=139 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=139 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=139 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=139 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=139 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=139 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=139 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=139 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=139 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=140 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=140 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=140 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=140 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=140 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=140 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=140 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=140 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=140 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=140 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=140 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=140 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=140 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=140 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=140 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=140 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=140 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=140 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=140 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=140 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=140 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=140 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=140 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=140 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=140 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=140 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=140 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=140 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=140 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=140 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=140 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=141 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=141 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=141 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=141 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=141 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=141 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=141 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=141 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=141 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=141 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=141 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=141 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=141 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=141 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=141 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=141 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=141 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=141 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=141 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=141 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=141 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=141 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=141 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=141 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=141 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=141 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=141 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=141 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=141 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=141 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=141 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=141 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=141 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=141 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=142 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=142 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=142 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=142 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=142 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=142 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=142 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=142 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=142 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=142 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=142 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=142 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=142 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=142 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=142 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=142 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=142 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=142 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=142 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=142 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=142 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=142 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=142 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=142 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=142 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=142 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=142 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=142 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=142 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=142 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=142 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=142 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=142 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=143 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=143 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=143 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=143 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=143 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=143 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=144 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=144 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=144 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=144 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=144 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=144 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=144 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=144 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=144 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=144 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=144 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=144 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=144 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=144 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=144 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=144 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=144 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=144 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=144 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=144 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=144 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=144 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=144 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=144 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=144 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=144 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=144 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=144 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=144 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=144 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=144 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=144 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=144 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=144 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=144 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=145 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=145 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=145 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=145 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=145 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=145 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=145 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=145 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=145 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=145 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=145 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=145 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=145 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=145 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=145 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=145 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=145 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=145 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=145 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=145 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=145 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=145 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=145 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=145 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=145 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=145 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=145 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=145 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=145 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=145 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=145 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=146 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=146 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=146 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=146 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=146 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=146 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=146 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=146 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=147 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=147 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=147 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=147 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=147 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=147 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=147 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=147 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=147 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=147 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=147 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=147 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=147 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=147 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=147 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=147 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=147 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=147 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=147 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=148 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=148 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=148 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=148 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=148 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=148 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=148 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=148 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=148 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=148 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=148 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=148 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=148 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=148 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=148 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=148 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=148 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=148 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=148 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=148 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=148 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=148 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=148 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=148 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=148 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=148 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=148 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=148 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=148 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=148 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=148 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=148 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=148 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=148 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=148 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=148 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=148 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=148 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=148 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=149 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=149 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=149 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=149 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=149 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=149 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=149 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=149 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=149 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=149 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=149 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=149 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=149 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=149 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=149 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=149 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=149 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=150 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=150 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=150 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=150 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=150 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=150 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=150 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=150 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=150 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=150 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=150 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=150 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=150 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=150 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=150 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=150 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=150 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=151 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=151 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=151 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=151 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=151 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=151 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=151 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=151 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=151 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=151 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=151 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=151 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=151 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=151 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=151 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=151 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=151 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=152 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=152 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=152 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=152 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=152 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=152 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=152 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=152 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=152 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=152 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=152 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=152 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=152 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=152 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=152 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=152 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=152 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=152 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=152 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=152 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=152 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=153 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=153 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=153 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=153 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=153 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=153 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=153 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=153 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=153 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=153 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=153 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=153 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=153 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=153 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=153 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=153 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=153 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=153 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=153 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=153 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=153 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=153 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=153 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=153 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=154 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=154 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=154 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=154 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=154 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=154 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=154 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=154 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=154 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=154 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=154 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=154 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=154 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=154 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=154 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=154 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=154 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=154 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=154 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=155 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=155 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=155 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=155 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=155 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=155 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=155 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=155 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=155 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=155 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=155 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=155 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=155 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=155 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=155 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=155 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=155 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=155 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=155 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=155 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=155 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=155 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=155 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=155 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=155 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=155 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=155 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=155 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=155 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=155 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=155 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=155 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=156 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=156 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=156 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=156 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=156 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=156 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=156 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=156 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=156 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=156 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=156 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=156 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=156 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=156 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=156 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=156 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=156 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=156 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=156 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=156 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=157 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=157 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=157 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=157 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=157 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=157 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=157 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=157 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=157 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=157 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=157 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=157 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=157 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=157 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=157 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=158 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=158 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=158 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=158 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=158 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=158 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=158 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=158 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=158 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=158 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=158 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=158 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=158 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=158 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=158 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=158 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=158 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=158 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=158 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=158 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=158 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=158 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=158 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=158 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=158 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=159 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=159 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=159 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=159 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=159 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=159 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=159 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=159 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=159 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=159 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=159 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=159 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=159 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=160 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=160 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=160 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=160 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=160 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=160 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=160 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=160 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=160 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=160 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=160 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=160 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=160 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=160 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=160 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=160 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=160 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=160 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=160 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=160 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=161 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=161 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=161 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=161 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=161 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=161 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=161 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=162 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=162 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=162 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=162 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=162 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=162 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=162 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=162 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=162 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=162 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=162 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=162 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=162 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=162 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=162 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=162 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=162 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=162 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=162 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=162 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=162 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=162 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=162 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=162 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=162 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=163 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=163 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=163 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=163 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=163 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=163 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=163 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=163 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=163 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=163 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=163 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=163 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=163 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=163 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=163 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=163 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=163 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=163 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=163 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=163 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=163 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=163 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=163 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=164 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=164 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=164 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=164 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=164 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=164 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=164 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=164 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=164 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=164 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=164 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=164 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=164 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=164 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=164 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=164 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=164 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=164 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=164 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=164 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=164 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=164 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=167 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=167 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=167 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=167 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=167 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=167 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=167 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=167 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=167 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=167 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=167 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=167 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=167 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=167 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=167 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=167 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=167 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=167 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=167 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=167 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=168 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=168 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=168 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=168 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=168 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=168 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=168 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=168 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=168 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=168 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=168 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=168 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=168 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=168 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=168 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=168 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=168 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=168 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=168 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=168 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=168 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=168 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=168 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=168 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=168 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=168 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=168 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=168 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=168 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=168 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=168 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=168 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=168 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=168 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=168 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=168 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=168 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=168 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=168 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=168 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=168 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=169 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=169 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=169 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=169 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=169 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=169 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=169 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=169 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=169 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=169 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=169 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=169 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=169 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=169 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=169 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=169 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=169 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=169 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=169 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=169 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=170 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=170 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=170 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=170 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=170 ms (DUP!)
+64 bytes from 20.0.0.2: icmp_seq=1 ttl=62 time=170 ms (DUP!)
+
+64 bytes from 20.0.0.2: icmp_seq=2 ttl=62 time=0.671 ms
+
+64 bytes from 20.0.0.2: icmp_seq=3 ttl=62 time=0.108 ms
+
+64 bytes from 20.0.0.2: icmp_seq=4 ttl=62 time=0.096 ms
+
+64 bytes from 20.0.0.2: icmp_seq=5 ttl=62 time=0.098 ms
+
+64 bytes from 20.0.0.2: icmp_seq=6 ttl=62 time=0.168 ms
+
+64 bytes from 20.0.0.2: icmp_seq=7 ttl=62 time=0.083 ms
+
+64 bytes from 20.0.0.2: icmp_seq=8 ttl=62 time=0.194 ms
+
+64 bytes from 20.0.0.2: icmp_seq=9 ttl=62 time=0.136 ms
+
+64 bytes from 20.0.0.2: icmp_seq=10 ttl=62 time=0.099 ms
+
+64 bytes from 20.0.0.2: icmp_seq=11 ttl=62 time=0.124 ms
+
+64 bytes from 20.0.0.2: icmp_seq=12 ttl=62 time=0.276 ms
+
+64 bytes from 20.0.0.2: icmp_seq=13 ttl=62 time=0.148 ms
+
+64 bytes from 20.0.0.2: icmp_seq=14 ttl=62 time=0.104 ms
+
+64 bytes from 20.0.0.2: icmp_seq=15 ttl=62 time=0.089 ms
+
+64 bytes from 20.0.0.2: icmp_seq=16 ttl=62 time=0.124 ms
+
+64 bytes from 20.0.0.2: icmp_seq=17 ttl=62 time=0.079 ms
+
+64 bytes from 20.0.0.2: icmp_seq=18 ttl=62 time=0.114 ms
+
+64 bytes from 20.0.0.2: icmp_seq=19 ttl=62 time=0.091 ms
+
+64 bytes from 20.0.0.2: icmp_seq=20 ttl=62 time=0.220 ms
+
+64 bytes from 20.0.0.2: icmp_seq=21 ttl=62 time=0.102 ms
+
+64 bytes from 20.0.0.2: icmp_seq=22 ttl=62 time=0.235 ms
+
+64 bytes from 20.0.0.2: icmp_seq=23 ttl=62 time=0.125 ms
+
+64 bytes from 20.0.0.2: icmp_seq=24 ttl=62 time=0.110 ms
+
+64 bytes from 20.0.0.2: icmp_seq=25 ttl=62 time=0.163 ms
+
+64 bytes from 20.0.0.2: icmp_seq=26 ttl=62 time=0.133 ms
+
+64 bytes from 20.0.0.2: icmp_seq=27 ttl=62 time=0.089 ms
+
+64 bytes from 20.0.0.2: icmp_seq=28 ttl=62 time=0.096 ms
+
+64 bytes from 20.0.0.2: icmp_seq=29 ttl=62 time=0.099 ms
+
+64 bytes from 20.0.0.2: icmp_seq=30 ttl=62 time=0.209 ms
+
+64 bytes from 20.0.0.2: icmp_seq=31 ttl=62 time=0.113 ms
+
+64 bytes from 20.0.0.2: icmp_seq=32 ttl=62 time=0.096 ms
+
+64 bytes from 20.0.0.2: icmp_seq=33 ttl=62 time=0.135 ms
+
+64 bytes from 20.0.0.2: icmp_seq=34 ttl=62 time=0.094 ms
+
+64 bytes from 20.0.0.2: icmp_seq=35 ttl=62 time=0.349 ms
+
+64 bytes from 20.0.0.2: icmp_seq=36 ttl=62 time=0.081 ms
+
+64 bytes from 20.0.0.2: icmp_seq=37 ttl=62 time=0.090 ms
+
+
+--- 20.0.0.2 ping statistics ---
+37 packets transmitted, 37 received, +1288 duplicates, 0% packet loss, time 36831ms
+rtt min/avg/max/mdev = 0.079/132.198/169.664/29.774 ms
+
+
+
+COMMAND: h1 ifconfig -a
+
+h1-eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 10.0.0.2  netmask 255.255.255.0  broadcast 10.0.0.255
+        inet6 fe80::a8bb:aaff:febb:aabb  prefixlen 64  scopeid 0x20<link>
+        ether aa:bb:aa:bb:aa:bb  txqueuelen 1000  (Ethernet)
+        RX packets 1700  bytes 164012 (164.0 KB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 120  bytes 10516 (10.5 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+
+
+COMMAND: h2 ifconfig -a
+
+h2-eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 10.0.0.3  netmask 255.255.255.0  broadcast 10.0.0.255
+        inet6 fe80::2022:22ff:fe22:2222  prefixlen 64  scopeid 0x20<link>
+        ether 22:22:22:22:22:22  txqueuelen 1000  (Ethernet)
+        RX packets 282  bytes 29968 (29.9 KB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 77  bytes 6798 (6.7 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+
+
+
+COMMAND: h3 ifconfig -a
+
+h3-eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 20.0.0.2  netmask 255.255.255.0  broadcast 20.0.0.255
+        inet6 fe80::cedd:ccff:fedd:ccdd  prefixlen 64  scopeid 0x20<link>
+        ether cc:dd:cc:dd:cc:dd  txqueuelen 1000  (Ethernet)
+        RX packets 386  bytes 36269 (36.2 KB)
+        RX errors 0  dropped 2  overruns 0  frame 0
+        TX packets 143  bytes 13198 (13.1 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+
+
+
+COMMAND: h4 ifconfig -a
+
+h4-eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 20.0.0.3  netmask 255.255.255.0  broadcast 20.0.0.255
+        inet6 fe80::4644:44ff:fe44:4444  prefixlen 64  scopeid 0x20<link>
+        ether 44:44:44:44:44:44  txqueuelen 1000  (Ethernet)
+        RX packets 210  bytes 22457 (22.4 KB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 16  bytes 1312 (1.3 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+
+
+Interrupt
+
+
+Interrupt
+
+
+
+*** Stopping 3 controllers
+
+default_controller 

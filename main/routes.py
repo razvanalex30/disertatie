@@ -7,6 +7,7 @@ import re
 import time
 import logging
 import signal
+import ipaddress
 
 import subprocess
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -49,6 +50,16 @@ def file_creation_date_filter(filename):
     day = formatted_date.day if formatted_date.day >= 10 else f"{formatted_date.day}"
     formatted_date = f"{month}/{day}/{formatted_date.year}, {formatted_date.strftime('%-I:%M:%S %p')}"
     return formatted_date
+
+
+def calculate_broadcast_address(ip_with_mask):
+    try:
+        ip_network = ipaddress.IPv4Network(ip_with_mask, strict=False)
+        broadcast_address = ip_network.broadcast_address
+
+        return str(broadcast_address)
+    except ValueError:
+        return "Invalid input format"
 
 
 def is_valid_capture_name(name):
@@ -119,16 +130,20 @@ def parse_routers_info(topo_setup_text):
                 router_line_forward = f"{router_name}.cmd('sysctl -w net.ipv4.ip_forward=1')"
                 routers_created_lines.append(router_line_forward)
             else:
-                router_line = f"{router_name} = net.addHost('{router_name}', cls=Node)"
+                router_line = f"{router_name} = net.addHost('{router_name}', cls=Node, ip=None)"
                 router_line_intf_1 = f"{router_name}.cmd('sysctl -w net.ipv4.ip_forward=1')"
-                routers_created_lines.append(router_line)
-                routers_created_lines.append(router_line_intf_1)
-                router_line_intf_2 = f"{router_name}.cmd('ip link add {router_name}-{interface_name} type dummy')"
-                router_line_intf_3 = f"{router_name}.cmd('ip addr add {ip_address}/{netmask} dev {router_name}-{interface_name}')"
-                router_line_intf_4 = f"{router_name}.cmd('ip link set dev {router_name}-{interface_name} up')"
-                router_created_lines_intf.append(router_line_intf_2)
+                if router_line and router_line_intf_1 not in routers_created_lines:
+                    routers_created_lines.append(router_line)
+                    routers_created_lines.append(router_line_intf_1)
+
+                ip_netmask = f"{ip_address}/{netmask}"
+                broadcast_ip = calculate_broadcast_address(ip_netmask)
+                # router_line_intf_2 = f"{router_name}.cmd('ip link add {router_name}-{interface_name} type dummy')"
+                router_line_intf_3 = f"{router_name}.cmd('ip addr add {ip_address}/{netmask} broadcast {broadcast_ip} dev {router_name}-{interface_name}')"
+                # router_line_intf_4 = f"{router_name}.cmd('ip link set dev {router_name}-{interface_name} up')"
+                # router_created_lines_intf.append(router_line_intf_2)
                 router_created_lines_intf.append(router_line_intf_3)
-                router_created_lines_intf.append(router_line_intf_4)
+                # router_created_lines_intf.append(router_line_intf_4)
         else:
             continue
 
@@ -198,6 +213,19 @@ def create_topology_script(**kwargs):
             link_line = f"net.addLink({conn_line[0]}, {conn_line[1]})"
             connection_text_lines.append(link_line)
 
+    legacy_switches = []
+    conn_text = connections_text.strip().split("\n")
+    for line in conn_text:
+        conn_line = line.split("<->")
+        if conn_line[0] in switches_names and conn_line[1] in routers_names:
+            if conn_line[0] not in legacy_switches:
+                legacy_switches.append(conn_line[0])
+                continue
+        elif conn_line[0] in routers_names and conn_line[1] in switches_names:
+            if conn_line[1] not in legacy_switches:
+                legacy_switches.append(conn_line[1])
+                continue
+    
 
 
     switches_lines = []
@@ -340,7 +368,7 @@ def search():
 
         topologies = topologies_created + topologies_uploaded
         topologies_nr = len(topologies)
-        # TO DO -> DE ADAUGAT REDIRECT LINK CATRE TOPOLOGIES UPLOADED/CREATED
+
         return render_template("search.html", form=form,
                                searched=topology.searched,
                                topologies_created=topologies_created,
@@ -1071,7 +1099,6 @@ def run_script(topology_name):
         capture_files.sort(key=lambda x: os.path.getctime(os.path.join(captures_dir_path, x)), reverse=True)
 
 
-
     with open(f"{script_dir_path}/logfile.log", "w") as logfile:
         logfile.close()
 
@@ -1082,11 +1109,9 @@ def run_script(topology_name):
 @app.route('/start_script', methods=['GET'])
 @login_required
 def start_script():
-    print(">>>> AM APASAT START SCRIPT")
 
     subprocess.run(["sudo", 'fuser', '-k', '6653/tcp'])
     subprocess.run(["sudo", 'mn', '-c'])
-    # DE PUS LOGICA SA FAC RESTART DE SCRIPT DACA PORNESC IAR
     with open(f"{script_dir_path}/logfile.log", "w") as logfile:
         logfile.close()
 
@@ -1130,11 +1155,6 @@ def send_message():
         proc.stdin.flush()
         proc.stdin.write("\n".encode())
         proc.stdin.flush()
-    # logging.basicConfig(format='%(message)s', filename='logfile.log', filemode='a', level=logging.INFO)
-    # logging.info(f"\nCOMMAND: {message}\n")
-    # Do something with the message, e.g., log it
-    # with open('logfile.log', 'a') as file:
-    #     file.write(f'User: {message}\n')
 
     return 'Message sent'
 
@@ -1201,12 +1221,6 @@ def start_capture():
     # Check if the capture name is valid
     if not is_valid_capture_name(capture_name):
         return 'Invalid capture name'
-
-    # captures_output_dir = os.path.join(f"{script_dir_path}", "captures")
-    print(f">>>>CAPTURES DIR: {captures_dir_path}")
-    # if not os.path.exists(captures_output_dir):
-    #     print("SUNT IN IF")
-    #     os.mkdir(captures_output_dir)
 
     global output_path
     output_path = f"{captures_dir_path}/{interface}_{capture_name}.pcap"
@@ -1280,8 +1294,6 @@ def reset_request():
         send_reset_email(user)
         flash('An email has been sent with instructions to reset your password', 'info')
         return redirect(url_for('login'))
-
-
 
     return render_template('reset_request.html', title='Reset Password', form=form)
 

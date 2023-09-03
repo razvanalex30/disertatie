@@ -5,10 +5,10 @@
   font-size: 14px;
   line-height: 1.2;
   overflow-y: scroll;
-  height: 400px; /* Adjust the height as per your requirements */
+  height: 400px;
   padding: 10px;
   margin: 0 auto;
-  width: 80%; /* Adjust the width as per your requirements */
+  width: 80%;
 }
 
 .terminal-header {

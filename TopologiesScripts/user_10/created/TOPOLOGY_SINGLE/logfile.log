@@ -14,11 +14,10 @@
 
 *** Configuring hosts
 
-r1 
-r2 
 h1 
 h2 
 h3 
+h4 
 
 
 *** Starting controllers
@@ -31,12 +30,10 @@ TOPOLOGY LINKS
 h1-eth0 <-> s1-eth1 (h1 s1)
 h2-eth0 <-> s1-eth2 (h2 s1)
 h3-eth0 <-> s1-eth3 (h3 s1)
-r1-eth0 <-> s1-eth4 (r1 s1)
-r2-eth0 <-> s1-eth5 (r2 s1)
+h4-eth0 <-> s1-eth4 (h4 s1)
 *** Starting controller
 
 default_controller 
-c1 
 
 
 *** Starting 1 switches
@@ -52,36 +49,32 @@ COMMAND: h1 ping h2
 
 PING 10.0.0.2 (10.0.0.2) 56(84) bytes of data.
 
-64 bytes from 10.0.0.2: icmp_seq=1 ttl=64 time=19.6 ms
+64 bytes from 10.0.0.2: icmp_seq=1 ttl=64 time=5.50 ms
 
-64 bytes from 10.0.0.2: icmp_seq=2 ttl=64 time=6.86 ms
+64 bytes from 10.0.0.2: icmp_seq=2 ttl=64 time=1.35 ms
 
-64 bytes from 10.0.0.2: icmp_seq=3 ttl=64 time=0.224 ms
+64 bytes from 10.0.0.2: icmp_seq=3 ttl=64 time=0.197 ms
+
+64 bytes from 10.0.0.2: icmp_seq=4 ttl=64 time=0.122 ms
 
 
 --- 10.0.0.2 ping statistics ---
-3 packets transmitted, 3 received, 0% packet loss, time 2004ms
-rtt min/avg/max/mdev = 0.224/8.896/19.604/8.041 ms
+4 packets transmitted, 4 received, 0% packet loss, time 3031ms
+rtt min/avg/max/mdev = 0.122/1.792/5.503/2.196 ms
 
 
-
-COMMAND: sh ovs-ofctl dump-flows s1
-
-NXST_FLOW reply (xid=0x4):
 
 COMMAND: exit
 
 *** Unknown command: 
 
-*** Stopping 2 controllers
+*** Stopping 1 controllers
 
 default_controller 
-c1 
 
 
-*** Stopping 5 links
+*** Stopping 4 links
 
-.
 .
 .
 .
@@ -93,13 +86,21 @@ c1
 s1 
 
 
-*** Stopping 5 hosts
+*** Stopping 4 hosts
 
-r1 
-r2 
 h1 
 h2 
 h3 
+h4 
 
 *** Done
+
+
+COMMAND: h1 ifconfig -a
+
+
+COMMAND: h2 ifconfig -a
+
+
+COMMAND: h1 ping h2
 

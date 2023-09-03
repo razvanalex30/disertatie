@@ -1,0 +1,223 @@
+*** Adding default controllers
+
+*** Adding controllers
+
+*** Add switches
+
+*** Add routers
+
+*** Add hosts
+
+*** Add links
+
+*** Starting network
+
+*** Configuring hosts
+
+r1 
+r2 
+h1 
+h2 
+h3 
+h4 
+
+
+*** Starting controllers
+
+*** Starting switches
+
+*** Post configure switches and hosts
+
+TOPOLOGY LINKS
+h1-eth0 <-> s1-eth1 (h1 s1)
+h2-eth0 <-> s1-eth2 (h2 s1)
+s1-eth3 <-> s2-eth1 (s1 s2)
+h3-eth0 <-> s2-eth2 (h3 s2)
+h4-eth0 <-> s2-eth3 (h4 s2)
+r1-eth0 <-> r2-eth0 (r1 r2)
+h4-eth1 <-> r2-eth1 (h4 r2)
+h1-eth1 <-> r1-eth1 (h1 r1)
+*** Starting controller
+
+default_controller 
+c1 
+c2 
+
+
+*** Starting 2 switches
+
+s1 
+s2 
+...
+
+
+*** Starting CLI:
+
+
+COMMAND: h1 ping h2
+
+PING 192.168.1.1 (192.168.1.1) 56(84) bytes of data.
+
+From 192.168.0.1 icmp_seq=1 Destination Host Unreachable
+
+From 192.168.0.1 icmp_seq=5 Destination Host Unreachable
+From 192.168.0.1 icmp_seq=6 Destination Host Unreachable
+From 192.168.0.1 icmp_seq=7 Destination Host Unreachable
+
+From 192.168.0.1 icmp_seq=8 Destination Host Unreachable
+From 192.168.0.1 icmp_seq=9 Destination Host Unreachable
+From 192.168.0.1 icmp_seq=10 Destination Host Unreachable
+
+From 192.168.0.1 icmp_seq=11 Destination Host Unreachable
+From 192.168.0.1 icmp_seq=12 Destination Host Unreachable
+From 192.168.0.1 icmp_seq=13 Destination Host Unreachable
+
+From 192.168.0.1 icmp_seq=14 Destination Host Unreachable
+From 192.168.0.1 icmp_seq=15 Destination Host Unreachable
+From 192.168.0.1 icmp_seq=16 Destination Host Unreachable
+
+From 192.168.0.1 icmp_seq=17 Destination Host Unreachable
+From 192.168.0.1 icmp_seq=18 Destination Host Unreachable
+From 192.168.0.1 icmp_seq=19 Destination Host Unreachable
+
+
+--- 192.168.1.1 ping statistics ---
+22 packets transmitted, 0 received, +16 errors, 100% packet loss, time 21419ms
+pipe 4
+
+
+
+COMMAND: exit
+
+*** Unknown command: 
+
+*** Stopping 3 controllers
+
+default_controller 
+c1 
+c2 
+
+
+*** Stopping 8 links
+
+.
+.
+.
+.
+.
+.
+.
+.
+
+
+*** Stopping 2 switches
+
+s1 
+s2 
+
+
+*** Stopping 6 hosts
+
+r1 
+r2 
+h1 
+h2 
+h3 
+h4 
+
+*** Done
+
+The CSRF token is missing.
+
+COMMAND: sh ovs-ofctl dump-flows s1
+
+
+COMMAND: h1 ping h2
+
+
+COMMAND: sh ovs-ofctl dump-flows s1
+
+
+COMMAND: h1 ifconfig -a
+
+
+COMMAND: h3 ifconfig -a
+
+
+COMMAND: h4 ifconfig -a
+
+
+COMMAND: exit
+
+The CSRF token is missing.
+
+COMMAND: h1 ifconfig -a
+
+
+COMMAND: h2 ifconfig -a
+
+
+COMMAND: h3 ifconfig -a
+
+
+COMMAND: h4 ifconfig -a
+
+
+COMMAND: exit
+
+The CSRF token is missing.
+The CSRF token is missing.
+The CSRF token is missing.
+The CSRF token is missing.
+
+COMMAND: h1 ping h2
+
+
+COMMAND: exit
+
+The CSRF token is missing.
+
+COMMAND: h1 ping h2
+
+
+COMMAND: exit
+
+The CSRF token is missing.
+The CSRF token is missing.
+The CSRF token is missing.
+
+COMMAND: h1 arp -n
+
+
+COMMAND: sh h1 arp -n
+
+
+COMMAND: h1 arp -n
+
+
+COMMAND: sh arp -n h1
+
+
+COMMAND: h1 arp
+
+
+COMMAND: xterm h1
+
+
+COMMAND: sh ovs-ofctl dump flows s1
+
+
+COMMAND: sh ovs-ofctl dump-flows s1
+
+
+COMMAND: h1 ifconfig -a
+
+
+COMMAND: ad
+
+
+COMMAND: links
+
+
+COMMAND: h1 ping h2
+

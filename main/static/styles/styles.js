@@ -56,10 +56,6 @@ function updateCapturesTable() {
 
 
 
-
-
-
-
 // This function deletes a capture from the captures array and updates the table
 function deleteCapture(fileName) {
     //Get all the table rows
@@ -100,7 +96,6 @@ function deleteCapture(fileName) {
         });
 }}
 
-//Razvan to add
 function sendMessage() {
     const message = messageInput.value;
 
@@ -219,7 +214,6 @@ function populateInterfaceDropdown() {
             data.forEach(interfaceName => {
                 const option = document.createElement('option');
                 if(interfaceName=='lo'){
-                console.log("SUNT IN IF")
                 option.value = 'Loopback';
                 option.textContent = 'Loopback';}
                 else {
@@ -262,7 +256,6 @@ function connectToStream() {
         if (event.data.includes('*** Starting CLI')) {
 
             if (!dropdownVisible) {
-                console.log('Dropdown and buttons should appear now.'); // Debug: Check if this line is reached
                 // Populate the dropdown and show the capture controls after the script starts
                 populateInterfaceDropdown();
                 const captureContainer = document.querySelector('.capture-container');
